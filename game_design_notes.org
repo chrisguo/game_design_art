@@ -1339,8 +1339,8 @@ lem. To make sure they are getting this feedback, ask yourself these questions:
 在游戏的每个时刻，都问问自己以下的问题：
 ** 透镜描述
 
-玩家在此刻需要了解什么呢？
-玩家在此刻想要了解什么呢？
+玩家在此刻需要了解什么呢？(need to know)---->系统需要让玩家知道的
+玩家在此刻想要了解什么呢？(want to know)---->站在玩家角度想的
 你希望玩家在此刻感受到什么呢？如何给予反馈能产生这种感受？
 玩家在此刻想要感受到什么呢？她们有机会去建立一种情景来得到她们想要的感受吗？
 玩家此刻的目标是什么？什么样的反馈有助于她们更接近这个目标呢？
@@ -1596,6 +1596,146 @@ Free from inner contradictions-----毫无内在矛盾
 他用具体例子说明：当在一个复杂的建筑群的建筑间铺设道路的时候，可先没有路，只是种上草。然后一年后，看看人们在草地上走出什么样的
 道路，再以此铺设道路。
 这个思路与《精益创业》的方法有异曲同工之妙，直接瞄准用户的需求。
+
+
+* 透镜#83 道之生动15特征的透镜
+一些事情或物品或产品，因为其自然而有机的设计，而让人感受很棒，很特殊。例如iphone，糖果等。
+建筑学家Alexander总结了生命现象的十五个特征，可用于设计。
+
+** 层次结构
+We see levels of scale in “telescoping goals, ” where a player has
+to satisfy short-term goals to reach mid-term ones and to eventually reach longterm
+goals. We see it in fractal interest curves. We also see it in nested game
+world structures. Spore is a symphony of levels of scale.
+目标是有层次结构的。
+分形的兴趣曲线是有层次结构的。
+游戏世界是有层次结构的。
+
+** 强大的中心
+We see this in visual layout, certainly, but also in our story
+structure. The avatar is at the center of our game universe — and generally we
+prefer strong avatars over weak ones. Also, we prefer strong centers when it
+comes to our purpose in the game — our goal.
+在视觉摆放上，在故事结构上，我们都看到了强大的中心。
+
+** 边界
+Many games are primarily about boundaries! Certainly any game
+about territory is an exploration of boundaries. But rules are another kind of
+boundary, and a game with no rules is no game at all.
+游戏规则是一种边界。
+许多游戏是关于边界的。
+
+** 交替性重复
+We see this on the pleasing shape of the chessboard, and
+we see it too in the cycle of level/boss/level/boss that comes up in so many games.
+Even tense/release/tense/release is an example of pleasing alternating repetition.
+
+在游戏中有许多交替性重复出现。
+1. 形状：棋盘
+2. 游戏内容安排：关卡-BOSS-关卡-BOSS
+3. 体验： 紧张-放松-紧张-放松
+
+** 正交空间
+What Alexander means here is that the foreground and background
+elements both have beautiful, complementary shapes, like Yin and Yang.
+In a sense a well-balanced game has this quality — allowing multiple alternate
+strategies to have an interlocked beauty.
+如同阴阳，后景与前景元素，有美丽的、相互补偿的形状。
+平衡得很好的游戏中，也有类似东西--多个相互替补的策略，形成深锁的美丽。
+
+** 好的形状
+This is as simple as it sounds — a shape that is pleasing. We certainly
+look for this in the visual elements of our games. But we can see and feel
+it, too, in level design. A good level feels “solid” and has a “good curve. ”
+好的形状体现在视觉设计上。
+好的形状体现在关卡设计上。
+好的关卡设计，让人感觉实在，而且有很好的曲线。
+
+** 局部对称
+This is different from an overall symmetry, like a mirror
+image; instead referring to multiple small, internal symmetries in a design.
+Zelda: The Wind Waker has this feeling throughout its architecture — when you
+are within a room or area, it seems to have a symmetry, but it is connected to
+other places in a way that feels organic. Rule systems and game balance can
+have this property as well.
+是设计中，多个细小的、内在的对称，而不是全局对称。
+在空间设计中，有这种局部对称，例如Zelda
+在规则系统设计，游戏平衡设计中，也有这种特性。
+
+** 深度互锁与暧昧
+
+相互对立而相互成立---围棋的黑白，道德经中的难易相成，高下相倾。缺其一，则另一东西也消失。
+
+** 对比
+In games we have many kinds of contrast. The contrast between
+opponents, between what is controllable and what is not, and between reward
+and punishment. When opposites in our game are strongly contrasted, the game
+feels more meaningful and more powerful.
+游戏中有太多对比。
+如果对比强烈，游戏看起来更加有意义，更加强大。
+
+** 梯度
+This refers to qualities that change gradually. The gradually increasing
+challenge curve is an example of this, but so are appropriately designed
+probability curves.
+事物逐渐的变化。
+难度曲线的逐步提升。
+概率曲线的逐步变化。
+
+** 瑕疵
+When a game is too perfect, it has no character. The handmade
+feeling of “ house rules ” often makes a game seem more alive.
+太完美就不好了，出现点小问题就好了。
+
+** 回音
+Echoes are a kind of pleasing, unifying repetition. When the boss monster
+has something in common with his minions, we are experiencing echoes.
+Good interest curves have this property, especially fractal ones.
+
+一种愉悦的、统一的重复。
+BOSS在某方面类似小鬼，我们就看见了回音。
+好的兴趣曲线有这样的特性，尤其是那种分形的。
+
+** 空洞
+As Alexander says, “In the most profound centers which have perfect
+wholeness, there is at the heart a void which is like water, infinite in depth, surrounded
+by and contrasted with the clutter of the stuff and fabric all around it. ”
+Think of a church, or the human heart. When boss monsters tend to be in large,
+hollow spaces, we are experiencing the void.
+
+寂兮渺兮
+当其无，有器之用。
+当其无，有室之用。
+有之以为利，无之以为用。
+
+
+** 简洁与内在平静
+Designers talk endlessly about how important it is
+for a game to be simple — usually with a small number of rules that have emergent
+properties. Of course, these rules must be well-balanced, which gives them
+the inner calm that Alexander describes.
+
+简单规则导致的自发性特征，是游戏设计者的追求。
+规则必须平衡，有内在平静。
+围棋有此特征，因为其规则简单到了极致，而自发空间那么巨大。
+
+** 有机融合（非独立性）
+This refers to something being well-connected to its surroundings
+— as if it was part of them. Each rule of our game should have this property,
+but so should every element of our game. If everything in our game has this
+quality, a certain wholeness results that makes the game feel very alive indeed.
+
+任何部分，都有机融入环境中，是环境的组成部分，没有突兀出现的东西，格格不入的东西。
+如果我们游戏所有部分都有这种特性，那么就会产生一个总体感---使游戏感受很具生命活力。
+
+
+** 道之物化
+上述15个特征，其实是道德经中许多抽象原则的具体化。
+道，无所不在。
+尊道而行，设计也需如此。
+
+
+
 * 实战
 学习《游戏设计的艺术后》，进行了下面的实战：
 ** 浮生历程的设计。
