@@ -1,0 +1,5419 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>game<sub>design</sub><sub>notes</sub></title>
+<!-- 2015-12-29 二 21:38 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="author" content="Chris Guo"/>
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  pre.src-sh:before    { content: 'sh'; }
+  pre.src-bash:before  { content: 'sh'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-R:before     { content: 'R'; }
+  pre.src-perl:before  { content: 'Perl'; }
+  pre.src-java:before  { content: 'Java'; }
+  pre.src-sql:before   { content: 'SQL'; }
+
+  table { border-collapse:collapse; }
+  td, th { vertical-align:top;  }
+  th.right  { text-align: center;  }
+  th.left   { text-align: center;   }
+  th.center { text-align: center; }
+  td.right  { text-align: right;  }
+  td.left   { text-align: left;   }
+  td.center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara:nth-child(2) { display: inline; }
+  .footpara { display: block; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012  Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">game<sub>design</sub><sub>notes</sub></h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1. version history</a>
+<ul>
+<li><a href="#sec-1-1">1.1. V1.1  2014年11月28日 11:47:01</a></li>
+<li><a href="#sec-1-2">1.2. V1.010   2014年07月09日 13:11:50</a></li>
+<li><a href="#sec-1-3">1.3. V1.009   2014年04月08日 13:49:56</a></li>
+<li><a href="#sec-1-4">1.4. V1.008  2013年12月23日 19:44:05</a></li>
+<li><a href="#sec-1-5">1.5. V1.007  2013年12月19日 20:13:53</a></li>
+<li><a href="#sec-1-6">1.6. V1.006  2013年12月14日 15:55:10</a></li>
+<li><a href="#sec-1-7">1.7. V1.005  2013年12月05日 17:56:09</a></li>
+<li><a href="#sec-1-8">1.8. V1.004  2013年11月08日 16:43:27</a></li>
+<li><a href="#sec-1-9">1.9. V1.003  2013年08月14日 12:37:52</a></li>
+<li><a href="#sec-1-10">1.10. V1.002  2013年07月31日 13:48:24</a></li>
+<li><a href="#sec-1-11">1.11. v1.001  2013年05月20日 12:28:16</a></li>
+<li><a href="#sec-1-12">1.12. 原始版本 2013年05月18日 12:51:36</a></li>
+</ul>
+</li>
+<li><a href="#sec-2">2. 前言</a>
+<ul>
+<li><a href="#sec-2-1">2.1. 什么是游戏设计？</a></li>
+<li><a href="#sec-2-2">2.2. 本书试图诱导读者，从各种不同的角度来思考、审查游戏。</a></li>
+<li><a href="#sec-2-3">2.3. 聚焦最基础。</a></li>
+<li><a href="#sec-2-4">2.4. 功夫在诗外(Talk to stangers):</a></li>
+<li><a href="#sec-2-5">2.5. 真正的设计，在于动手实践。</a></li>
+<li><a href="#sec-2-6">2.6. 构建你的设计地图(Map)</a></li>
+</ul>
+</li>
+<li><a href="#sec-3">3. 透镜-1:  Skinner Box</a>
+<ul>
+<li><a href="#sec-3-1">3.1. SkinnerBox的详细描述以及在游戏中的应用。</a></li>
+</ul>
+</li>
+<li><a href="#sec-4">4. 透镜0: 突破想像范围的透镜</a>
+<ul>
+<li><a href="#sec-4-1">4.1. [更多论据]</a>
+<ul>
+<li><a href="#sec-4-1-1">4.1.1. 市场营销</a></li>
+</ul>
+</li>
+<li><a href="#sec-4-2">4.2. 问自己下面问题：</a></li>
+</ul>
+</li>
+<li><a href="#sec-5">5. 透镜1：本质体验的透镜？</a>
+<ul>
+<li><a href="#sec-5-1">5.1. 透镜描述</a>
+<ul>
+<li><a href="#sec-5-1-1">5.1.1. 我想让玩家获得什么样的体验呢？</a></li>
+<li><a href="#sec-5-1-2">5.1.2. 这种体验中最本质的是什么呢？</a></li>
+<li><a href="#sec-5-1-3">5.1.3. 如何能让我的游戏捕捉到这种本质呢？</a></li>
+</ul>
+</li>
+<li><a href="#sec-5-2">5.2. wii sports的例子</a></li>
+<li><a href="#sec-5-3">5.3. 《找你妹》的例子</a></li>
+<li><a href="#sec-5-4">5.4. Dungeon Crawl</a></li>
+<li><a href="#sec-5-5">5.5. 扩展描述</a>
+<ul>
+<li><a href="#sec-5-5-1">5.5.1. 体验的构成：是一不是二，是整体不是局部</a></li>
+<li><a href="#sec-5-5-2">5.5.2. 体验是游戏设计的指路灯，北斗星，大海航行的舵手，它告诉整个团队努力的方向，引导游戏的整个设计和改进过程</a></li>
+<li><a href="#sec-5-5-3">5.5.3. 游戏品质的差异在体验</a></li>
+<li><a href="#sec-5-5-4">5.5.4. 体验的累积突变性</a></li>
+<li><a href="#sec-5-5-5">5.5.5. 实例</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#sec-6">6. 透镜1.5  动态体验的透镜</a>
+<ul>
+<li><a href="#sec-6-1">6.1. 一、认知曲线</a></li>
+<li><a href="#sec-6-2">6.2. 二、难度曲线</a></li>
+<li><a href="#sec-6-3">6.3. 三、兴趣曲线</a></li>
+<li><a href="#sec-6-4">6.4. 应用：以体验三曲线来分析2013年页游的困境</a></li>
+<li><a href="#sec-6-5">6.5. 应用：糖果的付费时机</a></li>
+</ul>
+</li>
+<li><a href="#sec-7">7. 透镜2:惊喜感的透镜</a>
+<ul>
+<li><a href="#sec-7-1">7.1. 透镜描述</a>
+<ul>
+<li><a href="#sec-7-1-1">7.1.1. 玩家在玩我游戏时，我会用什么来让玩家感到惊喜呢？</a></li>
+<li><a href="#sec-7-1-2">7.1.2. 我游戏的故事有让人惊喜的元素吗？各种游戏规则呢？美术部分呢？技术部分呢？</a></li>
+<li><a href="#sec-7-1-3">7.1.3. 规则能让玩家相互制造惊喜吗？</a></li>
+<li><a href="#sec-7-1-4">7.1.4. 规则能让玩家自己制造惊喜吗？</a></li>
+</ul>
+</li>
+<li><a href="#sec-7-2">7.2. 扩展描述</a></li>
+<li><a href="#sec-7-3">7.3. 应用1</a></li>
+<li><a href="#sec-7-4">7.4. 应用2</a></li>
+</ul>
+</li>
+<li><a href="#sec-8">8. 透镜3: 乐趣的透镜</a>
+<ul>
+<li><a href="#sec-8-1">8.1. 透镜描述</a>
+<ul>
+<li><a href="#sec-8-1-1">8.1.1. 我的游戏哪个部分有趣？为什么这么说？</a></li>
+<li><a href="#sec-8-1-2">8.1.2. 哪些部分需要变得更有趣？</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#sec-9">9. 透镜4 好奇心的透镜</a>
+<ul>
+<li><a href="#sec-9-1">9.1. 透镜描述</a>
+<ul>
+<li><a href="#sec-9-1-1">9.1.1. 思考玩家真正的动机&#x2014;它不单单是游戏中设定的各种目标，还包括了玩家想要达到这些目标的原因。问以下问题：</a></li>
+</ul>
+</li>
+<li><a href="#sec-9-2">9.2. 扩展描述</a></li>
+</ul>
+</li>
+<li><a href="#sec-10">10. 透镜5  内生价值</a>
+<ul>
+<li><a href="#sec-10-1">10.1. 透镜描述</a>
+<ul>
+<li><a href="#sec-10-1-1">10.1.1. 在我的游戏中哪些东西是对玩家有价值的？</a></li>
+<li><a href="#sec-10-1-2">10.1.2. 思考下，哪些东西没有表现出价值？</a></li>
+<li><a href="#sec-10-1-3">10.1.3. 如何能让它们对玩家显得更有价值呢？</a></li>
+<li><a href="#sec-10-1-4">10.1.4. 游戏中的价值与玩家的动机如何链接起来？</a></li>
+</ul>
+</li>
+<li><a href="#sec-10-2">10.2. 扩展描述</a></li>
+<li><a href="#sec-10-3">10.3. 实际例子</a></li>
+</ul>
+</li>
+<li><a href="#sec-11">11. 透镜6  问题解决的透镜</a>
+<ul>
+<li><a href="#sec-11-1">11.1. 我的游戏让玩家去解决哪些问题？</a></li>
+<li><a href="#sec-11-2">11.2. 游戏中有些作为玩法中的一部分的隐藏问题需要解决吗？</a></li>
+<li><a href="#sec-11-3">11.3. 如何能让我的游戏产生各种新的问题，以此来让玩家继续回来玩？</a></li>
+</ul>
+</li>
+<li><a href="#sec-12">12. 透镜7 基本四元组的透镜</a>
+<ul>
+<li><a href="#sec-12-1">12.1. 透镜描述</a>
+<ul>
+<li><a href="#sec-12-1-1">12.1.1. 我的游戏用上了机制、故事、技术和美感四个元素了吗？</a></li>
+<li><a href="#sec-12-1-2">12.1.2. 我可以通过改良一种或多种元素来提升游戏吗？</a></li>
+<li><a href="#sec-12-1-3">12.1.3. 这四种元素是相互协调，相互加强，为同一个主题服务吗？</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#sec-13">13. 8 全息设计的透镜</a>
+<ul>
+<li><a href="#sec-13-1">13.1. 透镜描述</a>
+<ul>
+<li><a href="#sec-13-1-1">13.1.1. 游戏中的哪些元素能使整个游戏变得愉悦？</a></li>
+<li><a href="#sec-13-1-2">13.1.2. 游戏中的哪些元素是削减这种体验的？</a></li>
+<li><a href="#sec-13-1-3">13.1.3. 如何调整这些元素来改良体验？</a></li>
+</ul>
+</li>
+<li><a href="#sec-13-2">13.2. 扩展描述</a></li>
+</ul>
+</li>
+<li><a href="#sec-14">14. 9 统一的透镜</a>
+<ul>
+<li><a href="#sec-14-1">14.1. 我用了每一种可能的方法去强化这个主题了吗？</a></li>
+</ul>
+</li>
+<li><a href="#sec-15">15. 10 共鸣的透镜</a>
+<ul>
+<li><a href="#sec-15-1">15.1. 找能引起玩家共鸣的主题。</a></li>
+</ul>
+</li>
+<li><a href="#sec-16">16. 12 问题陈述的透镜</a>
+<ul>
+<li><a href="#sec-16-1">16.1. 我到底在解决哪种问题呢？</a></li>
+<li><a href="#sec-16-2">16.2. 游戏真的是这个问题的最佳解决方案吗？为什么？</a></li>
+<li><a href="#sec-16-3">16.3. 我如何知道问题是否解决了呢？</a></li>
+</ul>
+</li>
+<li><a href="#sec-17">17. 筛选创意的八个步子</a>
+<ul>
+<li><a href="#sec-17-1">17.1. 1. 美感上的刺激。</a></li>
+<li><a href="#sec-17-2">17.2. 2.受众的统计数据</a></li>
+<li><a href="#sec-17-3">17.3. 3. 体验设计</a></li>
+<li><a href="#sec-17-4">17.4. 4. 创新</a></li>
+<li><a href="#sec-17-5">17.5. 5.商业和市场营销</a></li>
+<li><a href="#sec-17-6">17.6. 6.技术角度</a></li>
+<li><a href="#sec-17-7">17.7. 7.社会/社区角度</a></li>
+<li><a href="#sec-17-8">17.8. 8.游戏测试</a></li>
+</ul>
+</li>
+<li><a href="#sec-18">18. 透镜13 八滤镜的透镜</a></li>
+<li><a href="#sec-19">19. 游戏开发中的循环技术</a>
+<ul>
+<li><a href="#sec-19-1">19.1. 1.提出一个基础设计</a></li>
+<li><a href="#sec-19-2">19.2. 2.找出设计中最大的风险</a></li>
+<li><a href="#sec-19-3">19.3. 3.建立各种原型来减轻这些风险</a></li>
+<li><a href="#sec-19-4">19.4. 4.测试和检验这些原型</a></li>
+<li><a href="#sec-19-5">19.5. 5.基于你已经了解的，提出一个更详细的设计</a></li>
+<li><a href="#sec-19-6">19.6. 6.回到步骤2</a></li>
+</ul>
+</li>
+<li><a href="#sec-20">20. 透镜14 风险减轻的透镜</a>
+<ul>
+<li><a href="#sec-20-1">20.1. 透镜描述</a>
+<ul>
+<li><a href="#sec-20-1-1">20.1.1. 有哪些因素会阻碍这个游戏变得优秀？</a></li>
+<li><a href="#sec-20-1-2">20.1.2. 如何能阻止这些因素的发生？</a></li>
+</ul>
+</li>
+<li><a href="#sec-20-2">20.2. 原理</a></li>
+</ul>
+</li>
+<li><a href="#sec-21">21. 原型制作技巧</a>
+<ul>
+<li><a href="#sec-21-1">21.1. 循环回路</a>
+<ul>
+<li><a href="#sec-21-1-1">21.1.1. 一、陈述问题</a></li>
+<li><a href="#sec-21-1-2">21.1.2. 二、对一些可能的方案进行头脑风暴</a></li>
+<li><a href="#sec-21-1-3">21.1.3. 三、选择一种解决方案</a></li>
+<li><a href="#sec-21-1-4">21.1.4. 四、列出使用这种解决方案的各种风险</a></li>
+<li><a href="#sec-21-1-5">21.1.5. 五、建立各种原型来减轻这种风险</a></li>
+<li><a href="#sec-21-1-6">21.1.6. 六、测试这些原型，如果足够好了，就停止</a></li>
+<li><a href="#sec-21-1-7">21.1.7. 七、陈述你要解决的新问题，回到第2步。</a></li>
+</ul>
+</li>
+<li><a href="#sec-21-2">21.2. 高效的原型制作技巧</a>
+<ul>
+<li><a href="#sec-21-2-1">21.2.1. 技巧1 ： 回答一个问题</a></li>
+<li><a href="#sec-21-2-2">21.2.2. 技巧2: 忘掉质量</a></li>
+<li><a href="#sec-21-2-3">21.2.3. 技巧3: 别对它太依恋</a></li>
+<li><a href="#sec-21-2-4">21.2.4. 区分优先级</a></li>
+<li><a href="#sec-21-2-5">21.2.5. 并行开发原型</a></li>
+<li><a href="#sec-21-2-6">21.2.6. 并非一定是电子版本的</a></li>
+<li><a href="#sec-21-2-7">21.2.7. 选择快速游戏制作引擎</a></li>
+<li><a href="#sec-21-2-8">21.2.8. 先创造玩具</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#sec-22">22. 透镜15:  玩具的透镜</a></li>
+<li><a href="#sec-23">23. 透镜16 玩家的透镜</a>
+<ul>
+<li><a href="#sec-23-1">23.1. 透镜描述</a></li>
+<li><a href="#sec-23-2">23.2. 扩展描述</a>
+<ul>
+<li><a href="#sec-23-2-1">23.2.1. 我要批注</a></li>
+</ul>
+</li>
+<li><a href="#sec-23-3">23.3. 女人在游戏中喜欢的：</a>
+<ul>
+<li><a href="#sec-23-3-1">23.3.1. 情感。</a></li>
+<li><a href="#sec-23-3-2">23.3.2. 现实世界</a></li>
+<li><a href="#sec-23-3-3">23.3.3. 养育</a></li>
+<li><a href="#sec-23-3-4">23.3.4. 对话和迷题</a></li>
+<li><a href="#sec-23-3-5">23.3.5. 通过例子来学习</a></li>
+</ul>
+</li>
+<li><a href="#sec-23-4">23.4. 男人在游戏中喜欢的：</a>
+<ul>
+<li><a href="#sec-23-4-1">23.4.1. 掌握。</a></li>
+<li><a href="#sec-23-4-2">23.4.2. 竞技</a></li>
+<li><a href="#sec-23-4-3">23.4.3. 破坏</a></li>
+<li><a href="#sec-23-4-4">23.4.4. 空间性迷题</a></li>
+<li><a href="#sec-23-4-5">23.4.5. 反复试验</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#sec-24">24. 透镜#17 快乐的透镜</a></li>
+<li><a href="#sec-25">25. 透镜#18 心流的透镜</a>
+<ul>
+<li><a href="#sec-25-1">25.1. 透镜描述</a></li>
+<li><a href="#sec-25-2">25.2. 扩展描述</a></li>
+<li><a href="#sec-25-3">25.3. 分析：《北浮》提供了心流</a>
+<ul>
+<li><a href="#sec-25-3-1">25.3.1. 一、玩家有清晰的目标：赚钱，钱越多越好。</a></li>
+<li><a href="#sec-25-3-2">25.3.2. 二、没有被分心</a></li>
+<li><a href="#sec-25-3-3">25.3.3. 三、直接的反馈</a></li>
+<li><a href="#sec-25-3-4">25.3.4. 四、持续不断的挑战</a></li>
+</ul>
+</li>
+<li><a href="#sec-25-4">25.4. 分析：《糖果》提供了心流</a>
+<ul>
+<li><a href="#sec-25-4-1">25.4.1. 1. 玩家有清晰的目标：过眼前这关，然后下一关，以至于地图上的300多关。</a></li>
+<li><a href="#sec-25-4-2">25.4.2. 2. 没有被分心</a></li>
+<li><a href="#sec-25-4-3">25.4.3. 3. 直接的反馈</a></li>
+<li><a href="#sec-25-4-4">25.4.4. 4. 持续不断的挑战</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#sec-26">26. 透镜#19 需求的透镜</a></li>
+<li><a href="#sec-27">27. 透镜#20 评判的透镜</a>
+<ul>
+<li><a href="#sec-27-1">27.1. 透镜描述</a></li>
+<li><a href="#sec-27-2">27.2. 扩展描述</a></li>
+<li><a href="#sec-27-3">27.3. 应用</a></li>
+</ul>
+</li>
+<li><a href="#sec-28">28. 透镜#21 功能空间的透镜</a>
+<ul>
+<li><a href="#sec-28-1">28.1. 透镜描述</a></li>
+<li><a href="#sec-28-2">28.2. 扩展</a></li>
+<li><a href="#sec-28-3">28.3. 应用</a></li>
+</ul>
+</li>
+<li><a href="#sec-29">29. 透镜#22 动态状态的透镜</a>
+<ul>
+<li><a href="#sec-29-1">29.1. 透镜描述</a></li>
+<li><a href="#sec-29-2">29.2. 扩展描述</a></li>
+<li><a href="#sec-29-3">29.3. 应用</a></li>
+</ul>
+</li>
+<li><a href="#sec-30">30. 透镜 #23 自发性的透镜</a>
+<ul>
+<li><a href="#sec-30-1">30.1. 透镜描述</a></li>
+<li><a href="#sec-30-2">30.2. 扩展描述</a></li>
+<li><a href="#sec-30-3">30.3. 应用</a>
+<ul>
+<li><a href="#sec-30-3-1">30.3.1. 玩家采集（操作性动作），能影响自己和别人，能影响游戏空间的本质。 现在，只影响自己，乐趣和互动小。</a></li>
+<li><a href="#sec-30-3-2">30.3.2. PK中心只有战斗，动词单一为"PK"</a></li>
+<li><a href="#sec-30-3-3">30.3.3. 针对副本的怪物，现在只有单一动词“打”</a></li>
+<li><a href="#sec-30-3-4">30.3.4. 劳务市场的工作，有同一时刻工作人数的限制。</a></li>
+</ul>
+</li>
+<li><a href="#sec-30-4">30.4. 按</a></li>
+<li><a href="#sec-30-5">30.5. 实际例子</a></li>
+</ul>
+</li>
+<li><a href="#sec-31">31. 透镜　24  行为的透镜</a>
+<ul>
+<li><a href="#sec-31-1">31.1. 透镜描述</a>
+<ul>
+<li><a href="#sec-31-1-1">31.1.1. 我的游戏中有哪些操作性行为?</a></li>
+<li><a href="#sec-31-1-2">31.1.2. 我的游戏有哪些因而发生的行为?</a></li>
+<li><a href="#sec-31-1-3">31.1.3. 我希望看到哪些因而发生的行为，如何能调整游戏来上这种情况变得可能呢?</a></li>
+<li><a href="#sec-31-1-4">31.1.4. 我对目前因而发生的行为和操作性行为的比例满意吗？</a></li>
+<li><a href="#sec-31-1-5">31.1.5. 在我的游戏中有哪些行为是玩家希望能做但不能做的？我能一定程度上通过操作性行为或者因而发生的行为来让这些变得可能吗？</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#sec-32">32. 透镜　25  目标的透镜</a>
+<ul>
+<li><a href="#sec-32-1">32.1. 透镜描述</a>
+<ul>
+<li><a href="#sec-32-1-1">32.1.1. 我的游戏中的终极目标是什么？</a></li>
+<li><a href="#sec-32-1-2">32.1.2. 这个目标对玩家来说清晰可见吗？</a></li>
+<li><a href="#sec-32-1-3">32.1.3. 假如有一系列目标，玩家能理解吗？</a></li>
+<li><a href="#sec-32-1-4">32.1.4. 各种不同的目标，以一种有意义的方式相互连接吗？</a></li>
+<li><a href="#sec-32-1-5">32.1.5. 我设定的目标，是具体、可达成、值得去做吗？</a></li>
+<li><a href="#sec-32-1-6">32.1.6. 我设定的短期目标和长期目标是平衡的吗？</a></li>
+<li><a href="#sec-32-1-7">32.1.7. 玩家有机会自己去制定目标吗？</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#sec-33">33. 透镜#26 规则的透镜</a>
+<ul>
+<li><a href="#sec-33-1">33.1. 透镜描述</a></li>
+<li><a href="#sec-33-2">33.2. 扩展描述</a></li>
+<li><a href="#sec-33-3">33.3. 应用</a></li>
+</ul>
+</li>
+<li><a href="#sec-34">34. Lens #27: The Lens of Skill</a>
+<ul>
+<li><a href="#sec-34-1">34.1. ● What skills does my game require from the player?</a></li>
+<li><a href="#sec-34-2">34.2. ● Are there categories of skill that this game is missing?</a></li>
+<li><a href="#sec-34-3">34.3. ● Which skills are dominant?</a></li>
+<li><a href="#sec-34-4">34.4. ● Are these skills creating the experience I want?</a></li>
+<li><a href="#sec-34-5">34.5. ● Are some players much better at these skills than others? Does this make</a></li>
+<li><a href="#sec-34-6">34.6. ● Can players improve their skills with practice?</a></li>
+<li><a href="#sec-34-7">34.7. ● Does this game demand the right level of skill?</a></li>
+</ul>
+</li>
+<li><a href="#sec-35">35. 透镜#32 有意义的选择透镜</a>
+<ul>
+<li><a href="#sec-35-1">35.1. 透镜描述</a></li>
+<li><a href="#sec-35-2">35.2. 扩展描述</a></li>
+<li><a href="#sec-35-3">35.3. 应用</a></li>
+<li><a href="#sec-35-4">35.4. 按</a></li>
+</ul>
+</li>
+<li><a href="#sec-36">36. 透镜#33 三角平衡的透镜</a>
+<ul>
+<li><a href="#sec-36-1">36.1. 透镜描述</a>
+<ul>
+<li><a href="#sec-36-1-1">36.1.1. 安稳地低收益地玩</a></li>
+<li><a href="#sec-36-1-2">36.1.2. 冒险，高收益地玩</a></li>
+</ul>
+</li>
+<li><a href="#sec-36-2">36.2. 扩展描述</a></li>
+<li><a href="#sec-36-3">36.3. 应用</a></li>
+</ul>
+</li>
+<li><a href="#sec-37">37. 透镜#36  竞争的透镜</a>
+<ul>
+<li><a href="#sec-37-1">37.1. 透镜描述</a>
+<ul>
+<li><a href="#sec-37-1-1">37.1.1. 我的游戏对玩家技能给予了一种公平的衡量吗？</a></li>
+<li><a href="#sec-37-1-2">37.1.2. 玩家想在我的游戏中获胜吗？为什么？</a></li>
+<li><a href="#sec-37-1-3">37.1.3. 赢取这个游戏是人们骄傲的事情吗？为什么？</a></li>
+<li><a href="#sec-37-1-4">37.1.4. 新手玩家有意在我的游戏中竞争吗？</a></li>
+<li><a href="#sec-37-1-5">37.1.5. 老手玩家有意在我的游戏中竞争吗？</a></li>
+<li><a href="#sec-37-1-6">37.1.6. 老手玩家通常肯定打败新手玩家吗？</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#sec-38">38. 透镜#39  时间的透镜</a>
+<ul>
+<li><a href="#sec-38-1">38.1. 是什么决定了我游戏行为的时间长短？</a></li>
+<li><a href="#sec-38-2">38.2. 我的玩家是否因为玩的时间结束太早而不爽？</a></li>
+<li><a href="#sec-38-3">38.3. 我的玩家是否因为游戏时间太长而感到厌烦？</a></li>
+<li><a href="#sec-38-4">38.4. 给游戏增加一个时间限制是很刺激的！我的游戏能否这样？</a></li>
+<li><a href="#sec-38-5">38.5. 一个混合型时间设定能提高我的游戏吗？</a></li>
+</ul>
+</li>
+<li><a href="#sec-39">39. 透镜40  奖励的透镜</a>
+<ul>
+<li><a href="#sec-39-1">39.1. 奖励的类型：</a>
+<ul>
+<li><a href="#sec-39-1-1">39.1.1. 称赞</a></li>
+<li><a href="#sec-39-1-2">39.1.2. 分数</a></li>
+<li><a href="#sec-39-1-3">39.1.3. 延长游戏</a></li>
+<li><a href="#sec-39-1-4">39.1.4. 一种门票</a></li>
+<li><a href="#sec-39-1-5">39.1.5. 壮观场面</a></li>
+<li><a href="#sec-39-1-6">39.1.6. 表现机会</a></li>
+<li><a href="#sec-39-1-7">39.1.7. 力量</a></li>
+<li><a href="#sec-39-1-8">39.1.8. 资源</a></li>
+<li><a href="#sec-39-1-9">39.1.9. 完成游戏</a></li>
+</ul>
+</li>
+<li><a href="#sec-39-2">39.2. 给奖励的技巧</a>
+<ul>
+<li><a href="#sec-39-2-1">39.2.1. 给予多种奖励，组合起来（不光是静态组合-&#x2014;同时给两种以上奖励，而且有动态组合&#x2014;某种奖励积累到一定的程度，再给另一种奖励）</a></li>
+<li><a href="#sec-39-2-2">39.2.2. 让奖励多变，而不是固定不变。</a></li>
+</ul>
+</li>
+<li><a href="#sec-39-3">39.3. 透镜描述</a>
+<ul>
+<li><a href="#sec-39-3-1">39.3.1. 我的游戏现在给出的是哪些奖励？它还能给出别的奖励吗？</a></li>
+<li><a href="#sec-39-3-2">39.3.2. 当玩家在游戏里得到奖励的时候，他们感到兴奋吗？还是感到厌烦呢？为什么会这样？</a></li>
+<li><a href="#sec-39-3-3">39.3.3. 给玩家不能理解的奖励，等同于不给玩家奖励。我的游戏玩家，都能理解他们得到的奖励吗？</a></li>
+<li><a href="#sec-39-3-4">39.3.4. 我游戏中的奖励给得太有规律了吗？它们能以更多变的方式给予吗？</a></li>
+<li><a href="#sec-39-3-5">39.3.5. 奖励之间是如何相互关联的？有方法能让它们更好地关联起来吗？</a></li>
+<li><a href="#sec-39-3-6">39.3.6. 我的奖励体系是如何建立起来的？是太快还是太慢还是刚刚好呢？</a></li>
+</ul>
+</li>
+<li><a href="#sec-39-4">39.4. 扩展描述</a></li>
+<li><a href="#sec-39-5">39.5. 实际例子</a>
+<ul>
+<li><a href="#sec-39-5-1">39.5.1. 快速找东西？给你奖励</a></li>
+<li><a href="#sec-39-5-2">39.5.2. 新主题之开启</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#sec-40">40. 透镜41  处罚的透镜</a>
+<ul>
+<li><a href="#sec-40-1">40.1. 我游戏中，什么是处罚？</a></li>
+<li><a href="#sec-40-2">40.2. 我为什么要处罚玩家？目的是什么？</a></li>
+<li><a href="#sec-40-3">40.3. 我的处罚对于玩家公平吗？为什么？</a></li>
+<li><a href="#sec-40-4">40.4. 是否有一种办法，能把处罚变成奖励，然后获得同样、甚至更好的效果？</a></li>
+<li><a href="#sec-40-5">40.5. 我的强处罚是否已经与游戏中强奖励平衡了？</a></li>
+</ul>
+</li>
+<li><a href="#sec-41">41. 透镜42  简单/复杂的透镜</a>
+<ul>
+<li><a href="#sec-41-1">41.1. 复杂的类型：</a>
+<ul>
+<li><a href="#sec-41-1-1">41.1.1. 天生复杂度</a></li>
+<li><a href="#sec-41-1-2">41.1.2. 自发复杂度</a></li>
+</ul>
+</li>
+<li><a href="#sec-41-2">41.2. 透镜描述</a>
+<ul>
+<li><a href="#sec-41-2-1">41.2.1. 我游戏中，有哪些元素是具有天生复杂程度的？</a></li>
+<li><a href="#sec-41-2-2">41.2.2. 这些天生复杂度有途径能转变成自发复杂度吗？</a></li>
+<li><a href="#sec-41-2-3">41.2.3. 在游戏中，有产生自发复杂度吗？如果没有，为什么不能产生呢？</a></li>
+<li><a href="#sec-41-2-4">41.2.4. 我游戏中哪些元素太过简单了？</a></li>
+</ul>
+</li>
+<li><a href="#sec-41-3">41.3. 扩展描述</a></li>
+<li><a href="#sec-41-4">41.4. 实际例子</a></li>
+<li><a href="#sec-41-5">41.5. 我要批注</a>
+<ul>
+<li><a href="#sec-41-5-1">41.5.1. 围棋</a></li>
+<li><a href="#sec-41-5-2">41.5.2. 找你妹</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#sec-42">42. Lens #43: The Lens of Elegance</a>
+<ul>
+<li><a href="#sec-42-1">42.1. 描述</a>
+<ul>
+<li><a href="#sec-42-1-1">42.1.1. What are the purposes of each element? Count these up to give the element an “elegance rating.”</a></li>
+<li><a href="#sec-42-1-2">42.1.2. For elements with only one or two purposes, can some of these be combined into each other, or removed altogether?</a></li>
+<li><a href="#sec-42-1-3">42.1.3. For elements with several purpose is it possible for them to take on even more?</a></li>
+</ul>
+</li>
+<li><a href="#sec-42-2">42.2. 应用</a></li>
+</ul>
+</li>
+<li><a href="#sec-43">43. 透镜#44 特色的透镜</a>
+<ul>
+<li><a href="#sec-43-1">43.1. 描述</a></li>
+<li><a href="#sec-43-2">43.2. 扩展</a></li>
+</ul>
+</li>
+<li><a href="#sec-44">44. 透镜#49 进展可见的透镜</a>
+<ul>
+<li><a href="#sec-44-1">44.1. 透镜描述</a></li>
+<li><a href="#sec-44-2">44.2. 扩展描述</a></li>
+<li><a href="#sec-44-3">44.3. 应用</a>
+<ul>
+<li><a href="#sec-44-3-1">44.3.1. 玩家打副本，进展可见。</a></li>
+<li><a href="#sec-44-3-2">44.3.2. 科举考试</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#sec-45">45. 透镜57 反馈的透镜</a>
+<ul>
+<li><a href="#sec-45-1">45.1. 透镜描述</a></li>
+<li><a href="#sec-45-2">45.2. 扩展描述</a></li>
+<li><a href="#sec-45-3">45.3. 应用</a></li>
+</ul>
+</li>
+<li><a href="#sec-46">46. 透镜58 多汁的透镜</a>
+<ul>
+<li><a href="#sec-46-1">46.1. 透镜描述</a></li>
+<li><a href="#sec-46-2">46.2. 应用</a></li>
+</ul>
+</li>
+<li><a href="#sec-47">47. 透镜59 渠道和维度的透镜</a>
+<ul>
+<li><a href="#sec-47-1">47.1. 透镜描述</a></li>
+<li><a href="#sec-47-2">47.2. 扩展描述</a></li>
+<li><a href="#sec-47-3">47.3. 应用</a></li>
+</ul>
+</li>
+<li><a href="#sec-48">48. 透镜61 兴趣曲线的透镜</a>
+<ul>
+<li><a href="#sec-48-1">48.1. 透镜描述</a>
+<ul>
+<li><a href="#sec-48-1-1">48.1.1. 假如我对我的体验绘制一条兴趣曲线，那它大概是什么样的形状的？</a></li>
+<li><a href="#sec-48-1-2">48.1.2. 它会有一处勾人的地方吗？</a></li>
+<li><a href="#sec-48-1-3">48.1.3. 他有着兴趣的逐步提升，且具备周期性的休息中断吗？</a></li>
+<li><a href="#sec-48-1-4">48.1.4. 体验里，有一个比任何事情都有趣的大结局吗？</a></li>
+<li><a href="#sec-48-1-5">48.1.5. 什么样的调整，能让我拥有一条更棒的兴趣曲线吗？</a></li>
+<li><a href="#sec-48-1-6">48.1.6. 在我的兴趣曲线中有分形结构吗？它应该具备吗？</a></li>
+<li><a href="#sec-48-1-7">48.1.7. 我直觉觉察到的兴趣曲线，和观察玩家所了解到的兴趣曲线一致程度如何？如果让玩家来绘制兴趣曲线，是怎么样的呢？</a></li>
+</ul>
+</li>
+<li><a href="#sec-48-2">48.2. 扩展描述</a></li>
+<li><a href="#sec-48-3">48.3. 应用</a></li>
+</ul>
+</li>
+<li><a href="#sec-49">49. 透镜63 美好事物的透镜</a>
+<ul>
+<li><a href="#sec-49-1">49.1. 透镜描述</a>
+<ul>
+<li><a href="#sec-49-1-1">49.1.1. 哪些元素组成了我的游戏？如何能让每种元素变得更美好？</a></li>
+<li><a href="#sec-49-1-2">49.1.2. 有些事物本身并不美好，但组合起来就变得美好了。我的游戏中各种元素能够通过组合变得如诗般美好？</a></li>
+<li><a href="#sec-49-1-3">49.1.3. 在我的游戏背景下，美好意味着什么？</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#sec-50">50. 透镜  66  障碍的透镜  &lt;&#x2013;&#x2014;&gt;透镜25  目标的透镜</a>
+<ul>
+<li><a href="#sec-50-1">50.1. 透镜描述</a></li>
+<li><a href="#sec-50-2">50.2. 扩展描述</a></li>
+<li><a href="#sec-50-3">50.3. 应用</a></li>
+<li><a href="#sec-50-4">50.4. 新观察  2013年05月20日 12:00:05</a></li>
+</ul>
+</li>
+<li><a href="#sec-51">51. 故事语法:英雄历程(Hero’s Journey)</a>
+<ul>
+<li><a href="#sec-51-1">51.1. 黑客帝国的剧情</a></li>
+</ul>
+</li>
+<li><a href="#sec-52">52. Lens #68: The Lens of the Hero’s Journey</a></li>
+<li><a href="#sec-53">53. 透镜#72  间接控制的透镜</a>
+<ul>
+<li><a href="#sec-53-1">53.1. 间接控制手段一：限制</a></li>
+<li><a href="#sec-53-2">53.2. 间接控制手段二：目标</a></li>
+<li><a href="#sec-53-3">53.3. 间接控制手段三：界面</a></li>
+<li><a href="#sec-53-4">53.4. 间接控制手段四：视觉设计</a></li>
+<li><a href="#sec-53-5">53.5. 间接控制手段五：角色</a></li>
+<li><a href="#sec-53-6">53.6. 间接控制手段六：音乐</a></li>
+<li><a href="#sec-53-7">53.7. 提问</a>
+<ul>
+<li><a href="#sec-53-7-1">53.7.1. 理想来说，我想让玩家做什么事情？</a></li>
+<li><a href="#sec-53-7-2">53.7.2. 我能设定各种限制来让玩家做这些事情吗？</a></li>
+<li><a href="#sec-53-7-3">53.7.3. 我能设定各种目标来让玩家做这些事情吗？</a></li>
+<li><a href="#sec-53-7-4">53.7.4. 我能设定界面来让玩家做这些事情吗？</a></li>
+<li><a href="#sec-53-7-5">53.7.5. 我能用视觉设计来让玩家做这些事情吗？</a></li>
+<li><a href="#sec-53-7-6">53.7.6. 我能用角色来让玩家做这些事情吗？</a></li>
+<li><a href="#sec-53-7-7">53.7.7. 我能用音乐（音效）来让玩家做这些事情吗？</a></li>
+<li><a href="#sec-53-7-8">53.7.8. 还有什么方法，我能用来控制玩家，但又没有侵害玩家的自由感？</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#sec-54">54. 透镜#73  合谋的透镜</a>
+<ul>
+<li><a href="#sec-54-1">54.1. 透镜描述</a></li>
+</ul>
+</li>
+<li><a href="#sec-55">55. 透镜#75 玩家的化身透镜</a>
+<ul>
+<li><a href="#sec-55-1">55.1. 游戏中的化身是一种吸引玩家的理想人型吗？</a></li>
+<li><a href="#sec-55-2">55.2. 游戏中的化身有着能让玩家投射到角色上的图形抽象化的特征吗？</a></li>
+<li><a href="#sec-55-3">55.3. 实际经验</a></li>
+</ul>
+</li>
+<li><a href="#sec-56">56. 透镜77 角色性格特征的透镜</a>
+<ul>
+<li><a href="#sec-56-1">56.1. 哪些性格特征界定了我的角色？</a></li>
+<li><a href="#sec-56-2">56.2. 这些性格特征如何在角色的言语、行为和外观上表露出来？</a></li>
+<li><a href="#sec-56-3">56.3. 《饥荒》</a></li>
+</ul>
+</li>
+<li><a href="#sec-57">57. 透镜#82 内在矛盾的透镜</a>
+<ul>
+<li><a href="#sec-57-1">57.1. 透镜描述</a>
+<ul>
+<li><a href="#sec-57-1-1">57.1.1. 我的游戏的目的是什么？</a></li>
+<li><a href="#sec-57-1-2">57.1.2. 我游戏中的每个子系统的目的是什么？</a></li>
+<li><a href="#sec-57-1-3">57.1.3. 在我游戏中，有什么东西是从根本上抵触这些目的的呢？</a></li>
+<li><a href="#sec-57-1-4">57.1.4. 倘若这样，如何才能改变这种情况呢？</a></li>
+</ul>
+</li>
+<li><a href="#sec-57-2">57.2. 扩展描述</a></li>
+<li><a href="#sec-57-3">57.3. 应用</a></li>
+<li><a href="#sec-57-4">57.4. 设计招式</a></li>
+</ul>
+</li>
+<li><a href="#sec-58">58. 透镜#83 道之生动15特征的透镜</a>
+<ul>
+<li><a href="#sec-58-1">58.1. 层次结构</a></li>
+<li><a href="#sec-58-2">58.2. 强大的中心</a></li>
+<li><a href="#sec-58-3">58.3. 边界</a></li>
+<li><a href="#sec-58-4">58.4. 交替性重复</a></li>
+<li><a href="#sec-58-5">58.5. 正交空间</a></li>
+<li><a href="#sec-58-6">58.6. 好的形状</a></li>
+<li><a href="#sec-58-7">58.7. 局部对称</a></li>
+<li><a href="#sec-58-8">58.8. 深度互锁与暧昧</a></li>
+<li><a href="#sec-58-9">58.9. 对比</a></li>
+<li><a href="#sec-58-10">58.10. 梯度</a></li>
+<li><a href="#sec-58-11">58.11. 瑕疵</a></li>
+<li><a href="#sec-58-12">58.12. 回音</a></li>
+<li><a href="#sec-58-13">58.13. 空洞</a></li>
+<li><a href="#sec-58-14">58.14. 简洁与内在平静</a></li>
+<li><a href="#sec-58-15">58.15. 有机融合（非独立性）</a></li>
+<li><a href="#sec-58-16">58.16. 道之物化</a></li>
+</ul>
+</li>
+<li><a href="#sec-59">59. 实战</a>
+<ul>
+<li><a href="#sec-59-1">59.1. 浮生历程的设计。</a>
+<ul>
+<li><a href="#sec-59-1-1">59.1.1. 进展可见透镜：玩家的游戏进展是可见的。</a></li>
+<li><a href="#sec-59-1-2">59.1.2. 好奇心透镜：玩家会好奇，下一个城市flash是什么？</a></li>
+</ul>
+</li>
+<li><a href="#sec-59-2">59.2. 采集场的设计</a>
+<ul>
+<li><a href="#sec-59-2-1">59.2.1. 有意义的选择的透镜。</a></li>
+</ul>
+</li>
+<li><a href="#sec-59-3">59.3. 太学设计</a>
+<ul>
+<li><a href="#sec-59-3-1">59.3.1. 本质体验的透镜： 这种体验是玩家可接受的</a></li>
+<li><a href="#sec-59-3-2">59.3.2. 玩家的透镜：我们游戏的玩家不愿意理解费解的东西</a></li>
+<li><a href="#sec-59-3-3">59.3.3. 自发性的透镜之 “5. 会改变约束条件的副作用效果。</a></li>
+</ul>
+</li>
+<li><a href="#sec-59-4">59.4. 《绝对领域》的改进</a>
+<ul>
+<li><a href="#sec-59-4-1">59.4.1. 更美的开场画面</a></li>
+<li><a href="#sec-59-4-2">59.4.2. 增加前十分钟场景数量，并使场景：1.更美更细腻 2. 场景之间有显著差异</a></li>
+<li><a href="#sec-59-4-3">59.4.3. 简化剧情，剧情人物都改为目标玩家熟悉的日本动漫人物，编一个让玩家救公主的烂俗故事</a></li>
+<li><a href="#sec-59-4-4">59.4.4. 在简化剧情同时，给予玩家可以理解的浅显的目标</a></li>
+<li><a href="#sec-59-4-5">59.4.5. 让玩家在前十分钟内，形象由猥琐变得英俊帅气</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#sec-60">60. 基于混搭的头脑风暴技术</a></li>
+<li><a href="#sec-61">61. 从bafang学到的游戏设计思想</a></li>
+<li><a href="#sec-62">62. 作者Jesse的补充</a>
+<ul>
+<li><a href="#sec-62-1">62.1. 1. 故事发展中“奇幻”的重要性——“奇幻”被证明远比故事本身更重要。</a></li>
+<li><a href="#sec-62-2">62.2. 2. 大脑中寻找快乐和避免痛苦的系统是分离的。</a></li>
+<li><a href="#sec-62-3">62.3. 3. 自决理论。</a></li>
+<li><a href="#sec-62-4">62.4. 移动游戏的特殊</a></li>
+<li><a href="#sec-62-5">62.5. 功夫在诗外，不断尝试，不断创新</a></li>
+</ul>
+</li>
+<li><a href="#sec-63">63. 透镜101：正能量的透镜</a></li>
+<li><a href="#sec-64">64. 透镜102：得到失去的透镜</a></li>
+<li><a href="#sec-65">65. 透镜103：尺寸的透镜</a>
+<ul>
+<li><a href="#sec-65-1">65.1. 最优尺寸</a>
+<ul>
+<li><a href="#sec-65-1-1">65.1.1. 来源：</a></li>
+</ul>
+</li>
+<li><a href="#sec-65-2">65.2. 魔法尺寸</a></li>
+<li><a href="#sec-65-3">65.3. 我们游戏的各种尺寸，是最优尺寸吗？</a></li>
+<li><a href="#sec-65-4">65.4. 我们游戏的某个object，需要用魔法尺寸吗？</a></li>
+</ul>
+</li>
+<li><a href="#sec-66">66. 透镜104： 凯尔文勋爵的透镜</a>
+<ul>
+<li><a href="#sec-66-1">66.1. 实例：</a>
+<ul>
+<li><a href="#sec-66-1-1">66.1.1. 以开始界面的设置按钮为例：</a></li>
+</ul>
+</li>
+<li><a href="#sec-66-2">66.2. 《找你妹2014》物件大小</a></li>
+</ul>
+</li>
+<li><a href="#sec-67">67. 宫本茂言论</a>
+<ul>
+<li><a href="#sec-67-1">67.1. 把游戏以外的经验带到游戏制作中去。</a></li>
+<li><a href="#sec-67-2">67.2. 很多事情人们在生活中习以为常，但如果能换一个角度去观察他们的话，你就可以从中找到灵感的闪光。</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<p>
+《游戏设计艺术》笔记
+</p>
+
+<p>
+读The art of game design，随手记笔记，还对比参与制作的《北京浮生记》、《大明浮生记》、《找你妹2014》和其他项目的一些设定，进行了反思。
+</p>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> version history</h2>
+<div class="outline-text-2" id="text-1">
+</div><div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> V1.1  2014年11月28日 11:47:01</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+补充了透镜63：美好事务的透镜。
+补充了透镜75：玩家化身的透镜。
+补充了实战：改《绝对领域》的几个思路和做法。
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-1-2" class="outline-3">
+<h3 id="sec-1-2"><span class="section-number-3">1.2</span> V1.010   2014年07月09日 13:11:50</h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+添加了"时间的透镜"和"处罚的透镜"。
+</p>
+<ul class="org-ul">
+<li></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-sec-1-3" class="outline-3">
+<h3 id="sec-1-3"><span class="section-number-3">1.3</span> V1.009   2014年04月08日 13:49:56</h3>
+<div class="outline-text-3" id="text-1-3">
+<p>
+补充了一些细节，如本质体验，心流。
+修改了若干字。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-1-4" class="outline-3">
+<h3 id="sec-1-4"><span class="section-number-3">1.4</span> V1.008  2013年12月23日 19:44:05</h3>
+<div class="outline-text-3" id="text-1-4">
+<ol class="org-ol">
+<li>补充了104透镜：凯尔文勋爵的透镜
+</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-sec-1-5" class="outline-3">
+<h3 id="sec-1-5"><span class="section-number-3">1.5</span> V1.007  2013年12月19日 20:13:53</h3>
+<div class="outline-text-3" id="text-1-5">
+<ol class="org-ol">
+<li>补充了103透镜：魔法尺寸的透镜。
+</li>
+<li>补充了体验第一的实例。
+</li>
+</ol>
+</div>
+</div>
+<div id="outline-container-sec-1-6" class="outline-3">
+<h3 id="sec-1-6"><span class="section-number-3">1.6</span> V1.006  2013年12月14日 15:55:10</h3>
+<div class="outline-text-3" id="text-1-6">
+<p>
+1, 补充了间接控制、合谋的透镜。
+2, 重点阐述了1.5的动态体验三曲线（难度，认知和兴趣），并分析实际情况。
+3, 体验改进的累积性
+</p>
+</div>
+</div>
+<div id="outline-container-sec-1-7" class="outline-3">
+<h3 id="sec-1-7"><span class="section-number-3">1.7</span> V1.005  2013年12月05日 17:56:09</h3>
+<div class="outline-text-3" id="text-1-7">
+<p>
+补充了奖励透镜的实际设计例子
+补充了透镜102：“得到与失去”的透镜。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-1-8" class="outline-3">
+<h3 id="sec-1-8"><span class="section-number-3">1.8</span> V1.004  2013年11月08日 16:43:27</h3>
+<div class="outline-text-3" id="text-1-8">
+<p>
+补充了原作者的访谈，其内容是对书本的有益补充。
+补充了透镜101
+补充了skinner box
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-1-9" class="outline-3">
+<h3 id="sec-1-9"><span class="section-number-3">1.9</span> V1.003  2013年08月14日 12:37:52</h3>
+<div class="outline-text-3" id="text-1-9">
+<p>
+补充了特色的透镜。
+对透镜0进行了整理，条理更清楚。
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-1-10" class="outline-3">
+<h3 id="sec-1-10"><span class="section-number-3">1.10</span> V1.002  2013年07月31日 13:48:24</h3>
+<div class="outline-text-3" id="text-1-10">
+<p>
+补充了多汁透镜，bafang秘籍。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-1-11" class="outline-3">
+<h3 id="sec-1-11"><span class="section-number-3">1.11</span> v1.001  2013年05月20日 12:28:16</h3>
+<div class="outline-text-3" id="text-1-11">
+<p>
+一些细节改进。尤其是对某些奇葩手游的观察。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-1-12" class="outline-3">
+<h3 id="sec-1-12"><span class="section-number-3">1.12</span> 原始版本 2013年05月18日 12:51:36</h3>
+<div class="outline-text-3" id="text-1-12">
+<p>
+比较完善了。
+</p>
+
+<p>
+好几个透镜缺。
+</p>
+
+<p>
+格式不统一。
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> 前言</h2>
+<div class="outline-text-2" id="text-2">
+</div><div id="outline-container-sec-2-1" class="outline-3">
+<h3 id="sec-2-1"><span class="section-number-3">2.1</span> 什么是游戏设计？</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+游戏设计，就是做出一系列决策，来决定一个游戏该是什么样子。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-2-2" class="outline-3">
+<h3 id="sec-2-2"><span class="section-number-3">2.2</span> 本书试图诱导读者，从各种不同的角度来思考、审查游戏。</h3>
+<div class="outline-text-3" id="text-2-2">
+<p>
+这些角度被叫做透镜。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-2-3" class="outline-3">
+<h3 id="sec-2-3"><span class="section-number-3">2.3</span> 聚焦最基础。</h3>
+<div class="outline-text-3" id="text-2-3">
+<p>
+现在的游戏眼花缭乱，我们要聚焦最本质、最基础的。分析经典旧游戏。游戏设计基础，乃在于人类心理学。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-2-4" class="outline-3">
+<h3 id="sec-2-4"><span class="section-number-3">2.4</span> 功夫在诗外(Talk to stangers):</h3>
+<div class="outline-text-3" id="text-2-4">
+<p>
+万物一理，All knowledge is related。设计好游戏，就得走进生活，尝试所有事情。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-2-5" class="outline-3">
+<h3 id="sec-2-5"><span class="section-number-3">2.5</span> 真正的设计，在于动手实践。</h3>
+<div class="outline-text-3" id="text-2-5">
+<p>
+本书只能是一个开始。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-2-6" class="outline-3">
+<h3 id="sec-2-6"><span class="section-number-3">2.6</span> 构建你的设计地图(Map)</h3>
+<div class="outline-text-3" id="text-2-6">
+<p>
+要在你的脑子中，构建一个关于游戏设计的地图。本书末尾提供了一个。
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> 透镜-1:  Skinner Box</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+游戏是对人的一种操纵。Skinner Box是一种描述这种操纵的模型。
+</p>
+</div>
+
+<div id="outline-container-sec-3-1" class="outline-3">
+<h3 id="sec-3-1"><span class="section-number-3">3.1</span> <span class="todo TODO">TODO</span> SkinnerBox的详细描述以及在游戏中的应用。</h3>
+</div>
+</div>
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> 透镜0: 突破想像范围的透镜</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+此透镜非官方透镜，而是通过游戏设计实践悟出的。
+</p>
+
+<p>
+玩家天然喜新厌旧，总是在游戏中寻求新的体验。无论多么优秀的游戏，都会随着时间的流逝失去魅力（或边际乐趣）。
+</p>
+
+<p>
+对于某一个题材游戏、某一个主题游戏，人们会预先存在一个想像范围A，它是由常识、历史因袭、当时同类产品形成的行业惯例等决定的。
+</p>
+
+<p>
+  如果游戏产品P落于这个A范围之内，则无法没有给人们边际乐趣和边际惊喜（边际是指“额外增加的”，参见《微观经济学》），就会被认为是一个平庸的产品，将被湮灭在
+同类产品之中，属于同质化产品，缺乏传播（无论是媒体传播还是受众口口相传）价值。
+</p>
+
+<p>
+  因此，产品要胜出，它必须突破这种想像范围。游戏的机制（玩法）、美术、故事、技术，综合体验，甚至缺陷变态设定等，只要有一个或一个以上突围，则产品被认为是
+“有特色”的，就会给受众额外的乐趣、注意力和惊喜感，甚至引起口碑传播和媒体注意。案例：日本alpca, tengami, 西方的sworcery, Clumsy Ninja, 纪念碑谷，都是
+超过了当时玩家群想象范围的作品，引起了轰动和口碑传播。 
+</p>
+</div>
+
+<div id="outline-container-sec-4-1" class="outline-3">
+<h3 id="sec-4-1"><span class="section-number-3">4.1</span> [更多论据]</h3>
+<div class="outline-text-3" id="text-4-1">
+<p>
+中里伸也： 第一个原则，我们总要考虑给玩家提供不同的惊喜。
+我在这里与其给大家看，不如给大家演示一下。（观看视频）这是《魂斗罗3》的最后一个BOSS，下面是 中BOSS，先出现的直升飞机，发了导弹，刚才从横向转为3D。在这里，直升飞机会下来变成一个机器人，会有一个大的乌龟。大家看到这儿，一定会觉得它是 最大的BOSS了吧？其实在经过了一定的打之后，这个才是最后的BOSS。
+</p>
+
+<p>
+就像这样，你不能跟着玩家的想法去走，一定要超越玩家的想象。如果有一个想法成功的话，下次再用这样的想法，恐怕玩家不会再买账了。每次想出来唯一的、不同的想法，这个其实是游戏制作人员的一个最该做的事情。
+</p>
+
+<p>
+批注：金庸写小说，也是同样的思路和做法，他找几个读者聊天，让他们想象小说的下一阶段是怎么样的，然后金庸一定写出和这些读者想象不一样的东西，给读者最大惊喜感。
+一定要超越玩家想象才行。
+</p>
+</div>
+
+<div id="outline-container-sec-4-1-1" class="outline-4">
+<h4 id="sec-4-1-1"><span class="section-number-4">4.1.1</span> 市场营销</h4>
+<div class="outline-text-4" id="text-4-1-1">
+<p>
+市场营销手段，就是不断求新，同样手段不能再用，否则受众不认可。
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-4-2" class="outline-3">
+<h3 id="sec-4-2"><span class="section-number-3">4.2</span> 问自己下面问题：</h3>
+<div class="outline-text-3" id="text-4-2">
+<ol class="org-ol">
+<li>我的游戏，市场上有同类产品吗？有同题材产品吗？如果有，那么人们对这类产品的想像范围是什么？
+</li>
+
+<li>我应该如何突破想像范围，而使产品有特色？
+</li>
+
+<li>具体来说，游戏的机制（玩法）、美术、故事、技术，综合体验，缺陷变态设定等方面，我的产品有哪个超越了想像范围？
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> 透镜1：本质体验的透镜？</h2>
+<div class="outline-text-2" id="text-5">
+</div><div id="outline-container-sec-5-1" class="outline-3">
+<h3 id="sec-5-1"><span class="section-number-3">5.1</span> 透镜描述</h3>
+<div class="outline-text-3" id="text-5-1">
+<p>
+停止思考你的游戏，开始思考玩家的体验。
+</p>
+</div>
+
+<div id="outline-container-sec-5-1-1" class="outline-4">
+<h4 id="sec-5-1-1"><span class="section-number-4">5.1.1</span> 我想让玩家获得什么样的体验呢？</h4>
+</div>
+<div id="outline-container-sec-5-1-2" class="outline-4">
+<h4 id="sec-5-1-2"><span class="section-number-4">5.1.2</span> 这种体验中最本质的是什么呢？</h4>
+<div class="outline-text-4" id="text-5-1-2">
+<p>
+《极品飞车》：飙车快感
+《糖果粉碎传奇》：糖果之甜与爽透手感
+《pictuireka!》:限时“寻找”东西。
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-5-1-3" class="outline-4">
+<h4 id="sec-5-1-3"><span class="section-number-4">5.1.3</span> 如何能让我的游戏捕捉到这种本质呢？</h4>
+<div class="outline-text-4" id="text-5-1-3">
+<p>
+你需要清楚地描述出你想要的本质体验，然后寻找各种办法尽可能地把这种本质逐步灌输到你的游戏中。
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-5-2" class="outline-3">
+<h3 id="sec-5-2"><span class="section-number-3">5.2</span> wii sports的例子</h3>
+<div class="outline-text-3" id="text-5-2">
+<p>
+抓住了“挥动遥控器是游戏中最独特的”，去掉了当初想的尽可能像真实的棒球那样的想法。
+</p>
+
+
+<p>
+我要批注  有时为了强调游戏的关键体验，可以去掉某些真实性和现实性。所谓"Keep fun, cut the rest",就是这个意思。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-5-3" class="outline-3">
+<h3 id="sec-5-3"><span class="section-number-3">5.3</span> 《找你妹》的例子</h3>
+<div class="outline-text-3" id="text-5-3">
+<p>
+给女性玩家提供你“找”的这种独特体验。外加简单，无市场竞品。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-5-4" class="outline-3">
+<h3 id="sec-5-4"><span class="section-number-3">5.4</span> Dungeon Crawl</h3>
+<div class="outline-text-3" id="text-5-4">
+<p>
+去掉了火炬，而且可以自动探索，就是抓住了地牢冒险战斗的本质体验，灭掉了多余的。
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-5-5" class="outline-3">
+<h3 id="sec-5-5"><span class="section-number-3">5.5</span> 扩展描述</h3>
+<div class="outline-text-3" id="text-5-5">
+</div><div id="outline-container-sec-5-5-1" class="outline-4">
+<h4 id="sec-5-5-1"><span class="section-number-4">5.5.1</span> 体验的构成：是一不是二，是整体不是局部</h4>
+<div class="outline-text-4" id="text-5-5-1">
+<p>
+我要批注  体验是由界面，声音，美术，数值等综合产生的。
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-5-5-2" class="outline-4">
+<h4 id="sec-5-5-2"><span class="section-number-4">5.5.2</span> 体验是游戏设计的指路灯，北斗星，大海航行的舵手，它告诉整个团队努力的方向，引导游戏的整个设计和改进过程</h4>
+<div class="outline-text-4" id="text-5-5-2">
+<p>
+很多设计师都没有用上“本质体验的透镜”，在黑暗中摸索。
+很多设计师都没有用上“本质体验的透镜”，在游戏中掺杂其他体验，偏离了本质。
+</p>
+
+<p>
+游戏设计师最终目标是传达一种体验，当你对你理想中的体验及其本质元素有着清晰的了解时，  你的设计就有了某种可以追求的目标了。
+</p>
+
+<p>
+假设没有这种目标，你只能是不断在黑暗中游荡而已。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-5-5-3" class="outline-4">
+<h4 id="sec-5-5-3"><span class="section-number-4">5.5.3</span> 游戏品质的差异在体验</h4>
+<div class="outline-text-4" id="text-5-5-3">
+<p>
+我要批注  同样的游戏机制和数值，由于包装不同，体验完全不同，一个可以被认为是好游戏，另一个可以是垃圾。
+</p>
+
+<p>
+我要批注  体验第一，游戏第二。
+</p>
+
+<p>
+我要批注  体验胜过游戏。游戏不是体验，游戏只是为了达到体验的手段之一。
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-5-5-4" class="outline-4">
+<h4 id="sec-5-5-4"><span class="section-number-4">5.5.4</span> 体验的累积突变性</h4>
+<div class="outline-text-4" id="text-5-5-4">
+<p>
+案例： jinzhu说，对战平台改产品体验，改一点，没效果，再改一点，还没效果，后来这种改进累积起来突然突变了，玩家的次日留存达到了37%,最终版本居然达到了50%
+这说明：体验的改进，是一个厚积薄发的过程，需要通过积累逐步达到效果。很小的改进无效果不要紧，持续努力，积少成多，最终就突破了。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-5-5-5" class="outline-4">
+<h4 id="sec-5-5-5"><span class="section-number-4">5.5.5</span> 实例</h4>
+<div class="outline-text-4" id="text-5-5-5">
+<p>
+bafang反对《找你妹2014》的第一关只有1.5屏物件，因为：
+“感觉不对”
+</p>
+
+<p>
+启示：
+第一关只有1.5屏物件，虽然很容易了，但-&#x2014;这种设定改了原来产品在很多屏中找东西的感觉&#x2014;也就是体验。
+体验第一，其余第二。这不能只空谈，一定要落实到游戏设计上。
+</p>
+
+<p>
+jelly defense出现了塔防和手动捡金币两种操作，把塔防策略本质体验搞偏移分散了。
+游戏的设定，是否出现了对本质体验的偏差？比如试图搞两种以上的体验，不分主次？
+</p>
+</div>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-sec-6" class="outline-2">
+<h2 id="sec-6"><span class="section-number-2">6</span> 透镜1.5  动态体验的透镜</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+游戏从玩家开始体验之时，就隐含三条动态变化的曲线，贯彻全过程：
+</p>
+</div>
+<div id="outline-container-sec-6-1" class="outline-3">
+<h3 id="sec-6-1"><span class="section-number-3">6.1</span> 一、认知曲线</h3>
+<div class="outline-text-3" id="text-6-1">
+<p>
+开始一个新游戏后，玩家由对游戏设定（背景，人物，玩法，设定等）一点不知道，到
+知道一些，到完全理解和掌握的过程。这个过程需要在认知上接受
+游戏的设定。
+认知曲线陡峭的话，会导致玩家在前期流失。
+新手引导和各种提示是为了解决这个认知曲线问题的。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-6-2" class="outline-3">
+<h3 id="sec-6-2"><span class="section-number-3">6.2</span> 二、难度曲线</h3>
+<div class="outline-text-3" id="text-6-2">
+<p>
+玩家在玩游戏过程中，遇到的难度问题，可量化为一条难度曲线。
+难度曲线的设置很有讲究，太容易了，玩家觉得没有挑战性，就不玩了。太
+难了，一部分玩家就会流失。
+难之后要容易，容易之后要难。
+给玩家选择难易（而且收益也与难易相关），参见三角透镜。
+难度曲线贯彻游戏整个过程，需要仔细规划。
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-6-3" class="outline-3">
+<h3 id="sec-6-3"><span class="section-number-3">6.3</span> 三、兴趣曲线</h3>
+<div class="outline-text-3" id="text-6-3">
+<p>
+这个，本书有单独的兴趣曲线透镜。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-6-4" class="outline-3">
+<h3 id="sec-6-4"><span class="section-number-3">6.4</span> 应用：以体验三曲线来分析2013年页游的困境</h3>
+<div class="outline-text-3" id="text-6-4">
+<p>
+天朝的页游试图把认知曲线解决得更好，并大大降低游戏难度，好抓住玩家。具体表现是：
+前期指导事无巨细，玩家可无脑地点击，后来发展到游戏无需玩家点击即可自己玩，
+难度曲线的前端已经趴到x轴上不动了。
+这是发展的极致啊。
+</p>
+
+<p>
+但这种做法效果并不好。
+</p>
+<ol class="org-ol">
+<li>没有解决认知曲线的问题，因为玩家无脑点击，没有任何认知努力，所以没有学到什么东西，认知
+</li>
+</ol>
+<p>
+曲线的问题仍然存在。
+</p>
+<ol class="org-ol">
+<li>没有解决兴趣曲线的问题。由于天朝页游大部分是三国、修仙和武侠，游戏画面和玩法基本
+</li>
+</ol>
+<p>
+一样，高同质化，所以玩家见多识广，兴趣曲线总体上不来。
+</p>
+<ol class="org-ol">
+<li>难度曲线问题：一点难度都没有的游戏，玩家没有挑战感和存在感，也会失去兴趣。
+</li>
+</ol>
+
+<p>
+因此，即使某些页游做到了游戏前期可以自己玩，也无法有效地提升玩家对游戏的忠诚度和兴趣。
+页游，在激烈而无创新的竞争自己走偏了，而且越走越偏&#x2026;..
+</p>
+</div>
+</div>
+<div id="outline-container-sec-6-5" class="outline-3">
+<h3 id="sec-6-5"><span class="section-number-3">6.5</span> 应用：糖果的付费时机</h3>
+<div class="outline-text-3" id="text-6-5">
+<p>
+[引文开始]
+因此，做出一个决策、获得奖励，然后重复这些步骤，我们通过一些与此相似的镜头来考虑货币化的问题。
+你会在什么时候引入这些决策，又或者说在这种情况下，你会在什么时候引入货币化？再一次，
+你想要创造起情感依附，然后在正确的时间段中呈现这个货币化决策。
+在游戏中呈现得太早了相当于在回绝你的玩家，如果你将它体现得太晚，你或许就是在放弃获得收入的机会。
+一个精准时机的最佳案例可以在《糖果粉碎传奇》（Candy Crush Saga）中找到，在游戏的第十五关之后，
+玩家们将不得不开始考虑，要么支付0.99美元，要么邀请三位好友帮忙。
+如果游戏的货币化是在第七关呈现而不是在第十五关，这些玩家的情感依附是否还会一样呢？
+[引文结束]
+分析：
+其实这糖果的难度曲线非常明显，并以此诱导玩家付费。第十五关是水果消除，难度较大。
+第七关较为简单，玩家还没有完全被兴趣曲线吸引住，这时收费不合适。
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-7" class="outline-2">
+<h2 id="sec-7"><span class="section-number-2">7</span> 透镜2:惊喜感的透镜</h2>
+<div class="outline-text-2" id="text-7">
+</div><div id="outline-container-sec-7-1" class="outline-3">
+<h3 id="sec-7-1"><span class="section-number-3">7.1</span> 透镜描述</h3>
+<div class="outline-text-3" id="text-7-1">
+<p>
+惊喜感是如此的基础，使得我们会轻易地忽略它。利用这个透镜提醒你，在游戏中填入各种有趣的惊喜，问一下自己以下的问题。
+</p>
+</div>
+<div id="outline-container-sec-7-1-1" class="outline-4">
+<h4 id="sec-7-1-1"><span class="section-number-4">7.1.1</span> 玩家在玩我游戏时，我会用什么来让玩家感到惊喜呢？</h4>
+</div>
+<div id="outline-container-sec-7-1-2" class="outline-4">
+<h4 id="sec-7-1-2"><span class="section-number-4">7.1.2</span> 我游戏的故事有让人惊喜的元素吗？各种游戏规则呢？美术部分呢？技术部分呢？</h4>
+<div class="outline-text-4" id="text-7-1-2">
+<p>
+《大明浮生记》 美术部分的惊喜感能够一瞬间抓住玩家。
+</p>
+
+<p>
+故事是个老套故事。但老套故事容易让人理解。
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-7-1-3" class="outline-4">
+<h4 id="sec-7-1-3"><span class="section-number-4">7.1.3</span> 规则能让玩家相互制造惊喜吗？</h4>
+<div class="outline-text-4" id="text-7-1-3">
+<p>
+《大明浮生记》的相互通缉，制造了这种惊喜感，因为玩家入狱后，【基于规则】会有别的玩家捞他出来。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-7-1-4" class="outline-4">
+<h4 id="sec-7-1-4"><span class="section-number-4">7.1.4</span> 规则能让玩家自己制造惊喜吗？</h4>
+<div class="outline-text-4" id="text-7-1-4">
+<p>
+   惊喜感是所有娱乐方式中至关重要的一部分&#x2013;&#x2014;它是幽默、策略和问题解决的基础。我们大脑是铁定喜欢惊喜感的。
+在一次试验中，参加试验的人都会张开嘴去尝糖水和白开水，那些在两种水之间随机尝的人，比那些一直固定只品尝一种的人要感觉更快乐，即使他们品尝到的糖水的总量是一样的。
+</p>
+
+
+<p>
+抽奖是制造惊喜感的手段。
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-7-2" class="outline-3">
+<h3 id="sec-7-2"><span class="section-number-3">7.2</span> 扩展描述</h3>
+<div class="outline-text-3" id="text-7-2">
+<p>
+《大明》这个游戏，我会用什么来让玩家感到惊喜呢？
+</p>
+
+<p>
+风格上，轻松快乐,戏搞
+</p>
+
+<p>
+无所不在的幽默感
+</p>
+
+<p>
+独特的游戏界面让人眼前一亮，避免了同质化。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-7-3" class="outline-3">
+<h3 id="sec-7-3"><span class="section-number-3">7.3</span> 应用1</h3>
+<div class="outline-text-3" id="text-7-3">
+<p>
+《大明》的野怪中心，原先是若干无区别的野怪（等级稍微有差异的怪物，一律黑白颜色），玩家会觉得：
+1.打多了，无惊喜感导致的厌倦 
+2。无选择（或无明显区别的选择），
+3.没有三角平衡（见透镜33)
+</p>
+
+<p>
+改进： 
+</p>
+
+<p>
+每波怪物中，随机出现零个或一个BOSS怪物，它是彩色的（参见透镜59：界面维度增加了颜色），难度大，
+但是打了之后收益大。这样：
+</p>
+
+<ol class="org-ol">
+<li>有惊喜感
+</li>
+<li>玩家有了有意义的选择
+</li>
+<li>出现三角平衡（或打小怪得到平常收益，或打大怪得到大收益，但对玩家有风险）
+</li>
+</ol>
+
+<p>
+上述设定中，利用了好几个透镜。
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-7-4" class="outline-3">
+<h3 id="sec-7-4"><span class="section-number-3">7.4</span> 应用2</h3>
+<div class="outline-text-3" id="text-7-4">
+<p>
+《找你妹2014》，主题之间的差异是一个重点。
+玩家从一个主题进入到一个新的主题的时候，给予绚丽的界面效果显示新主题出现的新物件，并恭喜玩家，给予了玩家惊喜感。
+隐藏关卡开启，也给予了玩家惊喜感。
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-8" class="outline-2">
+<h2 id="sec-8"><span class="section-number-2">8</span> 透镜3: 乐趣的透镜</h2>
+<div class="outline-text-2" id="text-8">
+</div><div id="outline-container-sec-8-1" class="outline-3">
+<h3 id="sec-8-1"><span class="section-number-3">8.1</span> 透镜描述</h3>
+<div class="outline-text-3" id="text-8-1">
+<p>
+乐趣几乎在每个游戏中都是需要的。尽管有时乐趣经不起分析。为了让你的游戏的乐趣得到最大化，问一下自己这些问题。
+</p>
+</div>
+
+<div id="outline-container-sec-8-1-1" class="outline-4">
+<h4 id="sec-8-1-1"><span class="section-number-4">8.1.1</span> 我的游戏哪个部分有趣？为什么这么说？</h4>
+</div>
+<div id="outline-container-sec-8-1-2" class="outline-4">
+<h4 id="sec-8-1-2"><span class="section-number-4">8.1.2</span> 哪些部分需要变得更有趣？</h4>
+<div class="outline-text-4" id="text-8-1-2">
+<p>
+涂鸦墙
+通缉令&#x2014;玩家互动
+联盟地下室&#x2014;很搞
+杀怪的技能动画（理论上）
+</p>
+
+<p>
+*哪些部分需要变得更有趣？
+</p>
+
+<p>
+打工系统,它枯燥无聊，没什么特色
+科举考试
+打副本
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-9" class="outline-2">
+<h2 id="sec-9"><span class="section-number-2">9</span> 透镜4 好奇心的透镜</h2>
+<div class="outline-text-2" id="text-9">
+</div><div id="outline-container-sec-9-1" class="outline-3">
+<h3 id="sec-9-1"><span class="section-number-3">9.1</span> 透镜描述</h3>
+<div class="outline-text-3" id="text-9-1">
+</div><div id="outline-container-sec-9-1-1" class="outline-4">
+<h4 id="sec-9-1-1"><span class="section-number-4">9.1.1</span> 思考玩家真正的动机&#x2014;它不单单是游戏中设定的各种目标，还包括了玩家想要达到这些目标的原因。问以下问题：</h4>
+<div class="outline-text-4" id="text-9-1-1">
+</div><ol class="org-ol"><li>我的游戏，在玩家脑海中根植了哪些问题呢？<br/></li>
+<li>我做了哪些事情让玩家在意这些问题呢？<br/></li>
+<li>如何能让玩家产生更多的问题呢？<br/></li></ol>
+</div>
+</div>
+
+<div id="outline-container-sec-9-2" class="outline-3">
+<h3 id="sec-9-2"><span class="section-number-3">9.2</span> 扩展描述</h3>
+<div class="outline-text-3" id="text-9-2">
+<p>
+例如，一个迷宫类的游戏可能在每个关卡里都有限时的目标，玩家在不断地问这个问题：“我可以在30秒内找到迷宫的出口吗？”
+让玩家更在意这个问题的手法，可以在他们解决每个迷宫时有趣的动画上做文章，从而让玩家可能产生另外一个问题：“我很好奇下一段动画会是怎么样的。”
+</p>
+
+<p>
+我要批注：  
+《大明浮生记》的浮生历程，就是在他们解决每个城市进入的时候，动画上做文章，从而让玩家可能产生另外一个问题：“我很好奇下一个城市的动画会是怎么样的。”
+《《找你妹2014》》，玩家会在意下一关出什么新物品？获得新东西？
+&lt;糖果&gt;右上角有一个问号，打开出现“my name is Odus, pass level 50 to 
+unlock new dreamly content!", 这种做法就是激发玩家好奇心。
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-10" class="outline-2">
+<h2 id="sec-10"><span class="section-number-2">10</span> 透镜5  内生价值</h2>
+<div class="outline-text-2" id="text-10">
+</div><div id="outline-container-sec-10-1" class="outline-3">
+<h3 id="sec-10-1"><span class="section-number-3">10.1</span> 透镜描述</h3>
+<div class="outline-text-3" id="text-10-1">
+</div><div id="outline-container-sec-10-1-1" class="outline-4">
+<h4 id="sec-10-1-1"><span class="section-number-4">10.1.1</span> 在我的游戏中哪些东西是对玩家有价值的？</h4>
+<div class="outline-text-4" id="text-10-1-1">
+</div><ol class="org-ol"><li>等级、经验、战功、金币。<br/></li>
+<li>"混“的指标&#x2014;成就系统。<br/><div class="outline-text-5" id="text-10-1-1-2">
+<p>
+游戏的特别之处是”混“，而不是武功很强。
+成就的指标对玩家是有价值的。
+</p>
+</div>
+</li></ol>
+</div>
+<div id="outline-container-sec-10-1-2" class="outline-4">
+<h4 id="sec-10-1-2"><span class="section-number-4">10.1.2</span> 思考下，哪些东西没有表现出价值？</h4>
+<div class="outline-text-4" id="text-10-1-2">
+</div><ol class="org-ol"><li>玩家采集到的特产（对玩家有什么价值？）<br/><div class="outline-text-5" id="text-10-1-2-1">
+<p>
+在前期，成为金币来源之一。
+后期，成为名将喜好品。
+</p>
+
+<p>
+如果突然让某特产的系统收购价提高，将导致金币来源控制不住。设计存在问题。
+</p>
+</div>
+</li>
+<li>"混“的指标&#x2014;成就系统。<br/><div class="outline-text-5" id="text-10-1-2-2">
+<p>
+游戏的特别之处是”混“，而不是武功很强。
+成就的指标对玩家是有价值的。
+</p>
+</div>
+</li>
+
+<li>PK威望<br/><div class="outline-text-5" id="text-10-1-2-3">
+<p>
+PK威望小于1300才能招。
+大家不认可这个设定。
+</p>
+
+<p>
+招人的条件：
+PK威望高，加少数特产
+PK威望低，加多个特产
+都能让玩家耗时间。
+</p>
+</div>
+</li></ol>
+</div>
+<div id="outline-container-sec-10-1-3" class="outline-4">
+<h4 id="sec-10-1-3"><span class="section-number-4">10.1.3</span> 如何能让它们对玩家显得更有价值呢？</h4>
+<div class="outline-text-4" id="text-10-1-3">
+</div><ol class="org-ol"><li>成就系统分数越高，玩家在战斗中越厉害？或者越能用较少的钱成为VIP?<br/></li>
+<li>玩家的特产越多，就越?<br/></li>
+<li>玩家等级。技能。装备。能让玩家。。。。。<br/></li></ol>
+</div>
+<div id="outline-container-sec-10-1-4" class="outline-4">
+<h4 id="sec-10-1-4"><span class="section-number-4">10.1.4</span> 游戏中的价值与玩家的动机如何链接起来？</h4>
+<div class="outline-text-4" id="text-10-1-4">
+<p>
+玩家的动机是，放松？
+</p>
+
+<p>
+玩家的动机是，娱乐？
+</p>
+
+<p>
+玩家的动机是，搞笑？
+</p>
+
+<p>
+如何连接起来？
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-10-2" class="outline-3">
+<h3 id="sec-10-2"><span class="section-number-3">10.2</span> 扩展描述</h3>
+<div class="outline-text-3" id="text-10-2">
+<p>
+记住，游戏中物品的价值和各种分数能直接反映出玩家有多在意在你的游戏中获得成功。
+</p>
+
+<p>
+通过思考玩家真正在意什么，以及为什么在意这些，你通常能了解如何对游戏进行改良。
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-10-3" class="outline-3">
+<h3 id="sec-10-3"><span class="section-number-3">10.3</span> 实际例子</h3>
+<div class="outline-text-3" id="text-10-3">
+<p>
+Bubsy游戏中的纺线球：收集能得到更高分数，但玩家不在乎，也不收集。为什么呢？因为玩家的动机仅仅是完成关卡，高分对此无任何帮助，而且高分也无任何奖励。
+</p>
+
+<p>
+对比：刺猬索尼克2, 你收集戒指，收集到的戒指对玩家很重要，有很大的内生价值-&#x2014;因为戒指能保护你不受敌人攻击，每收集100个戒指，能额外得到一条命。
+</p>
+
+<p>
+《大明》的特产，现在也没有用处，无内生价值不强。
+</p>
+
+<p>
+《大明》的混世技能，现在也没有用处，无内生价值不强。
+</p>
+
+<p>
+《大明》的PK威望，现在也没有用处，无内生价值不强。
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-11" class="outline-2">
+<h2 id="sec-11"><span class="section-number-2">11</span> 透镜6  问题解决的透镜</h2>
+<div class="outline-text-2" id="text-11">
+<p>
+思考玩家要在你游戏中成功所必须解决的问题。
+</p>
+</div>
+<div id="outline-container-sec-11-1" class="outline-3">
+<h3 id="sec-11-1"><span class="section-number-3">11.1</span> 我的游戏让玩家去解决哪些问题？</h3>
+<div class="outline-text-3" id="text-11-1">
+<p>
+自身升级成长
+</p>
+
+<p>
+获得武器和技能
+</p>
+
+<p>
+强化武器和技能
+</p>
+
+<p>
+打副本通关，去更牛的城市
+</p>
+
+<p>
+然后才能打败怪物和别的玩家
+</p>
+</div>
+</div>
+<div id="outline-container-sec-11-2" class="outline-3">
+<h3 id="sec-11-2"><span class="section-number-3">11.2</span> 游戏中有些作为玩法中的一部分的隐藏问题需要解决吗？</h3>
+</div>
+
+<div id="outline-container-sec-11-3" class="outline-3">
+<h3 id="sec-11-3"><span class="section-number-3">11.3</span> 如何能让我的游戏产生各种新的问题，以此来让玩家继续回来玩？</h3>
+<div class="outline-text-3" id="text-11-3">
+<p>
+通缉系统能让玩家之间产生新的问题，因为玩家需要打败新玩家
+</p>
+
+<p>
+隐藏地点的设计不错，因为玩家的等级，可能进入不了某个他发现的隐藏地点（或精英副本），所以对他来说，是一个产生新问题的机制，让玩家继续回来玩。
+</p>
+
+<p>
+很多游戏对玩家过关进行评价，例如《保卫萝卜》，有的玩家为了一个好评价，不断玩同一关。
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-12" class="outline-2">
+<h2 id="sec-12"><span class="section-number-2">12</span> 透镜7 基本四元组的透镜</h2>
+<div class="outline-text-2" id="text-12">
+</div><div id="outline-container-sec-12-1" class="outline-3">
+<h3 id="sec-12-1"><span class="section-number-3">12.1</span> 透镜描述</h3>
+<div class="outline-text-3" id="text-12-1">
+<p>
+游戏，是由机制、故事、技术和美感四元素组成的。
+</p>
+
+<p>
+观察你游戏的组成，单独考虑它们，然后再整体地考察它们。
+</p>
+</div>
+
+<div id="outline-container-sec-12-1-1" class="outline-4">
+<h4 id="sec-12-1-1"><span class="section-number-4">12.1.1</span> 我的游戏用上了机制、故事、技术和美感四个元素了吗？</h4>
+<div class="outline-text-4" id="text-12-1-1">
+<p>
+故事要编写剧情。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-12-1-2" class="outline-4">
+<h4 id="sec-12-1-2"><span class="section-number-4">12.1.2</span> 我可以通过改良一种或多种元素来提升游戏吗？</h4>
+<div class="outline-text-4" id="text-12-1-2">
+<p>
+最给力的主要是美感？
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-12-1-3" class="outline-4">
+<h4 id="sec-12-1-3"><span class="section-number-4">12.1.3</span> 这四种元素是相互协调，相互加强，为同一个主题服务吗？</h4>
+<div class="outline-text-4" id="text-12-1-3">
+<p>
+一些设计师一直想着游戏内部运作的细节，但完全忽略了玩家的体验。
+</p>
+
+<p>
+你不但要理解各种游戏元素及其相互的关联，你还必须一直考虑它们和体验之间的关系。
+</p>
+
+<p>
+所以要同时关注游戏的皮肤（用户体验）和骨骼（游戏内在机制）
+</p>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-13" class="outline-2">
+<h2 id="sec-13"><span class="section-number-2">13</span> 8 全息设计的透镜</h2>
+<div class="outline-text-2" id="text-13">
+</div><div id="outline-container-sec-13-1" class="outline-3">
+<h3 id="sec-13-1"><span class="section-number-3">13.1</span> 透镜描述</h3>
+<div class="outline-text-3" id="text-13-1">
+<p>
+你必须同时看到游戏中的每个方面：在看到四个元素以及玩家体验的同时，还看到它们之间的相互关联。你可以把注意力从游戏的皮肤和骨骼之间
+来回切换，但更好的办法是，能全息地观察你的游戏和游戏的体验。
+问：
+</p>
+</div>
+<div id="outline-container-sec-13-1-1" class="outline-4">
+<h4 id="sec-13-1-1"><span class="section-number-4">13.1.1</span> 游戏中的哪些元素能使整个游戏变得愉悦？</h4>
+</div>
+<div id="outline-container-sec-13-1-2" class="outline-4">
+<h4 id="sec-13-1-2"><span class="section-number-4">13.1.2</span> 游戏中的哪些元素是削减这种体验的？</h4>
+</div>
+<div id="outline-container-sec-13-1-3" class="outline-4">
+<h4 id="sec-13-1-3"><span class="section-number-4">13.1.3</span> 如何调整这些元素来改良体验？</h4>
+<div class="outline-text-4" id="text-13-1-3">
+<p>
+  To use this lens, you must see everything in your game at once: the four ele-
+ments and the player experience, as well as how they interrelate. It is accepta-
+ble to shift your focus from skin to skeleton and back again, but it is far better 
+to view your game and experience holographically. 
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-13-2" class="outline-3">
+<h3 id="sec-13-2"><span class="section-number-3">13.2</span> 扩展描述</h3>
+<div class="outline-text-3" id="text-13-2">
+<p>
+其实，就是从游戏的表面体验到游戏的有机组成两个不同层次、以及它们如何相互作用来来观察游戏、改进游戏的设计。
+</p>
+
+<p>
+这就是全息设计的本质。
+</p>
+
+<p>
+游戏的皮肤：游戏体验。
+</p>
+
+<p>
+游戏的骨骼：组成游戏的各元素。
+</p>
+
+<p>
+一个可怕的陷阱：一些设计师，一直想着游戏内部运作的细节，但完全忽略了玩家的体验。
+</p>
+
+<p>
+只关注游戏骨骼，或者只关注游戏的皮肤，都不全面。必须同时关注两个方面。
+</p>
+
+<p>
+你要把注意力在游戏皮肤和骨骼之间来回切换。
+</p>
+
+<p>
+*游戏中的哪些元素能使整个体验变得愉悦？
+</p>
+
+<p>
+界面，语言。
+</p>
+
+<p>
+*游戏总的哪些元素是削弱这种体验的？
+</p>
+
+<p>
+冷却，特产，无法让玩家理解的技能。
+</p>
+
+<p>
+*如何能调整这些游戏元素来改良体验？
+</p>
+
+<p>
+前n次不需要冷却
+</p>
+
+<p>
+特产有用化
+</p>
+
+<p>
+技能简化，表现能力增加，搭配有趣
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-14" class="outline-2">
+<h2 id="sec-14"><span class="section-number-2">14</span> 9 统一的透镜</h2>
+<div class="outline-text-2" id="text-14">
+<p>
+*我游戏的主题是什么？
+</p>
+
+<p>
+让玩家轻松搞笑地在明朝混，最终目的是当皇帝。
+</p>
+</div>
+
+<div id="outline-container-sec-14-1" class="outline-3">
+<h3 id="sec-14-1"><span class="section-number-3">14.1</span> 我用了每一种可能的方法去强化这个主题了吗？</h3>
+<div class="outline-text-3" id="text-14-1">
+<p>
+美术方面，用诙谐简单的画面来表现，有一定的效果。
+</p>
+
+<p>
+玩法方面，玩家从事的事情，有混的感觉。其实当前《大明》还没有强调这个，混的感觉相当淡化。
+</p>
+
+<p>
+统一的透镜和基本的四元组透镜一起运用是很棒的。先分解，再综合它们为一个主题而服务。
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-15" class="outline-2">
+<h2 id="sec-15"><span class="section-number-2">15</span> 10 共鸣的透镜</h2>
+<div class="outline-text-2" id="text-15">
+</div><div id="outline-container-sec-15-1" class="outline-3">
+<h3 id="sec-15-1"><span class="section-number-3">15.1</span> 找能引起玩家共鸣的主题。</h3>
+<div class="outline-text-3" id="text-15-1">
+<p>
+我们讨厌那种繁琐和累的武侠RPG，它们太同质化了，没意思。
+</p>
+
+<p>
+我们工作已经很累了，让我们轻松点好吗？
+</p>
+
+<p>
+我们看花花绿绿的艳俗游戏界面都厌倦了，想看漫画清新的界面
+</p>
+
+<p>
+我们需要发自内心的愉悦感。
+</p>
+
+<p>
+这些都是《大明》能引起共鸣的主题。
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-16" class="outline-2">
+<h2 id="sec-16"><span class="section-number-2">16</span> 12 问题陈述的透镜</h2>
+<div class="outline-text-2" id="text-16">
+<p>
+把你的游戏看成是对某个问题的解决方案
+</p>
+</div>
+
+<div id="outline-container-sec-16-1" class="outline-3">
+<h3 id="sec-16-1"><span class="section-number-3">16.1</span> 我到底在解决哪种问题呢？</h3>
+<div class="outline-text-3" id="text-16-1">
+<p>
+武侠RPG很累的模式
+</p>
+
+<p>
+游戏越做越雷同的方式
+</p>
+</div>
+</div>
+<div id="outline-container-sec-16-2" class="outline-3">
+<h3 id="sec-16-2"><span class="section-number-3">16.2</span> 游戏真的是这个问题的最佳解决方案吗？为什么？</h3>
+<div class="outline-text-3" id="text-16-2">
+<p>
+是的
+</p>
+</div>
+</div>
+<div id="outline-container-sec-16-3" class="outline-3">
+<h3 id="sec-16-3"><span class="section-number-3">16.3</span> 我如何知道问题是否解决了呢？</h3>
+<div class="outline-text-3" id="text-16-3">
+<p>
+当《大明》开始口碑传播。
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-17" class="outline-2">
+<h2 id="sec-17"><span class="section-number-2">17</span> 筛选创意的八个步子</h2>
+<div class="outline-text-2" id="text-17">
+</div><div id="outline-container-sec-17-1" class="outline-3">
+<h3 id="sec-17-1"><span class="section-number-3">17.1</span> 1. 美感上的刺激。</h3>
+<div class="outline-text-3" id="text-17-1">
+<p>
+这个游戏感觉对头吗？
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-17-2" class="outline-3">
+<h3 id="sec-17-2"><span class="section-number-3">17.2</span> 2.受众的统计数据</h3>
+<div class="outline-text-3" id="text-17-2">
+<p>
+目标受众会足够喜欢这个游戏吗？
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-17-3" class="outline-3">
+<h3 id="sec-17-3"><span class="section-number-3">17.3</span> 3. 体验设计</h3>
+<div class="outline-text-3" id="text-17-3">
+<p>
+把你所知道的能用来创造一种出色的体验的所有东西都考虑进去，包括美感，兴趣曲线，共鸣的主题，游戏平衡，以及其他。
+这是一个良好设计的游戏吗？
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-17-4" class="outline-3">
+<h3 id="sec-17-4"><span class="section-number-3">17.4</span> 4. 创新</h3>
+<div class="outline-text-3" id="text-17-4">
+<p>
+给玩家一些从来没有见过的东西.
+</p>
+
+<p>
+这个游戏足够新颖吗？
+</p>
+</div>
+</div>
+<div id="outline-container-sec-17-5" class="outline-3">
+<h3 id="sec-17-5"><span class="section-number-3">17.5</span> 5.商业和市场营销</h3>
+<div class="outline-text-3" id="text-17-5">
+<p>
+这个游戏能卖得火吗？
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-17-6" class="outline-3">
+<h3 id="sec-17-6"><span class="section-number-3">17.6</span> 6.技术角度</h3>
+<div class="outline-text-3" id="text-17-6">
+<p>
+这个游戏在技术上有可能作出来吗？
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-17-7" class="outline-3">
+<h3 id="sec-17-7"><span class="section-number-3">17.7</span> 7.社会/社区角度</h3>
+<div class="outline-text-3" id="text-17-7">
+<p>
+这个游戏满足我们社会上的目标吗？
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-17-8" class="outline-3">
+<h3 id="sec-17-8"><span class="section-number-3">17.8</span> 8.游戏测试</h3>
+<div class="outline-text-3" id="text-17-8">
+<p>
+参加游戏测试的入足够喜欢这个游戏吗？
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-18" class="outline-2">
+<h2 id="sec-18"><span class="section-number-2">18</span> 透镜13 八滤镜的透镜</h2>
+<div class="outline-text-2" id="text-18">
+<p>
+你的设计必须满足众多的约束，只有当它无需再进行修改地通过了所有的八个滤镜时，你才能声称你的设计是最终成型的。
++这个游戏感觉对头吗？
++目标受众足够喜欢这个游戏吗？
++这是一个良好设计的游戏吗？
+  我要批注  废话，什么叫“良好设计”的？如何量化和可评估呢？
++这个游戏足够新颖吗？
+  我要批注  不错，挺新的。
++这个游戏会卖得火吗？
++这个游戏在技术上有可能做得出来吗？
++这个游戏满足我们社会上和社区上的目标吗？
+我要批注  这是什么意思呢？
++参与测试的人，足够喜欢这个游戏吗？
+我要批注  还好，有4%的人喜欢，而且成为了fans
+</p>
+</div>
+</div>
+<div id="outline-container-sec-19" class="outline-2">
+<h2 id="sec-19"><span class="section-number-2">19</span> 游戏开发中的循环技术</h2>
+<div class="outline-text-2" id="text-19">
+</div><div id="outline-container-sec-19-1" class="outline-3">
+<h3 id="sec-19-1"><span class="section-number-3">19.1</span> 1.提出一个基础设计</h3>
+</div>
+<div id="outline-container-sec-19-2" class="outline-3">
+<h3 id="sec-19-2"><span class="section-number-3">19.2</span> 2.找出设计中最大的风险</h3>
+</div>
+<div id="outline-container-sec-19-3" class="outline-3">
+<h3 id="sec-19-3"><span class="section-number-3">19.3</span> 3.建立各种原型来减轻这些风险</h3>
+</div>
+<div id="outline-container-sec-19-4" class="outline-3">
+<h3 id="sec-19-4"><span class="section-number-3">19.4</span> 4.测试和检验这些原型</h3>
+</div>
+<div id="outline-container-sec-19-5" class="outline-3">
+<h3 id="sec-19-5"><span class="section-number-3">19.5</span> 5.基于你已经了解的，提出一个更详细的设计</h3>
+</div>
+<div id="outline-container-sec-19-6" class="outline-3">
+<h3 id="sec-19-6"><span class="section-number-3">19.6</span> 6.回到步骤2</h3>
+<div class="outline-text-3" id="text-19-6">
+<p>
+下面的透镜14,15以及原型制作技巧，都是为了实践这个循环的。
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-20" class="outline-2">
+<h2 id="sec-20"><span class="section-number-2">20</span> 透镜14 风险减轻的透镜</h2>
+<div class="outline-text-2" id="text-20">
+</div><div id="outline-container-sec-20-1" class="outline-3">
+<h3 id="sec-20-1"><span class="section-number-3">20.1</span> 透镜描述</h3>
+<div class="outline-text-3" id="text-20-1">
+<p>
+停止去正面思考你的游戏，开始想游戏的风险：
+</p>
+</div>
+
+<div id="outline-container-sec-20-1-1" class="outline-4">
+<h4 id="sec-20-1-1"><span class="section-number-4">20.1.1</span> 有哪些因素会阻碍这个游戏变得优秀？</h4>
+<div class="outline-text-4" id="text-20-1-1">
+<p>
+我要批注：当前风险如下：  
+</p>
+<ol class="org-ol">
+<li>性能卡, 前主程导致，幸亏田老师正在修正，风险正在减少。
+</li>
+
+<li>数值设定不合理，这是某大神水平差造成的，现在正在修正。
+</li>
+
+<li>玩家体验很差，这个我来主抓。
+</li>
+
+<li>存在漏洞，被玩家利用，造成各种不公平或者不可接受的情形出现。
+</li>
+
+<li>收费不成系统。这个有人在主抓，向先进游戏学习。
+</li>
+
+<li>玩法单薄，没啥可玩的。
+</li>
+</ol>
+</div>
+</div>
+<div id="outline-container-sec-20-1-2" class="outline-4">
+<h4 id="sec-20-1-2"><span class="section-number-4">20.1.2</span> 如何能阻止这些因素的发生？</h4>
+<div class="outline-text-4" id="text-20-1-2">
+<ol class="org-ol">
+<li>技术发力，做好性能优化。
+</li>
+
+<li>策划发力，做好数值。
+</li>
+
+<li>狠抓体验。
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-20-2" class="outline-3">
+<h3 id="sec-20-2"><span class="section-number-3">20.2</span> 原理</h3>
+<div class="outline-text-3" id="text-20-2">
+<p>
+《孙子兵法》九变第八：智者之虑，必杂于利害。杂于利而务可信也，
+杂于害而患可解也。含义：
+明智的将帅考虑问题，总是兼顾到利和害两个方面。在有利的悄况下考虑到不利的方面，事情就可以顺利进行;在不利的情况下考虑到有利的方面，祸患就可以解除。
+所以项目一开始，就把可能的风险和不利局面想清楚，找出应对办法。
+《找》这个项目，做到了这点，事先分析了各种风险，做到了预先防备，基本顺利。
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-21" class="outline-2">
+<h2 id="sec-21"><span class="section-number-2">21</span> 原型制作技巧</h2>
+<div class="outline-text-2" id="text-21">
+</div><div id="outline-container-sec-21-1" class="outline-3">
+<h3 id="sec-21-1"><span class="section-number-3">21.1</span> 循环回路</h3>
+<div class="outline-text-3" id="text-21-1">
+</div><div id="outline-container-sec-21-1-1" class="outline-4">
+<h4 id="sec-21-1-1"><span class="section-number-4">21.1.1</span> 一、陈述问题</h4>
+</div>
+<div id="outline-container-sec-21-1-2" class="outline-4">
+<h4 id="sec-21-1-2"><span class="section-number-4">21.1.2</span> 二、对一些可能的方案进行头脑风暴</h4>
+</div>
+<div id="outline-container-sec-21-1-3" class="outline-4">
+<h4 id="sec-21-1-3"><span class="section-number-4">21.1.3</span> 三、选择一种解决方案</h4>
+</div>
+<div id="outline-container-sec-21-1-4" class="outline-4">
+<h4 id="sec-21-1-4"><span class="section-number-4">21.1.4</span> 四、列出使用这种解决方案的各种风险</h4>
+</div>
+<div id="outline-container-sec-21-1-5" class="outline-4">
+<h4 id="sec-21-1-5"><span class="section-number-4">21.1.5</span> 五、建立各种原型来减轻这种风险</h4>
+</div>
+<div id="outline-container-sec-21-1-6" class="outline-4">
+<h4 id="sec-21-1-6"><span class="section-number-4">21.1.6</span> 六、测试这些原型，如果足够好了，就停止</h4>
+</div>
+<div id="outline-container-sec-21-1-7" class="outline-4">
+<h4 id="sec-21-1-7"><span class="section-number-4">21.1.7</span> 七、陈述你要解决的新问题，回到第2步。</h4>
+</div>
+</div>
+
+<div id="outline-container-sec-21-2" class="outline-3">
+<h3 id="sec-21-2"><span class="section-number-3">21.2</span> 高效的原型制作技巧</h3>
+<div class="outline-text-3" id="text-21-2">
+</div><div id="outline-container-sec-21-2-1" class="outline-4">
+<h4 id="sec-21-2-1"><span class="section-number-4">21.2.1</span> 技巧1 ： 回答一个问题</h4>
+<div class="outline-text-4" id="text-21-2-1">
+<p>
+  每次制作游戏原型，要回答一个到多个问题。
+应该清晰地称述这些问题。
+把注意力只放在回答好关键问题上，抵制把原型做得过分精致的诱惑。
+原型可能回答类似下面的问题：
+  我们游戏的核心玩法有趣吗？它能长时间保持有趣吗？
+  从美感上来说，我们的角色和背景设定相互符合吗？
+  这个游戏需要多少关卡？
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-21-2-2" class="outline-4">
+<h4 id="sec-21-2-2"><span class="section-number-4">21.2.2</span> 技巧2: 忘掉质量</h4>
+<div class="outline-text-4" id="text-21-2-2">
+<p>
+原型制作是为了回答问题的，所以做出的速度越快越好，不要追求质量。
+你绕不开循环原则，所以越快进行循环，越好。
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-21-2-3" class="outline-4">
+<h4 id="sec-21-2-3"><span class="section-number-4">21.2.3</span> 技巧3: 别对它太依恋</h4>
+<div class="outline-text-4" id="text-21-2-3">
+<p>
+这是原型，所以它的意义在于回答问题，其余皆可抛弃。
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-21-2-4" class="outline-4">
+<h4 id="sec-21-2-4"><span class="section-number-4">21.2.4</span> 区分优先级</h4>
+<div class="outline-text-4" id="text-21-2-4">
+<p>
+消除风险的时候，可能面临多个风险。要分析这些风险，第一时间处理最大的风险。
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-21-2-5" class="outline-4">
+<h4 id="sec-21-2-5"><span class="section-number-4">21.2.5</span> 并行开发原型</h4>
+<div class="outline-text-4" id="text-21-2-5">
+<p>
+美术和技术可以并行进行原型开发。
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-21-2-6" class="outline-4">
+<h4 id="sec-21-2-6"><span class="section-number-4">21.2.6</span> 并非一定是电子版本的</h4>
+<div class="outline-text-4" id="text-21-2-6">
+<p>
+可以制作简单的桌面游戏原型
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-21-2-7" class="outline-4">
+<h4 id="sec-21-2-7"><span class="section-number-4">21.2.7</span> 选择快速游戏制作引擎</h4>
+<div class="outline-text-4" id="text-21-2-7">
+<p>
+比如python, panda3d之类的
+用它们，能够快速开发出东西，进行测试，再进行开发和调整。
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-21-2-8" class="outline-4">
+<h4 id="sec-21-2-8"><span class="section-number-4">21.2.8</span> 先创造玩具</h4>
+<div class="outline-text-4" id="text-21-2-8">
+<p>
+先制作出玩具，再制作游戏。
+</p>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-22" class="outline-2">
+<h2 id="sec-22"><span class="section-number-2">22</span> 透镜15:  玩具的透镜</h2>
+<div class="outline-text-2" id="text-22">
+<p>
+如果我的游戏没有任何目标，它仍然有趣吗？如果不是这样，那么怎么办？
+</p>
+
+<p>
+人们看到我的游戏时，在不知道做什么之前，有和它交互之想法吗？如果没有，怎么办？
+</p>
+</div>
+</div>
+<div id="outline-container-sec-23" class="outline-2">
+<h2 id="sec-23"><span class="section-number-2">23</span> 透镜16 玩家的透镜</h2>
+<div class="outline-text-2" id="text-23">
+<p>
+游戏是为玩家做的。
+</p>
+
+<p>
+爱因斯坦的小提琴的例子：启发：你必须清楚观众喜欢什么，不喜欢什么。
+必须用观众能听得懂的术语和方式来表达。
+</p>
+</div>
+
+<div id="outline-container-sec-23-1" class="outline-3">
+<h3 id="sec-23-1"><span class="section-number-3">23.1</span> 透镜描述</h3>
+<div class="outline-text-3" id="text-23-1">
+<p>
+用Ainstian给主要是老妇人组成的观众拉小提琴来说明：了解你的观众很重要！这些人不是为了听讲课，而是为了和著名的物理学家亲密接触。
+</p>
+
+<p>
+要想打造出绝好的体验，我们必须效仿爱因斯坦。你必须清楚你的观众喜欢什么，不喜欢什么，你甚至必须比它们自己还要了解它们。做到这一点的秘籍，
+在于倾听。你必须透彻且深入地倾听你的玩家，你必须紧密地和它们的思想、感情、恐惧和欲望连接在一起。
+</p>
+
+<p>
+要设身处地，利用你的移情力量把自己置身于它们的位置上。
+</p>
+
+<p>
+停止思考你的游戏，开始思考你的玩家
+问下面的问题来了解那些玩你游戏的人：
+</p>
+<ol class="org-ol">
+<li>通常来说它们喜欢什么？
+</li>
+<li>他们不喜欢什么，为什么？
+</li>
+<li>他们期望在游戏中看到什么？
+</li>
+<li>如果我站在他们的位置，我想在游戏中看到什么？
+</li>
+<li>特别来说，他们喜欢和不喜欢我游戏中的哪些部分？
+</li>
+</ol>
+
+<p>
+一个优秀的游戏设计师，应该重视去思考玩家，他应该是玩家的拥护者。
+</p>
+
+<p>
+技巧熟练的设计师会同时把玩家的透镜和全息设计的透镜拿在手上，不断地对玩家、游戏体验，以及游戏中的各自机制进行同时的思考。
+</p>
+
+<p>
+思考玩家的过程是很有用的，但更有用的是观察它们玩你的游戏的过程。你越多地观察它们玩游戏的过程，你就越容易地预测到她们喜欢什么。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-23-2" class="outline-3">
+<h3 id="sec-23-2"><span class="section-number-3">23.2</span> 扩展描述</h3>
+<div class="outline-text-3" id="text-23-2">
+<p>
+巴图的玩家类型分类法
+</p>
+
+<ol class="org-ol">
+<li>成就型玩家  想要达成游戏中的各种目标，它们主要快乐来源是挑战
+</li>
+</ol>
+
+<p>
+2.探索型玩家 想要了解游戏的方方面面，快乐来源于发现
+</p>
+
+<ol class="org-ol">
+<li>社交玩家 对人与人的关系很感兴趣
+</li>
+</ol>
+
+<p>
+4 杀手型玩家 对击败别人以及与别人竞技感兴趣，感兴趣于对别人施加影响
+</p>
+
+<p>
+外加一个：脑残类玩家，只是在地铁上随手打发下时间，适合手机游戏休闲类型。
+</p>
+</div>
+
+<div id="outline-container-sec-23-2-1" class="outline-4">
+<h4 id="sec-23-2-1"><span class="section-number-4">23.2.1</span> 我要批注</h4>
+<div class="outline-text-4" id="text-23-2-1">
+<p>
+对于成就类型玩家，我们游戏有成就系统，满足他们。
+对于探索类型玩家，我们游戏有隐藏地点，满足他们。外加推图模式，也是探索的一种。
+对于社交类型玩家，我们设计了四种类别的玩家关系，以及帮会系统，来满足他们。
+对于杀手类型玩家，我们设计了PK系统和通缉系统，以及PK威望这种数值，来满足他们。
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-23-3" class="outline-3">
+<h3 id="sec-23-3"><span class="section-number-3">23.3</span> 女人在游戏中喜欢的：</h3>
+<div class="outline-text-3" id="text-23-3">
+</div><div id="outline-container-sec-23-3-1" class="outline-4">
+<h4 id="sec-23-3-1"><span class="section-number-4">23.3.1</span> 情感。</h4>
+</div>
+<div id="outline-container-sec-23-3-2" class="outline-4">
+<h4 id="sec-23-3-2"><span class="section-number-4">23.3.2</span> 现实世界</h4>
+</div>
+<div id="outline-container-sec-23-3-3" class="outline-4">
+<h4 id="sec-23-3-3"><span class="section-number-4">23.3.3</span> 养育</h4>
+</div>
+<div id="outline-container-sec-23-3-4" class="outline-4">
+<h4 id="sec-23-3-4"><span class="section-number-4">23.3.4</span> 对话和迷题</h4>
+</div>
+<div id="outline-container-sec-23-3-5" class="outline-4">
+<h4 id="sec-23-3-5"><span class="section-number-4">23.3.5</span> 通过例子来学习</h4>
+</div>
+</div>
+
+<div id="outline-container-sec-23-4" class="outline-3">
+<h3 id="sec-23-4"><span class="section-number-3">23.4</span> 男人在游戏中喜欢的：</h3>
+<div class="outline-text-3" id="text-23-4">
+</div><div id="outline-container-sec-23-4-1" class="outline-4">
+<h4 id="sec-23-4-1"><span class="section-number-4">23.4.1</span> 掌握。</h4>
+</div>
+<div id="outline-container-sec-23-4-2" class="outline-4">
+<h4 id="sec-23-4-2"><span class="section-number-4">23.4.2</span> 竞技</h4>
+</div>
+<div id="outline-container-sec-23-4-3" class="outline-4">
+<h4 id="sec-23-4-3"><span class="section-number-4">23.4.3</span> 破坏</h4>
+</div>
+<div id="outline-container-sec-23-4-4" class="outline-4">
+<h4 id="sec-23-4-4"><span class="section-number-4">23.4.4</span> 空间性迷题</h4>
+</div>
+<div id="outline-container-sec-23-4-5" class="outline-4">
+<h4 id="sec-23-4-5"><span class="section-number-4">23.4.5</span> 反复试验</h4>
+</div>
+</div>
+</div>
+
+
+
+<div id="outline-container-sec-24" class="outline-2">
+<h2 id="sec-24"><span class="section-number-2">24</span> 透镜#17 快乐的透镜</h2>
+<div class="outline-text-2" id="text-24">
+<p>
+在使用这个透镜的时候，思考你的游戏已经提供的还没有提供的各类快乐
+问问题：
+</p>
+
+<p>
+你的游戏给予玩家哪些快乐？这些玩家快乐可以进一步加强吗？
+</p>
+
+<p>
+哪些快乐是你的体验中遗漏的？为什么？能把它们加回来吗？
+</p>
+
+<p>
+快乐：
+</p>
+
+<p>
+预感
+</p>
+
+<p>
+幸灾乐祸
+</p>
+
+<p>
+给予礼物
+</p>
+
+<p>
+幽默
+</p>
+
+<p>
+可能性
+</p>
+
+<p>
+成就的自豪
+</p>
+
+<p>
+净化&#x2013;吃光所有的豆-&#x2014;&#x2014;消除！！
+</p>
+
+<p>
+惊喜 &#x2013;大脑喜欢各种惊喜
+</p>
+
+<p>
+刺激
+</p>
+
+<p>
+战胜逆境
+</p>
+
+<p>
+好奇
+</p>
+
+
+<p>
+人对人的信息，存了很多脸部和头部的，所以我们接受漫画中非常夸张的大头。
+</p>
+
+<p>
+线条：完美地匹配了我们内部的建模机制，并且帮它们省去不少工作。为什么动漫看起来赏心悦目？因为我们的
+</p>
+
+<p>
+大脑在理解事物的时候喜欢那些只需更少工作的。
+</p>
+
+<p>
+作为游戏设计师，我们需要对这些心智模型更多加关心。因为有着简单规则的游戏就像漫画人物一样，
+</p>
+
+<p>
+它们是我们容易接受和处理的预先消化过的模型。正因为这个原因让
+</p>
+
+<p>
+它们玩起来感觉很放松，因为相比现实世界，它们只需我们大脑做更少的工作就能处理了，
+</p>
+
+<p>
+其余的大部分复杂性早已从里面剥离。
+</p>
+
+<p>
+flow的关键
+一、清晰的目标。目标清晰，更容易聚焦到手头的任务上。
+二、聚焦，专注，不被分心。
+三、直接的反馈（立刻的反馈）。采取行动后，立刻有结果。
+四、持续不断的挑战。挑战太难，人就有挫败感，人会转向选择别的感觉值得做的事情做。挑战太容易，让人感觉太无聊，人也会再次选择值得做的事情。
+</p>
+
+<p>
+我要批注  过关通道的设计，达到了上面四点，还不错。
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-25" class="outline-2">
+<h2 id="sec-25"><span class="section-number-2">25</span> 透镜#18 心流的透镜</h2>
+<div class="outline-text-2" id="text-25">
+</div><div id="outline-container-sec-25-1" class="outline-3">
+<h3 id="sec-25-1"><span class="section-number-3">25.1</span> 透镜描述</h3>
+<div class="outline-text-3" id="text-25-1">
+<p>
+其实就是心理学家那个flow模型。
+</p>
+
+<p>
+  思考一下，什么吸引你的玩家聚焦在游戏中的。
+问自己这些问题：
+</p>
+<ol class="org-ol">
+<li>我的游戏有清晰的目标吗？如果没有，如何修正这个问题呢？
+</li>
+<li>玩家在游戏中的目标和我预期的目标一致吗？
+</li>
+<li>游戏中有哪些让玩家分心，乃至忘记了目标？ 如有，如何减少这些分心因素，或者把它们关系到游戏目标上。
+</li>
+<li>我考虑了玩家水平会逐步提升，而提供了稳定的、不容易、但也不太难的挑战了吗？
+</li>
+<li>玩家提升技巧的速度，是我希望的速度吗？如果不是这样，我如何改变之？
+</li>
+</ol>
+</div>
+</div>
+<div id="outline-container-sec-25-2" class="outline-3">
+<h3 id="sec-25-2"><span class="section-number-3">25.2</span> 扩展描述</h3>
+<div class="outline-text-3" id="text-25-2">
+<p>
+对游戏设计师来说，研究心流是很值得的。
+产生一种行为，并把玩家推向心流的一部分关键因素如下：
+</p>
+<ol class="org-ol">
+<li>清晰的目标。
+</li>
+</ol>
+<p>
+  目标越清晰，越能持续聚焦在手头的任务上。
+我要批注  现在提供了较为清晰的目标：去广州救父亲，去福州得到自己的皇族玉佩
+</p>
+<ol class="org-ol">
+<li>没有被分心。
+</li>
+</ol>
+<p>
+  分心会偷走聚焦，没有聚焦就没有心流。
+我要批注  什么让我的游戏有分心？
+</p>
+<ol class="org-ol">
+<li>直接的反馈。
+</li>
+</ol>
+<p>
+  立刻给出反馈，能保持聚焦。
+我要批注  现在打副本，有马上显示“过关进度 65%", 这就是直接的反馈。
+</p>
+<ol class="org-ol">
+<li>持续不断的挑战
+</li>
+</ol>
+<p>
+  人喜欢挑战。但它必须是能达到的，而且不能无聊。
+我要批注  过关通道就是持续不断的挑战。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-25-3" class="outline-3">
+<h3 id="sec-25-3"><span class="section-number-3">25.3</span> 分析：《北浮》提供了心流</h3>
+<div class="outline-text-3" id="text-25-3">
+</div><div id="outline-container-sec-25-3-1" class="outline-4">
+<h4 id="sec-25-3-1"><span class="section-number-4">25.3.1</span> 一、玩家有清晰的目标：赚钱，钱越多越好。</h4>
+<div class="outline-text-4" id="text-25-3-1">
+<p>
+玩家还有眼前的目标：赶快给村长还钱，这个目标是当下的，不完成就会被村长打死，结束游戏。
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-25-3-2" class="outline-4">
+<h4 id="sec-25-3-2"><span class="section-number-4">25.3.2</span> 二、没有被分心</h4>
+<div class="outline-text-4" id="text-25-3-2">
+<p>
+玩家没有别的不相关的事情分散精力。北浮整个游戏很简单，各种功能都是围绕“赚钱”这个核心点的。
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-25-3-3" class="outline-4">
+<h4 id="sec-25-3-3"><span class="section-number-4">25.3.3</span> 三、直接的反馈</h4>
+<div class="outline-text-4" id="text-25-3-3">
+<p>
+玩家的倒卖行动，能立刻看到结果，赚了还是赔了。
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-25-3-4" class="outline-4">
+<h4 id="sec-25-3-4"><span class="section-number-4">25.3.4</span> 四、持续不断的挑战</h4>
+<div class="outline-text-4" id="text-25-3-4">
+<p>
+游戏中，玩家先倒卖小物品，然后倒卖大物品（汽车），挑战是持续不断的。
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-25-4" class="outline-3">
+<h3 id="sec-25-4"><span class="section-number-3">25.4</span> 分析：《糖果》提供了心流</h3>
+<div class="outline-text-3" id="text-25-4">
+</div><div id="outline-container-sec-25-4-1" class="outline-4">
+<h4 id="sec-25-4-1"><span class="section-number-4">25.4.1</span> 1. 玩家有清晰的目标：过眼前这关，然后下一关，以至于地图上的300多关。</h4>
+</div>
+<div id="outline-container-sec-25-4-2" class="outline-4">
+<h4 id="sec-25-4-2"><span class="section-number-4">25.4.2</span> 2. 没有被分心</h4>
+<div class="outline-text-4" id="text-25-4-2">
+<p>
+因为玩法聚焦于地图上单线关卡串，没有别的东西让玩家分心。
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-25-4-3" class="outline-4">
+<h4 id="sec-25-4-3"><span class="section-number-4">25.4.3</span> 3. 直接的反馈</h4>
+<div class="outline-text-4" id="text-25-4-3">
+<p>
+玩家每个动作（移动糖果），都有反馈。
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-25-4-4" class="outline-4">
+<h4 id="sec-25-4-4"><span class="section-number-4">25.4.4</span> 4. 持续不断的挑战</h4>
+<div class="outline-text-4" id="text-25-4-4">
+<p>
+地图上漫长而持续的关卡，不仅难度逐步增加，而且玩法也逐步多样化，给玩家提供了持续不断的挑战。
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-26" class="outline-2">
+<h2 id="sec-26"><span class="section-number-2">26</span> 透镜#19 需求的透镜</h2>
+<div class="outline-text-2" id="text-26">
+<p>
+停止思考游戏，思考它满足了人们什么需求。
+</p>
+
+<p>
+&lt;找你妹》满足了女性“找”的需求。
+&lt;找你妹》满足了N多人要一个简单的打发时间的需求。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-27" class="outline-2">
+<h2 id="sec-27"><span class="section-number-2">27</span> 透镜#20 评判的透镜</h2>
+<div class="outline-text-2" id="text-27">
+</div><div id="outline-container-sec-27-1" class="outline-3">
+<h3 id="sec-27-1"><span class="section-number-3">27.1</span> 透镜描述</h3>
+<div class="outline-text-3" id="text-27-1">
+<p>
+在确定你的游戏是否对玩家进行了良好的评判时，问一下自己下面的问题：
+</p>
+</div>
+
+<ol class="org-ol"><li>我的游戏会评判玩家哪些方面呢？<br/></li>
+<li>它是如何传达这种评判的？<br/></li>
+<li>玩家感觉这种评判公正吗？<br/></li>
+<li>玩家在乎这种评判吗？<br/></li>
+<li>这些评判让玩家有自我提升的欲望吗？<br/></li></ol>
+</div>
+<div id="outline-container-sec-27-2" class="outline-3">
+<h3 id="sec-27-2"><span class="section-number-3">27.2</span> 扩展描述</h3>
+<div class="outline-text-3" id="text-27-2">
+<p>
+在马洛斯需求体系的第四层，自尊心是和游戏有着最密切关联的。为什么呢？所有人一个深层次而且常见的需求是被评判。
+我们内心深处都想了解自己是处于何种状态的。
+事实上游戏是有目的地评判的绝好系统，这点也是它们最吸引人的特色之一。
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-27-3" class="outline-3">
+<h3 id="sec-27-3"><span class="section-number-3">27.3</span> 应用</h3>
+<div class="outline-text-3" id="text-27-3">
+</div><ol class="org-ol"><li>我的游戏会评判玩家哪些方面呢？<br/><ol class="org-ol"><li>玩家传统RPG那一套的评价体系。&#x2013;&#x2014;俗气，无特点。<br/></li>
+<li>玩家非传统的一套：<br/><ol class="org-ol"><li>混世技能，评价了玩家混世的方方面面。这个能带来一些乐趣。<br/></li>
+<li>成就系统，评价了玩家在游戏中的各种表现。这个带来追求。<br/></li>
+<li>称号系统？评价玩家比较变态的成就？<br/></li></ol>
+</li></ol>
+</li>
+<li>它是如何传达这种评判的？<br/><ol class="org-ol"><li>通过排行和数值。是否还有更好的方法呢？<br/></li>
+<li>通过称号？<br/></li></ol>
+</li>
+
+<li>玩家感觉这种评判公正吗？<br/><ol class="org-ol"><li>不知道啊。<br/></li></ol>
+</li>
+
+<li>玩家在乎这种评判吗？<br/><ol class="org-ol"><li>不知道啊。<br/></li></ol>
+</li>
+
+<li>这些评判让玩家有自我提升的欲望吗？<br/><ol class="org-ol"><li>应该有。<br/></li></ol>
+</li></ol>
+</div>
+</div>
+<div id="outline-container-sec-28" class="outline-2">
+<h2 id="sec-28"><span class="section-number-2">28</span> 透镜#21 功能空间的透镜</h2>
+<div class="outline-text-2" id="text-28">
+<p>
+当游戏所有表面元素都被抽取之后，游戏是在什么空间中发生的。
+</p>
+</div>
+
+<div id="outline-container-sec-28-1" class="outline-3">
+<h3 id="sec-28-1"><span class="section-number-3">28.1</span> 透镜描述</h3>
+<div class="outline-text-3" id="text-28-1">
+<p>
+游戏空间是分离的还是连续的？
+空间有多少个维度呢？
+这个空间的边界是什么？
+空间中有子空间吗？它们是如何关联的？
+在抽象出这个游戏的空间时，有别的更有用的视角吗？
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-28-2" class="outline-3">
+<h3 id="sec-28-2"><span class="section-number-3">28.2</span> 扩展</h3>
+</div>
+<div id="outline-container-sec-28-3" class="outline-3">
+<h3 id="sec-28-3"><span class="section-number-3">28.3</span> 应用</h3>
+</div>
+</div>
+
+<div id="outline-container-sec-29" class="outline-2">
+<h2 id="sec-29"><span class="section-number-2">29</span> 透镜#22 动态状态的透镜</h2>
+<div class="outline-text-2" id="text-29">
+</div><div id="outline-container-sec-29-1" class="outline-3">
+<h3 id="sec-29-1"><span class="section-number-3">29.1</span> 透镜描述</h3>
+<div class="outline-text-3" id="text-29-1">
+<p>
+想想你游戏中哪些信息会改变，而且想一想，哪些人会知晓这些改变。问：
+在我游戏中有哪些对象？
+这些对象有着哪些属性？
+每种属性有着哪些可能的状态？是什么触发了这些属性状态的改变？
+哪些状态是只有游戏知情的？
+哪些状态是所有玩家知情的？
+哪些状态是只有一部分玩家或者一个玩家知情的？
+改变游戏中对状态的知情关系，能在某种程度上改良我的游戏吗？
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-29-2" class="outline-3">
+<h3 id="sec-29-2"><span class="section-number-3">29.2</span> 扩展描述</h3>
+<div class="outline-text-3" id="text-29-2">
+<p>
+  玩游戏的过程，是决策的过程，而决策过程是基于信息的。确定出不同的属性和其状态，以及哪些人知道这些状态，是
+你游戏机制的核心。
+  对信息知情者的一点点改变，有时能从根本上改变游戏。
+  一个戏剧化的做法是，让所有私秘的信息突然变得公开了。
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-29-3" class="outline-3">
+<h3 id="sec-29-3"><span class="section-number-3">29.3</span> 应用</h3>
+<div class="outline-text-3" id="text-29-3">
+<p>
+在明朝中，你看不到别的玩家的重要信息（例如攻击力，装备等），除非你是他的好友。
+知情者体系图：玩家ABC， 有A自己知道的信息，有AB知道的信息，有AC知道的信息等。有大家都知道的信息，有只有游戏知道的信息等等。
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-30" class="outline-2">
+<h2 id="sec-30"><span class="section-number-2">30</span> 透镜 #23 自发性的透镜</h2>
+<div class="outline-text-2" id="text-30">
+</div><div id="outline-container-sec-30-1" class="outline-3">
+<h3 id="sec-30-1"><span class="section-number-3">30.1</span> 透镜描述</h3>
+<div class="outline-text-3" id="text-30-1">
+<p>
+为了确保你的游戏中有各种有趣的自发性特征，问一下自己下面的问题：
+</p>
+</div>
+<ol class="org-ol"><li>我的玩家能拥有多少种动词？<br/></li>
+<li>每种动词作用的对象有多少？<br/></li>
+<li>玩家能够通过多少种方法达成他们的目标？<br/></li>
+<li>玩家能够控制的主语有多少种？<br/></li>
+<li>各种副作用是如何改变约束关系的？<br/></li></ol>
+</div>
+<div id="outline-container-sec-30-2" class="outline-3">
+<h3 id="sec-30-2"><span class="section-number-3">30.2</span> 扩展描述</h3>
+<div class="outline-text-3" id="text-30-2">
+<p>
+这是对行为这种机制的描述。
+行为是游戏机制中的“动词”。
+有两种动词：
+一、操作性行为，玩家能采取的基础行为。
+二、因而发生的行为，需要从高层次上去观察。他们是与玩家如何利用这些操作性行为达成目标相关的。它包含了游戏中微妙的交互方式，而且通常来说策略性很重。
+这些大多数本质上不是规则的一部分，而是在玩游戏的过程中自然产生的行为和策略。
+大多数游戏设计师认同，这些有趣的因而发生的行为是一个好游戏的标志。
+p=因而发生的行为/操作性行为, p数值越高，游戏越有趣和有深度。
+努力去创造因而发生的行为，就像管理你的花园一样，因而发生的行为是有自己生命力的，同时也是脆弱和容易被破坏的。
+如果你发现了一些有趣的结果导向的行为时，要认出它们并培养它们。
+但如何让它们出现呢？
+下面5方法能帮助你为游戏准备好土壤并散播下自发性的种子：
+</p>
+<ol class="org-ol">
+<li>添加更多的动词。也就是，添加更多的操作性行为。因而行为都市在操作性行为对各种对象以及对游戏空间进行相互交互时出现的。当你添加更多的操作性行为后，交互的机会也就变多了，
+</li>
+</ol>
+<p>
+从而也让自发行为更多地出现。但是，添加太多的操作性动作&#x2014;尤其是那些不会相互交互的行为，会让游戏臃肿杂乱。因此，添加一个好的操作行为比专家一堆一般
+行为要效果好。
+</p>
+<ol class="org-ol">
+<li>能作用到多种对象上的动词。这也许是造就一个简洁、优雅、有趣的游戏最强有力的武器了。
+</li>
+<li>能够用多于一种的方法达成目标，就造成了极为丰富的动态游戏过程，让各种事情成为可能。但这种方式呢，会带来游戏平衡性问题。
+</li>
+<li>多个主语。
+自发性的行为看来粗等于=主语x动词x对象。
+因此，增加主语，很有可能增加自发性行为。
+</li>
+<li>会改变约束条件的副作用效果。
+每当你采取一个行动，它所带来的副作用都会改变你自己或你的对手的约束情况，那是很有趣的。
+例子：
+在跳棋中，你移动一个旗子，你不但改变了你可能被吃掉的格局，还改变了你对手（以及你自己）可以移动的格局。在这个意义上，
+每一步都改变了游戏空间的本质，无论这种改变是你希望或者不希望的。
+通过迫使游戏何种的多个因素在每个操作行为中发生改变，你有很大的可能性能促使各种有趣的自发性行为突出在游戏里出现。
+</li>
+</ol>
+<p>
+我要批注  中国象棋、围棋、国际象棋，都是如此，动一个旗子，就会导致游戏空1. 全部都提示，则玩家太多
+</p>
+<ol class="org-ol">
+<li>只有少数被提示，就不会消息狂涨，但又有这类消息出现。不然，消息很单一，无法营造气氛间的改变（自己或对方的状态都变化），而玩家要评估变化后的游戏空间
+</li>
+</ol>
+<p>
+进行下一步行动，这样会改变约束条件的副作用效果凸显，自发行为突出。策略性就在其中，而策略性导致乐趣。如果玩家的某个行动不导致游戏空间的改变，
+这种行动意义就不大了。
+</p>
+
+<p>
+我要批注  简单规则作用在简单对象集合中，导致复杂性，而复杂性是自发性的温床。需要从数学上、实践上深入研究自发性，相信它是游戏好玩的秘籍。
+需要用Ruby制造一个自发性发生引擎，简单规则作用在简单对象集合，不断调整，直到产生内在复杂性，得到好玩的结果。
+需要阅读更多材料、更深入的材料，全面掌握自发性、简单与复杂。
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-30-3" class="outline-3">
+<h3 id="sec-30-3"><span class="section-number-3">30.3</span> 应用</h3>
+<div class="outline-text-3" id="text-30-3">
+<p>
+我要批注  上面这些方法，提供了改善明朝游戏有趣性的线索。一定要有针对性的研究。
+现在游戏无趣，就是操作性动作少，因而行为少，缺乏策略。
+一些改进想法：
+</p>
+</div>
+
+<div id="outline-container-sec-30-3-1" class="outline-4">
+<h4 id="sec-30-3-1"><span class="section-number-4">30.3.1</span> 玩家采集（操作性动作），能影响自己和别人，能影响游戏空间的本质。 现在，只影响自己，乐趣和互动小。</h4>
+<div class="outline-text-4" id="text-30-3-1">
+<p>
+改进思路：每个城市采集的次数有限，你采集一次，就少一次，别人不能采了（改变游戏空间本质）
+     你采集的时候，动物会干扰你，打跑动物才能得到物品。
+     你采集的时候，别的玩家会干扰你，PK赢了才能得到物品，否则被别的玩家抢走。
+     你采集的时候，会捡到钱包（里面有元宝）
+</p>
+</div>
+</div>
+<div id="outline-container-sec-30-3-2" class="outline-4">
+<h4 id="sec-30-3-2"><span class="section-number-4">30.3.2</span> PK中心只有战斗，动词单一为"PK"</h4>
+<div class="outline-text-4" id="text-30-3-2">
+<p>
+改进思路：
+    玩家之间除了PK之外，还能偷盗、忽悠。（增加操作性动词）
+   玩家A的妙手空空技能如果大于玩家B的“警惕之心”，A在PK中心对B实施“偷盗”，就有机会偷出B的一些金币或身上背包中的物品。
+   玩家A的妙手空空技能如果小于玩家B的“警惕之心”，A在PK中心对B实施“偷盗”，就不能偷出B的一些金币或身上背包中的物品。
+</p>
+
+<p>
+玩家A的忽悠技能如果高于B的“警惕之心”，能够对B使用“忽悠”操作，随机让B的伙伴离开。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-30-3-3" class="outline-4">
+<h4 id="sec-30-3-3"><span class="section-number-4">30.3.3</span> 针对副本的怪物，现在只有单一动词“打”</h4>
+<div class="outline-text-4" id="text-30-3-3">
+<p>
+思路 
+   针对副本的怪物，提供
+   “塞钱收买”、“忽悠劝说”两个动词。
+   “塞钱收买”，就是塞出1000完美刀，对方接受，玩家不通过战斗即可过关。&#x2014;&#x2014;能够用多于一种的方法达成目标。
+   “忽悠劝说”，就是玩家的“忽悠”和“亲和力”等级很高，对方接受，玩家通过劝说也能过关。-&#x2014;&#x2014;&#x2014;能够用多于一种的方法达成目标。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-30-3-4" class="outline-4">
+<h4 id="sec-30-3-4"><span class="section-number-4">30.3.4</span> 劳务市场的工作，有同一时刻工作人数的限制。</h4>
+<div class="outline-text-4" id="text-30-3-4">
+<p>
+思路
+  某工作，有下面标识（23/50),
+  其中，23是当前工作人数，50是同时工作的人数上限。
+原理：玩家工作，副作用就是占了别人的位置。
+  会改变约束条件的副作用效果。
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-30-4" class="outline-3">
+<h3 id="sec-30-4"><span class="section-number-3">30.4</span> 按</h3>
+<div class="outline-text-3" id="text-30-4">
+<p>
+本透镜的实质在于，想办法扩大玩家面对的游戏状态空间。多个动词，能作用到多种对象上的动词，能够用多于一种的方法达成目标， 多个主语，
+都是为了使用乘法原理扩大状态空间。s=AxBxC
+会改变约束条件的副作用效果，其实就是让某个动词使状态空间的状态发生较大的改变。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-30-5" class="outline-3">
+<h3 id="sec-30-5"><span class="section-number-3">30.5</span> 实际例子</h3>
+<div class="outline-text-3" id="text-30-5">
+<p>
+找你妹3中，142那么难的关，一个聪明的玩家用原子弹炸两屏，然后再找东西，效果好。
+这种玩法，并不是设计初衷，但玩家发现了这种自发性玩法。比较有意思。
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-31" class="outline-2">
+<h2 id="sec-31"><span class="section-number-2">31</span> 透镜　24  行为的透镜</h2>
+<div class="outline-text-2" id="text-31">
+</div><div id="outline-container-sec-31-1" class="outline-3">
+<h3 id="sec-31-1"><span class="section-number-3">31.1</span> 透镜描述</h3>
+<div class="outline-text-3" id="text-31-1">
+<p>
+思考哪些是玩家能做的，哪些是它们不能做的，以及为什么会这样。
+问下面的问题
+</p>
+</div>
+<div id="outline-container-sec-31-1-1" class="outline-4">
+<h4 id="sec-31-1-1"><span class="section-number-4">31.1.1</span> 我的游戏中有哪些操作性行为?</h4>
+</div>
+<div id="outline-container-sec-31-1-2" class="outline-4">
+<h4 id="sec-31-1-2"><span class="section-number-4">31.1.2</span> 我的游戏有哪些因而发生的行为?</h4>
+</div>
+<div id="outline-container-sec-31-1-3" class="outline-4">
+<h4 id="sec-31-1-3"><span class="section-number-4">31.1.3</span> 我希望看到哪些因而发生的行为，如何能调整游戏来上这种情况变得可能呢?</h4>
+</div>
+<div id="outline-container-sec-31-1-4" class="outline-4">
+<h4 id="sec-31-1-4"><span class="section-number-4">31.1.4</span> 我对目前因而发生的行为和操作性行为的比例满意吗？</h4>
+</div>
+<div id="outline-container-sec-31-1-5" class="outline-4">
+<h4 id="sec-31-1-5"><span class="section-number-4">31.1.5</span> 在我的游戏中有哪些行为是玩家希望能做但不能做的？我能一定程度上通过操作性行为或者因而发生的行为来让这些变得可能吗？</h4>
+<div class="outline-text-4" id="text-31-1-5">
+<p>
+确定你的游戏拥有的行为会是你作为一名游戏设计师说要做的最基础的决定。对这些行为细小的改变都会对游戏产生巨大的影响，或者会
+让游戏产生极大量自发性的玩法，或者让游戏性变得可预知和单调乏味，谨慎小心地选择你的各种行为，学会倾听你的游戏和你的玩家，以此了解
+你的各种选择会让哪些东西变得可能。
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-32" class="outline-2">
+<h2 id="sec-32"><span class="section-number-2">32</span> 透镜　25  目标的透镜</h2>
+<div class="outline-text-2" id="text-32">
+</div><div id="outline-container-sec-32-1" class="outline-3">
+<h3 id="sec-32-1"><span class="section-number-3">32.1</span> 透镜描述</h3>
+<div class="outline-text-3" id="text-32-1">
+<p>
+为了确保你游戏的目标是合适的，而且良好平衡的，问下面的问题：
+</p>
+</div>
+<div id="outline-container-sec-32-1-1" class="outline-4">
+<h4 id="sec-32-1-1"><span class="section-number-4">32.1.1</span> 我的游戏中的终极目标是什么？</h4>
+</div>
+<div id="outline-container-sec-32-1-2" class="outline-4">
+<h4 id="sec-32-1-2"><span class="section-number-4">32.1.2</span> 这个目标对玩家来说清晰可见吗？</h4>
+</div>
+<div id="outline-container-sec-32-1-3" class="outline-4">
+<h4 id="sec-32-1-3"><span class="section-number-4">32.1.3</span> 假如有一系列目标，玩家能理解吗？</h4>
+</div>
+<div id="outline-container-sec-32-1-4" class="outline-4">
+<h4 id="sec-32-1-4"><span class="section-number-4">32.1.4</span> 各种不同的目标，以一种有意义的方式相互连接吗？</h4>
+</div>
+<div id="outline-container-sec-32-1-5" class="outline-4">
+<h4 id="sec-32-1-5"><span class="section-number-4">32.1.5</span> 我设定的目标，是具体、可达成、值得去做吗？</h4>
+<div class="outline-text-4" id="text-32-1-5">
+<p>
+好的目标，有下面三个特征：
+</p>
+</div>
+<ol class="org-ol"><li>1. 具体。<br/><div class="outline-text-5" id="text-32-1-5-1">
+<p>
+玩家能理解和清晰地说明他们将要达成什么样的目标。
+</p>
+</div>
+</li>
+
+<li>2. 可达成。<br/><div class="outline-text-5" id="text-32-1-5-2">
+<p>
+玩家需要觉得自己有机会达成这目标。如果目标让他们觉得不可实现，他们很快就会放弃。
+</p>
+</div>
+</li>
+
+<li>3. 值得去做。<br/><div class="outline-text-5" id="text-32-1-5-3">
+<p>
+有很多方法让能达成的目标值得去做。
+假如达成目标是一种挑战，那么仅仅是达成目标的过程就是一种奖励了。
+更进一步，可以在玩家达成目标的时候，给玩家一些有价值的东西让你的目标更值得去做。-&#x2014;利用快乐透镜找出奖励玩家的多种
+方式（我要批注：如何具体落实），让玩家对自己达成的成就感到自豪。（老郭批准：给称号！）
+虽然玩家达成目标的时候给玩家奖励很重要，但在玩家达成目标之前让玩家觉得奖励极具奖励性更重要！如此玩家才雄心勃勃地去完成目标。(我要批注 :
+大闹天宫在战斗之前，先告诉玩家这次战斗预料玩家能够获得什么奖励，是很强的，学习之。)
+</p>
+</div>
+</li></ol>
+</div>
+
+<div id="outline-container-sec-32-1-6" class="outline-4">
+<h4 id="sec-32-1-6"><span class="section-number-4">32.1.6</span> 我设定的短期目标和长期目标是平衡的吗？</h4>
+<div class="outline-text-4" id="text-32-1-6">
+<p>
+这种长短期目标的平衡，能让玩家知道什么是当前立刻要做的，什么是最终要达成、而且更有吸引力的的目标。
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-32-1-7" class="outline-4">
+<h4 id="sec-32-1-7"><span class="section-number-4">32.1.7</span> 玩家有机会自己去制定目标吗？</h4>
+</div>
+</div>
+</div>
+
+
+
+
+<div id="outline-container-sec-33" class="outline-2">
+<h2 id="sec-33"><span class="section-number-2">33</span> 透镜#26 规则的透镜</h2>
+<div class="outline-text-2" id="text-33">
+</div><div id="outline-container-sec-33-1" class="outline-3">
+<h3 id="sec-33-1"><span class="section-number-3">33.1</span> 透镜描述</h3>
+<div class="outline-text-3" id="text-33-1">
+<p>
+深入观察你的游戏，直到你能弄懂最深沉的结构。
+</p>
+</div>
+
+<ol class="org-ol"><li>什么是我游戏的基础规则？这些规则和操作规则的区别是什么？<br/><div class="outline-text-5" id="text-33-1-0-1">
+<p>
+基础规则是对游戏状态、这些状态何时改变、以及对状态改变的数学表达。
+Foundational rules are a mathematical representation of game state and how and
+when it changes。
+</p>
+
+<p>
+操作规则：玩家要做什么才能玩这个游戏。
+Operational Rules
+</p>
+</div>
+</li>
+
+<li>随着游戏的进行，玩家之间能形成“法规”或“房规”吗？<br/><div class="outline-text-5" id="text-33-1-0-2">
+<p>
+法规-&#x2014;Law.
+Laws: These only form when games are played in serious, competitive settings,
+where the stakes are high enough that a need is felt to explicitly record the rules
+of good sportsmanship.
+</p>
+
+<p>
+房规
+ house rules are usually created by players in response to a deficiency
+perceived after a few rounds of play.
+</p>
+</div>
+</li>
+
+
+<li>在我的游戏中有不同模式吗？<br/></li>
+<li>各种规则容易理解吗？规则间有让人混淆的地方吗？如果容易混淆，我应该修正规则还是进行详细解释？<br/></li></ol>
+</div>
+<div id="outline-container-sec-33-2" class="outline-3">
+<h3 id="sec-33-2"><span class="section-number-3">33.2</span> 扩展描述</h3>
+</div>
+<div id="outline-container-sec-33-3" class="outline-3">
+<h3 id="sec-33-3"><span class="section-number-3">33.3</span> 应用</h3>
+<div class="outline-text-3" id="text-33-3">
+<p>
+游戏就是规则的集合，你应该投入时间和精力。
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-34" class="outline-2">
+<h2 id="sec-34"><span class="section-number-2">34</span> Lens #27: The Lens of Skill</h2>
+<div class="outline-text-2" id="text-34">
+<p>
+To use this lens, stop looking at your game, and start looking at the skills you
+are asking of your players.
+Ask yourself these questions:
+</p>
+</div>
+<div id="outline-container-sec-34-1" class="outline-3">
+<h3 id="sec-34-1"><span class="section-number-3">34.1</span> ● What skills does my game require from the player?</h3>
+</div>
+<div id="outline-container-sec-34-2" class="outline-3">
+<h3 id="sec-34-2"><span class="section-number-3">34.2</span> ● Are there categories of skill that this game is missing?</h3>
+</div>
+<div id="outline-container-sec-34-3" class="outline-3">
+<h3 id="sec-34-3"><span class="section-number-3">34.3</span> ● Which skills are dominant?</h3>
+</div>
+<div id="outline-container-sec-34-4" class="outline-3">
+<h3 id="sec-34-4"><span class="section-number-3">34.4</span> ● Are these skills creating the experience I want?</h3>
+</div>
+<div id="outline-container-sec-34-5" class="outline-3">
+<h3 id="sec-34-5"><span class="section-number-3">34.5</span> ● Are some players much better at these skills than others? Does this make</h3>
+<div class="outline-text-3" id="text-34-5">
+<p>
+the game feel unfair?
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-34-6" class="outline-3">
+<h3 id="sec-34-6"><span class="section-number-3">34.6</span> ● Can players improve their skills with practice?</h3>
+</div>
+<div id="outline-container-sec-34-7" class="outline-3">
+<h3 id="sec-34-7"><span class="section-number-3">34.7</span> ● Does this game demand the right level of skill?</h3>
+</div>
+</div>
+
+
+<div id="outline-container-sec-35" class="outline-2">
+<h2 id="sec-35"><span class="section-number-2">35</span> 透镜#32 有意义的选择透镜</h2>
+<div class="outline-text-2" id="text-35">
+</div><div id="outline-container-sec-35-1" class="outline-3">
+<h3 id="sec-35-1"><span class="section-number-3">35.1</span> 透镜描述</h3>
+<div class="outline-text-3" id="text-35-1">
+<p>
+当我们在做出有意义的选择的时候，我们感觉自己当前做的事情是很重要的。问：
+</p>
+</div>
+<ol class="org-ol"><li>我让玩家做什么样的选择呢？<br/></li>
+<li>这些选择有意义吗？它们是如何有意义的？<br/></li>
+<li>我给了玩家数量合适的选择了吗？更多的选择会让玩家感觉强大，还是更少的选择让游戏变得更清晰？<br/></li>
+<li>在我的游戏中有什么最优策略吗？<br/></li></ol>
+</div>
+<div id="outline-container-sec-35-2" class="outline-3">
+<h3 id="sec-35-2"><span class="section-number-3">35.2</span> 扩展描述</h3>
+<div class="outline-text-3" id="text-35-2">
+<p>
+一个好的游戏，往往给玩家很多有意义的选择。
+但选择的数量要细致设计。太多，玩家迷惑。太少，玩家感觉失落。
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-35-3" class="outline-3">
+<h3 id="sec-35-3"><span class="section-number-3">35.3</span> 应用</h3>
+<div class="outline-text-3" id="text-35-3">
+<p>
+我要批注  原来设计的采集，玩家没有任何选择，系统随机给玩家特产或宝石，让玩家感觉自己无能为力。失去了乐趣。后来我把
+特产和宝石分开，让玩家感觉有选择。玩家体验上升了。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-35-4" class="outline-3">
+<h3 id="sec-35-4"><span class="section-number-3">35.4</span> 按</h3>
+<div class="outline-text-3" id="text-35-4">
+<p>
+有意义的选择，其实质在于给玩家较大的状态空间。如果选择小，则状态空间小。如果选择无意义，则状态空间小。
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-36" class="outline-2">
+<h2 id="sec-36"><span class="section-number-2">36</span> 透镜#33 三角平衡的透镜</h2>
+<div class="outline-text-2" id="text-36">
+</div><div id="outline-container-sec-36-1" class="outline-3">
+<h3 id="sec-36-1"><span class="section-number-3">36.1</span> 透镜描述</h3>
+<div class="outline-text-3" id="text-36-1">
+<p>
+让游戏变得有趣和刺激的很好方法：
+让玩家能选择：
+</p>
+</div>
+<div id="outline-container-sec-36-1-1" class="outline-4">
+<h4 id="sec-36-1-1"><span class="section-number-4">36.1.1</span> 安稳地低收益地玩</h4>
+</div>
+<div id="outline-container-sec-36-1-2" class="outline-4">
+<h4 id="sec-36-1-2"><span class="section-number-4">36.1.2</span> 冒险，高收益地玩</h4>
+<div class="outline-text-4" id="text-36-1-2">
+<p>
+问：
+我在游戏中设计了三角平衡吗？如果没有，如何设计它呢？
+这三角关系平衡么？换句话说，得到的报酬和承担的风险是旗鼓相当的吗？
+</p>
+
+<p>
+如果你希望建立三角平衡，你需要四处寻找可着手的点。
+一旦建立了这种三角平衡，游戏就精彩和刺激了。
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-36-2" class="outline-3">
+<h3 id="sec-36-2"><span class="section-number-3">36.2</span> 扩展描述</h3>
+<div class="outline-text-3" id="text-36-2">
+<p>
+《太空侵略者》建立了这种三角平衡。玩家可以打平常普通的怪，也可打从上部快速飞过的怪物，得到分数很多，但也很危险。
+</p>
+
+<p>
+我要批注  其实就是提供玩家多项选择，每个选择的风险和报酬，符合等边际法则：经济学的边际收益比上边际投入要衡定。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-36-3" class="outline-3">
+<h3 id="sec-36-3"><span class="section-number-3">36.3</span> 应用</h3>
+</div>
+</div>
+
+
+<div id="outline-container-sec-37" class="outline-2">
+<h2 id="sec-37"><span class="section-number-2">37</span> 透镜#36  竞争的透镜</h2>
+<div class="outline-text-2" id="text-37">
+</div><div id="outline-container-sec-37-1" class="outline-3">
+<h3 id="sec-37-1"><span class="section-number-3">37.1</span> 透镜描述</h3>
+<div class="outline-text-3" id="text-37-1">
+<p>
+确定出谁在某事情上最厉害是人类一项最基本渴求。
+利用这个透镜来确保你竞争类游戏让人们想在其中获胜。问：
+</p>
+</div>
+
+<div id="outline-container-sec-37-1-1" class="outline-4">
+<h4 id="sec-37-1-1"><span class="section-number-4">37.1.1</span> 我的游戏对玩家技能给予了一种公平的衡量吗？</h4>
+</div>
+<div id="outline-container-sec-37-1-2" class="outline-4">
+<h4 id="sec-37-1-2"><span class="section-number-4">37.1.2</span> 玩家想在我的游戏中获胜吗？为什么？</h4>
+</div>
+<div id="outline-container-sec-37-1-3" class="outline-4">
+<h4 id="sec-37-1-3"><span class="section-number-4">37.1.3</span> 赢取这个游戏是人们骄傲的事情吗？为什么？</h4>
+</div>
+<div id="outline-container-sec-37-1-4" class="outline-4">
+<h4 id="sec-37-1-4"><span class="section-number-4">37.1.4</span> 新手玩家有意在我的游戏中竞争吗？</h4>
+</div>
+<div id="outline-container-sec-37-1-5" class="outline-4">
+<h4 id="sec-37-1-5"><span class="section-number-4">37.1.5</span> 老手玩家有意在我的游戏中竞争吗？</h4>
+</div>
+<div id="outline-container-sec-37-1-6" class="outline-4">
+<h4 id="sec-37-1-6"><span class="section-number-4">37.1.6</span> 老手玩家通常肯定打败新手玩家吗？</h4>
+</div>
+</div>
+</div>
+
+
+
+<div id="outline-container-sec-38" class="outline-2">
+<h2 id="sec-38"><span class="section-number-2">38</span> 透镜#39  时间的透镜</h2>
+<div class="outline-text-2" id="text-38">
+<p>
+体验会因为时间太短或者时间太长而不好。
+为了求到合适的时间，问：
+</p>
+</div>
+<div id="outline-container-sec-38-1" class="outline-3">
+<h3 id="sec-38-1"><span class="section-number-3">38.1</span> 是什么决定了我游戏行为的时间长短？</h3>
+<div class="outline-text-3" id="text-38-1">
+<p>
+有的是win and lose condition. 
+注意到，糖果有一个关卡与时间有关。
+      找你妹全部都与时间有关。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-38-2" class="outline-3">
+<h3 id="sec-38-2"><span class="section-number-3">38.2</span> 我的玩家是否因为玩的时间结束太早而不爽？</h3>
+<div class="outline-text-3" id="text-38-2">
+<p>
+如果如此，应该如何改变呢？
+</p>
+</div>
+</div>
+<div id="outline-container-sec-38-3" class="outline-3">
+<h3 id="sec-38-3"><span class="section-number-3">38.3</span> 我的玩家是否因为游戏时间太长而感到厌烦？</h3>
+<div class="outline-text-3" id="text-38-3">
+<p>
+如果如此，应该如何改变呢？
+</p>
+</div>
+</div>
+<div id="outline-container-sec-38-4" class="outline-3">
+<h3 id="sec-38-4"><span class="section-number-3">38.4</span> 给游戏增加一个时间限制是很刺激的！我的游戏能否这样？</h3>
+</div>
+
+<div id="outline-container-sec-38-5" class="outline-3">
+<h3 id="sec-38-5"><span class="section-number-3">38.5</span> 一个混合型时间设定能提高我的游戏吗？</h3>
+<div class="outline-text-3" id="text-38-5">
+<p>
+混合型的含义是：几个短的阶段，组合成一个长的阶段。
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-39" class="outline-2">
+<h2 id="sec-39"><span class="section-number-2">39</span> 透镜40  奖励的透镜</h2>
+<div class="outline-text-2" id="text-39">
+</div><div id="outline-container-sec-39-1" class="outline-3">
+<h3 id="sec-39-1"><span class="section-number-3">39.1</span> 奖励的类型：</h3>
+<div class="outline-text-3" id="text-39-1">
+</div><div id="outline-container-sec-39-1-1" class="outline-4">
+<h4 id="sec-39-1-1"><span class="section-number-4">39.1.1</span> 称赞</h4>
+<div class="outline-text-4" id="text-39-1-1">
+<p>
+通过声音、文字、角色等告诉你很好。实质：游戏评判和认同你了。
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-39-1-2" class="outline-4">
+<h4 id="sec-39-1-2"><span class="section-number-4">39.1.2</span> 分数</h4>
+<div class="outline-text-4" id="text-39-1-2">
+<p>
+简单的成就评判。很管用。
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-39-1-3" class="outline-4">
+<h4 id="sec-39-1-3"><span class="section-number-4">39.1.3</span> 延长游戏</h4>
+<div class="outline-text-4" id="text-39-1-3">
+<p>
+多一条命。
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-39-1-4" class="outline-4">
+<h4 id="sec-39-1-4"><span class="section-number-4">39.1.4</span> 一种门票</h4>
+<div class="outline-text-4" id="text-39-1-4">
+<p>
+新的关卡开启奖励，一道锁着门的钥匙。。。。。。
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-39-1-5" class="outline-4">
+<h4 id="sec-39-1-5"><span class="section-number-4">39.1.5</span> 壮观场面</h4>
+<div class="outline-text-4" id="text-39-1-5">
+<p>
+过场动画
+</p>
+</div>
+</div>
+<div id="outline-container-sec-39-1-6" class="outline-4">
+<h4 id="sec-39-1-6"><span class="section-number-4">39.1.6</span> 表现机会</h4>
+<div class="outline-text-4" id="text-39-1-6">
+<p>
+某些玩家喜欢以特别的衣服和装饰来表现自己。实质：满足玩家想要在这个世界留下自己的印记的基本需求。
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-39-1-7" class="outline-4">
+<h4 id="sec-39-1-7"><span class="section-number-4">39.1.7</span> 力量</h4>
+<div class="outline-text-4" id="text-39-1-7">
+<p>
+玩家想要变得更强大
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-39-1-8" class="outline-4">
+<h4 id="sec-39-1-8"><span class="section-number-4">39.1.8</span> 资源</h4>
+<div class="outline-text-4" id="text-39-1-8">
+<p>
+不用说了。
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-39-1-9" class="outline-4">
+<h4 id="sec-39-1-9"><span class="section-number-4">39.1.9</span> 完成游戏</h4>
+<div class="outline-text-4" id="text-39-1-9">
+<p>
+完成所有目标，能给玩家特殊的完满感。
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-39-2" class="outline-3">
+<h3 id="sec-39-2"><span class="section-number-3">39.2</span> 给奖励的技巧</h3>
+<div class="outline-text-3" id="text-39-2">
+</div><div id="outline-container-sec-39-2-1" class="outline-4">
+<h4 id="sec-39-2-1"><span class="section-number-4">39.2.1</span> 给予多种奖励，组合起来（不光是静态组合-&#x2014;同时给两种以上奖励，而且有动态组合&#x2014;某种奖励积累到一定的程度，再给另一种奖励）</h4>
+</div>
+<div id="outline-container-sec-39-2-2" class="outline-4">
+<h4 id="sec-39-2-2"><span class="section-number-4">39.2.2</span> 让奖励多变，而不是固定不变。</h4>
+<div class="outline-text-4" id="text-39-2-2">
+<p>
+实际例子：打败怪物给　10分奖励，人们觉得没意思。搞成：打败怪物，2/3的概率得0分，1/3机会得到30分，人们觉得这个奖励很好。
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-39-3" class="outline-3">
+<h3 id="sec-39-3"><span class="section-number-3">39.3</span> 透镜描述</h3>
+<div class="outline-text-3" id="text-39-3">
+<p>
+你的游戏时候在适当的时间给了玩家适当数量的奖励？问：
+</p>
+</div>
+<div id="outline-container-sec-39-3-1" class="outline-4">
+<h4 id="sec-39-3-1"><span class="section-number-4">39.3.1</span> 我的游戏现在给出的是哪些奖励？它还能给出别的奖励吗？</h4>
+</div>
+<div id="outline-container-sec-39-3-2" class="outline-4">
+<h4 id="sec-39-3-2"><span class="section-number-4">39.3.2</span> 当玩家在游戏里得到奖励的时候，他们感到兴奋吗？还是感到厌烦呢？为什么会这样？</h4>
+</div>
+
+<div id="outline-container-sec-39-3-3" class="outline-4">
+<h4 id="sec-39-3-3"><span class="section-number-4">39.3.3</span> 给玩家不能理解的奖励，等同于不给玩家奖励。我的游戏玩家，都能理解他们得到的奖励吗？</h4>
+</div>
+<div id="outline-container-sec-39-3-4" class="outline-4">
+<h4 id="sec-39-3-4"><span class="section-number-4">39.3.4</span> 我游戏中的奖励给得太有规律了吗？它们能以更多变的方式给予吗？</h4>
+</div>
+<div id="outline-container-sec-39-3-5" class="outline-4">
+<h4 id="sec-39-3-5"><span class="section-number-4">39.3.5</span> 奖励之间是如何相互关联的？有方法能让它们更好地关联起来吗？</h4>
+</div>
+<div id="outline-container-sec-39-3-6" class="outline-4">
+<h4 id="sec-39-3-6"><span class="section-number-4">39.3.6</span> 我的奖励体系是如何建立起来的？是太快还是太慢还是刚刚好呢？</h4>
+</div>
+</div>
+<div id="outline-container-sec-39-4" class="outline-3">
+<h3 id="sec-39-4"><span class="section-number-3">39.4</span> 扩展描述</h3>
+</div>
+
+<div id="outline-container-sec-39-5" class="outline-3">
+<h3 id="sec-39-5"><span class="section-number-3">39.5</span> 实际例子</h3>
+<div class="outline-text-3" id="text-39-5">
+</div><div id="outline-container-sec-39-5-1" class="outline-4">
+<h4 id="sec-39-5-1"><span class="section-number-4">39.5.1</span> 快速找东西？给你奖励</h4>
+<div class="outline-text-4" id="text-39-5-1">
+<p>
+学霸给找东西加“真快”和“神速xN”。
+如果每两次找东西之间的时间间隔很少，或者持续很少，则给玩家一个很帅
+的评价“真快”和“神速xN”，伴有多汁酷爽的特效哦！
+这个设计很好：
+</p>
+<ol class="org-ol">
+<li>正确地评价了玩家（参见评价的透镜）
+</li>
+<li>正确地奖励了玩家，给予了“称赞”，通过声音、文字、角色等告诉你很好。
+</li>
+</ol>
+</div>
+</div>
+<div id="outline-container-sec-39-5-2" class="outline-4">
+<h4 id="sec-39-5-2"><span class="section-number-4">39.5.2</span> 新主题之开启</h4>
+<div class="outline-text-4" id="text-39-5-2">
+<p>
+新主题开启，把大量新的物件以很炫的展现方式“奖赏”给玩家
+是一种很好的方式。
+</p>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-40" class="outline-2">
+<h2 id="sec-40"><span class="section-number-2">40</span> 透镜41  处罚的透镜</h2>
+<div class="outline-text-2" id="text-40">
+<p>
+使用处罚的时候需要非常谨慎。因为使用不当，玩家会离开。
+如果平衡得好，玩家就很在乎，成功的时候也会很自豪。
+问：
+</p>
+</div>
+<div id="outline-container-sec-40-1" class="outline-3">
+<h3 id="sec-40-1"><span class="section-number-3">40.1</span> 我游戏中，什么是处罚？</h3>
+</div>
+<div id="outline-container-sec-40-2" class="outline-3">
+<h3 id="sec-40-2"><span class="section-number-3">40.2</span> 我为什么要处罚玩家？目的是什么？</h3>
+</div>
+<div id="outline-container-sec-40-3" class="outline-3">
+<h3 id="sec-40-3"><span class="section-number-3">40.3</span> 我的处罚对于玩家公平吗？为什么？</h3>
+</div>
+<div id="outline-container-sec-40-4" class="outline-3">
+<h3 id="sec-40-4"><span class="section-number-3">40.4</span> 是否有一种办法，能把处罚变成奖励，然后获得同样、甚至更好的效果？</h3>
+</div>
+<div id="outline-container-sec-40-5" class="outline-3">
+<h3 id="sec-40-5"><span class="section-number-3">40.5</span> 我的强处罚是否已经与游戏中强奖励平衡了？</h3>
+</div>
+</div>
+<div id="outline-container-sec-41" class="outline-2">
+<h2 id="sec-41"><span class="section-number-2">41</span> 透镜42  简单/复杂的透镜</h2>
+<div class="outline-text-2" id="text-41">
+</div><div id="outline-container-sec-41-1" class="outline-3">
+<h3 id="sec-41-1"><span class="section-number-3">41.1</span> 复杂的类型：</h3>
+<div class="outline-text-3" id="text-41-1">
+</div><div id="outline-container-sec-41-1-1" class="outline-4">
+<h4 id="sec-41-1-1"><span class="section-number-4">41.1.1</span> 天生复杂度</h4>
+<div class="outline-text-4" id="text-41-1-1">
+<p>
+Innate complexity. When the very rules of the game get very complex, I call this
+innate complexity. This is the kind of complexity that often gets a bad name. It
+generally arises either because the designer is trying to simulate a complex real-
+world situation, or because extra rules need to be added to a game in order to
+balance it. When you see a ruleset with lots of “exception cases,” this is gener-
+ally a ruleset that is innately complex. Games like this can be hard to learn, but
+some people really enjoy mastering the complex rulesets.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-41-1-2" class="outline-4">
+<h4 id="sec-41-1-2"><span class="section-number-4">41.1.2</span> 自发复杂度</h4>
+<div class="outline-text-4" id="text-41-1-2">
+<p>
+Emergent complexity. This is the kind of complexity that everyone praises.
+Games like Go that have a very simple ruleset that gives rise to very complex sit-
+uations are said to have emergent complexity. When games are praised for being
+simple and complex at the same time, it is the emergent complexity that is being
+praised.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-41-2" class="outline-3">
+<h3 id="sec-41-2"><span class="section-number-3">41.2</span> 透镜描述</h3>
+<div class="outline-text-3" id="text-41-2">
+<p>
+追求：在一个简单的系统中产生出有意义的复杂度。
+</p>
+</div>
+<div id="outline-container-sec-41-2-1" class="outline-4">
+<h4 id="sec-41-2-1"><span class="section-number-4">41.2.1</span> 我游戏中，有哪些元素是具有天生复杂程度的？</h4>
+</div>
+<div id="outline-container-sec-41-2-2" class="outline-4">
+<h4 id="sec-41-2-2"><span class="section-number-4">41.2.2</span> 这些天生复杂度有途径能转变成自发复杂度吗？</h4>
+</div>
+
+<div id="outline-container-sec-41-2-3" class="outline-4">
+<h4 id="sec-41-2-3"><span class="section-number-4">41.2.3</span> 在游戏中，有产生自发复杂度吗？如果没有，为什么不能产生呢？</h4>
+</div>
+
+<div id="outline-container-sec-41-2-4" class="outline-4">
+<h4 id="sec-41-2-4"><span class="section-number-4">41.2.4</span> 我游戏中哪些元素太过简单了？</h4>
+</div>
+</div>
+<div id="outline-container-sec-41-3" class="outline-3">
+<h3 id="sec-41-3"><span class="section-number-3">41.3</span> 扩展描述</h3>
+</div>
+
+<div id="outline-container-sec-41-4" class="outline-3">
+<h3 id="sec-41-4"><span class="section-number-3">41.4</span> 实际例子</h3>
+<div class="outline-text-3" id="text-41-4">
+<p>
+《找你妹2014》的物品，每个都简单，容易认，但放到一起，就复杂难找了。
+好像就是，“简单”的堆彻，最终照成复杂？
+</p>
+</div>
+</div>
+<div id="outline-container-sec-41-5" class="outline-3">
+<h3 id="sec-41-5"><span class="section-number-3">41.5</span> 我要批注</h3>
+<div class="outline-text-3" id="text-41-5">
+<p>
+其实就是量变产生质变？
+</p>
+</div>
+<div id="outline-container-sec-41-5-1" class="outline-4">
+<h4 id="sec-41-5-1"><span class="section-number-4">41.5.1</span> 围棋</h4>
+<div class="outline-text-4" id="text-41-5-1">
+<p>
+《围棋》的确是用简单规则达到自发性复杂的经典。
+但是。。。。在我们游戏设计中，如何达到这一点呢？难啊。需要设计天才。
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-41-5-2" class="outline-4">
+<h4 id="sec-41-5-2"><span class="section-number-4">41.5.2</span> 找你妹</h4>
+<div class="outline-text-4" id="text-41-5-2">
+<p>
+每个物件都很简单，但放到一起，要找就比较麻烦了，复杂了。
+</p>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-42" class="outline-2">
+<h2 id="sec-42"><span class="section-number-2">42</span> Lens #43: The Lens of Elegance</h2>
+<div class="outline-text-2" id="text-42">
+</div><div id="outline-container-sec-42-1" class="outline-3">
+<h3 id="sec-42-1"><span class="section-number-3">42.1</span> 描述</h3>
+<div class="outline-text-3" id="text-42-1">
+<p>
+ Most “classic games” are considered to be masterpieces of elegance. Use this
+lens to make your game as elegant as possible. Ask yourself these questions:
+ What are the elements of my game?
+</p>
+</div>
+<div id="outline-container-sec-42-1-1" class="outline-4">
+<h4 id="sec-42-1-1"><span class="section-number-4">42.1.1</span> What are the purposes of each element? Count these up to give the element an “elegance rating.”</h4>
+</div>
+<div id="outline-container-sec-42-1-2" class="outline-4">
+<h4 id="sec-42-1-2"><span class="section-number-4">42.1.2</span> For elements with only one or two purposes, can some of these be combined into each other, or removed altogether?</h4>
+</div>
+<div id="outline-container-sec-42-1-3" class="outline-4">
+<h4 id="sec-42-1-3"><span class="section-number-4">42.1.3</span> For elements with several purpose is it possible for them to take on even more?</h4>
+</div>
+</div>
+<div id="outline-container-sec-42-2" class="outline-3">
+<h3 id="sec-42-2"><span class="section-number-3">42.2</span> 应用</h3>
+<div class="outline-text-3" id="text-42-2">
+<p>
+需要逐条分析游戏的元素。
+尽量确保元素不再增加的条件下，增加单个元素扛的目标数量，
+从而增加游戏乐趣,同时又保证了游戏较为简单。
+</p>
+
+<p>
+找你妹3的钥匙，是单一目的元素：只能开启隐藏关卡。所以设计上是不成功的。
+如何改进？如果玩家拥有足够的钥匙，就能开启一个新关卡？
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-43" class="outline-2">
+<h2 id="sec-43"><span class="section-number-2">43</span> 透镜#44 特色的透镜</h2>
+<div class="outline-text-2" id="text-43">
+</div><div id="outline-container-sec-43-1" class="outline-3">
+<h3 id="sec-43-1"><span class="section-number-3">43.1</span> 描述</h3>
+<div class="outline-text-3" id="text-43-1">
+<p>
+1.在我的游戏里面，有什么东西是很奇怪并且人们谈起来很兴奋？
+2.我的游戏中，有着让它独一无二有趣特质的东西吗？
+3.我的游戏中，有玩家喜欢的瑕疵吗？
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-43-2" class="outline-3">
+<h3 id="sec-43-2"><span class="section-number-3">43.2</span> 扩展</h3>
+<div class="outline-text-3" id="text-43-2">
+<p>
+其实，一些奇怪的设定出现在经典游戏，例如超级玛丽的管子工，地产大亨的船和鞋子之类。
+游戏成了，这些设定就是“特色”了，如果游戏没成，设定也就是浮云而已。
+</p>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-sec-44" class="outline-2">
+<h2 id="sec-44"><span class="section-number-2">44</span> 透镜#49 进展可见的透镜</h2>
+<div class="outline-text-2" id="text-44">
+</div><div id="outline-container-sec-44-1" class="outline-3">
+<h3 id="sec-44-1"><span class="section-number-3">44.1</span> 透镜描述</h3>
+<div class="outline-text-3" id="text-44-1">
+<p>
+当玩家在解决一个复杂困难的问题时，他们需要看到自己正在做出的进展。
+为了确保他们得到这种反馈，问自己下面的问题。
+</p>
+</div>
+<ol class="org-ol"><li>在我的游戏或迷题中，到底什么才算是做出了进展？<br/></li>
+<li>在我的游戏或迷题中，是否有足够多的进展？我有办法为其加入更多的进展吗？<br/></li>
+<li>哪些进展是可见的，哪些进展是隐蔽的？我有办法揭示出这些隐蔽的进展吗？<br/></li></ol>
+</div>
+<div id="outline-container-sec-44-2" class="outline-3">
+<h3 id="sec-44-2"><span class="section-number-3">44.2</span> 扩展描述</h3>
+<div class="outline-text-3" id="text-44-2">
+<p>
+让人们继续坚持搞完魔方游戏的很重要一点，在于它提供了进展感。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-44-3" class="outline-3">
+<h3 id="sec-44-3"><span class="section-number-3">44.3</span> 应用</h3>
+<div class="outline-text-3" id="text-44-3">
+<p>
+手机游戏”糖果“的那地图，把进展可见搞到极致了，效果很好。
+</p>
+
+<p>
+我要批注  “进展可见”的确很好。
+对明朝的改进，一个重要方面就是确保了“进展可见”。具体表现在：
+</p>
+</div>
+<div id="outline-container-sec-44-3-1" class="outline-4">
+<h4 id="sec-44-3-1"><span class="section-number-4">44.3.1</span> 玩家打副本，进展可见。</h4>
+<div class="outline-text-4" id="text-44-3-1">
+<p>
+原来的版本，“副本”就是“副本”，玩家不知道为什么要打它。打它有什么好处？我有什么进展？很迷茫。
+改进思路：改为“过关通道”，并且加了Tips来显示“通向成都，打通率35%”。
+做法评述：“过关通道”使玩家有清晰的目标感。
+       “通向成都，打通率35%”。是进展可见。
+</p>
+
+<p>
+原来的版本，副本中，每打通副本一个怪物，没有提供进展的报告。
+改进思路：每打败一个怪物，就出现“过关进度：25%"这种提示，给了玩家具体、强烈的进展可见。
+做法评述：
+      玩家有很强的目标感和明确具体的进展可见。因此，玩家体验上来了。
+</p>
+
+<p>
+改进思路：上一关、下一关处，出现这个过关通道的总关数，当前打通关数，这个也能给玩家明确的进展信息。
+</p>
+
+<p>
+英文原文：
+</p>
+
+<p>
+Lens #49: The Lens of Visible Progress
+Players need to see that they are making progress when solving a difficult prob-
+lem. To make sure they are getting this feedback, ask yourself these questions:
+● What does it mean to make progress in my game or puzzle?
+● Is there enough progress in my game? Is there a way I can add more interim
+   steps of progressive success?
+● What progress is visible, and what progress is hidden? Can I find a way to
+   reveal what is hidden?
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-44-3-2" class="outline-4">
+<h4 id="sec-44-3-2"><span class="section-number-4">44.3.2</span> 科举考试</h4>
+<div class="outline-text-4" id="text-44-3-2">
+<p>
+原来版本，”科举考场“下面，没有写明白玩家的奋斗目标，让玩家困惑。
+改进思路：
+   改为”考学目标：进士“，目标感就清晰了。
+进一步改进：
+   改为”考进士(56%)“，则进展更可见。
+</p>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-45" class="outline-2">
+<h2 id="sec-45"><span class="section-number-2">45</span> 透镜57 反馈的透镜</h2>
+<div class="outline-text-2" id="text-45">
+<p>
+玩家从游戏中得到的反馈包括方方面面的内容：例如评判，奖励，指引，鼓励和挑战。
+利用这个透镜来确保你的反馈循环能产生你想要的体验。
+在游戏的每个时刻，都问问自己以下的问题：
+</p>
+</div>
+<div id="outline-container-sec-45-1" class="outline-3">
+<h3 id="sec-45-1"><span class="section-number-3">45.1</span> 透镜描述</h3>
+<div class="outline-text-3" id="text-45-1">
+<p>
+玩家在此刻需要了解什么呢？(need to know)-&#x2014;&gt;系统需要让玩家知道的
+玩家在此刻想要了解什么呢？(want to know)-&#x2014;&gt;站在玩家角度想的
+你希望玩家在此刻感受到什么呢？如何给予反馈能产生这种感受？
+玩家在此刻想要感受到什么呢？她们有机会去建立一种情景来得到她们想要的感受吗？
+玩家此刻的目标是什么？什么样的反馈有助于她们更接近这个目标呢？
+</p>
+</div>
+</div>
+<div id="outline-container-sec-45-2" class="outline-3">
+<h3 id="sec-45-2"><span class="section-number-3">45.2</span> 扩展描述</h3>
+<div class="outline-text-3" id="text-45-2">
+<p>
+使用这个透镜会耗费你不少的精力，因为一个游戏中的反馈是需要连续不断的，并且需要在不同的情况下给出不同的反馈。
+这需要在游戏中的每个时刻都耗费一定的心力去使用这个透镜，但是你花的这些时间都是很值得的，因为它有助于确保你的
+游戏是清晰的、具有挑战性的和值得去玩的。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-45-3" class="outline-3">
+<h3 id="sec-45-3"><span class="section-number-3">45.3</span> 应用</h3>
+<div class="outline-text-3" id="text-45-3">
+<p>
+没有反馈的体验，是充满挫败和让人不知所措的。美国和英国过街按钮的对比：前者不给反馈，让用户相当抓狂，后者给予了反馈，用户体验很好。
+实际案例：黑光HD的第一版，地图界面，有个闪动的双剑。指示玩家这个地方可点击。但玩家点击后，没有任何反馈。因为
+需要点击双剑下面的地图按钮。这种设计，是没有反馈，带来很大的挫败感。
+</p>
+
+<p>
+我要批注  应该对每个界面(Interface)、在游戏进行的每个时刻(Movement)，问这些问题并试图解决之。这样，游戏才能对玩家体贴、友好。
+        对于(I,M)二维矩阵，问问题。 
+我要批注  重视玩家体验，就是理解和重视玩家的苦衷。可以动用这个透镜来实际提升。
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-46" class="outline-2">
+<h2 id="sec-46"><span class="section-number-2">46</span> 透镜58 多汁的透镜</h2>
+<div class="outline-text-2" id="text-46">
+</div><div id="outline-container-sec-46-1" class="outline-3">
+<h3 id="sec-46-1"><span class="section-number-3">46.1</span> 透镜描述</h3>
+<div class="outline-text-3" id="text-46-1">
+<p>
+有干巴巴的界面，也有多汁的界面。
+为设计出多汁的界面：
+</p>
+<ol class="org-ol">
+<li>我的界面，给了玩家行为持续的反馈吗？
+</li>
+<li>玩家的行为，产生了二级动作吗？二级动作是否强大和有趣呢？
+</li>
+<li>多汁系统在奖励玩家的时候，会同时用多种方法哦！我在奖励玩家的时候，我能用多少种方法呢？我能
+找到更多方法吗？
+</li>
+</ol>
+</div>
+</div>
+<div id="outline-container-sec-46-2" class="outline-3">
+<h3 id="sec-46-2"><span class="section-number-3">46.2</span> 应用</h3>
+<div class="outline-text-3" id="text-46-2">
+<p>
+这个多汁的界面，其实做的经典的是“Candy Crush”,效果相当好。
+</p>
+<ol class="org-ol">
+<li>地图上，玩家所在最新位置，有光晕在动。
+</li>
+<li>糖果画得绚丽饱满，想舔。
+</li>
+<li>玩家的一个行动，可能引发二级动作（糖果爆炸等），强大而有趣。
+</li>
+<li>按钮一动一动的。
+</li>
+</ol>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-47" class="outline-2">
+<h2 id="sec-47"><span class="section-number-2">47</span> 透镜59 渠道和维度的透镜</h2>
+<div class="outline-text-2" id="text-47">
+<p>
+任何界面的重要目标是传达信息。确定出传达必要的信息的最佳方式。步骤：
+</p>
+<ol class="org-ol">
+<li>列出所有信息并且划分优先等级。
+不是所有的信息都重要，因此要对信息划分等级： 每时每刻都要看的信息、经常看的信息、只需偶然看看的信息。
+</li>
+<li>列出信息传达的渠道
+也就是显示信息的区域，比如屏幕顶部、右下角，音效、音乐，角色聊天泡泡等。
+</li>
+<li>把信息映射到渠道上
+把各类信息映射到不同的渠道上。重要的信息，在最重要的渠道上。方法：部分靠直觉，部分靠经验，大部分靠反复试验&#x2014;绘制很多草图。
+</li>
+<li>信息的维度玩家从游戏中得到的反馈包括方方面面的内容：例如评判，奖励，指引，鼓励和挑战。
+</li>
+</ol>
+<p>
+利用这个透镜来确保你的反馈循环能产生你想要的体验。
+在游戏的每个时刻，都问问自己以下的问题：
+</p>
+
+<p>
+   每一个信息渠道都有多种维度：
+    显示出数字
+    数字的颜色
+    数字的大小
+    数字的字体
+   当你在一个渠道上用多种维度来强化一项信息时，能够让你想要传达的信息变得非常清晰（多汁）。
+对渠道和维度的出色利用能够打造出一个简练和布局良好的界面。
+</p>
+</div>
+
+<div id="outline-container-sec-47-1" class="outline-3">
+<h3 id="sec-47-1"><span class="section-number-3">47.1</span> 透镜描述</h3>
+<div class="outline-text-3" id="text-47-1">
+<p>
+选择如何去把游戏信息映射到各种渠道和维度上是设计游戏界面的核心。问：
+有哪些数据需要传达给玩家呢？又有哪些数据需要从玩家那里传来呢？
+哪些数据是最重要的？
+我有哪些渠道能够用来传达这些数据？
+哪些渠道最合适传达哪些数据？为什么？
+在不同渠道上，有哪些维度是可用的？
+我该如何利用这些维度呢？
+</p>
+</div>
+</div>
+<div id="outline-container-sec-47-2" class="outline-3">
+<h3 id="sec-47-2"><span class="section-number-3">47.2</span> 扩展描述</h3>
+</div>
+
+
+<div id="outline-container-sec-47-3" class="outline-3">
+<h3 id="sec-47-3"><span class="section-number-3">47.3</span> 应用</h3>
+</div>
+</div>
+
+
+<div id="outline-container-sec-48" class="outline-2">
+<h2 id="sec-48"><span class="section-number-2">48</span> 透镜61 兴趣曲线的透镜</h2>
+<div class="outline-text-2" id="text-48">
+<p>
+兴趣曲线是你作为游戏设计师能用上的最有用和最具多用途的工具。
+</p>
+</div>
+<div id="outline-container-sec-48-1" class="outline-3">
+<h3 id="sec-48-1"><span class="section-number-3">48.1</span> 透镜描述</h3>
+<div class="outline-text-3" id="text-48-1">
+<p>
+能迷惑住人心的事物对于每个人都是不同的。但最让人接受的迷惑方式明显是对于每个人都类似的。
+为了了解玩家的兴趣在你设计的体验过程中随时间是如何变化的，问一下自己：
+</p>
+</div>
+<div id="outline-container-sec-48-1-1" class="outline-4">
+<h4 id="sec-48-1-1"><span class="section-number-4">48.1.1</span> 假如我对我的体验绘制一条兴趣曲线，那它大概是什么样的形状的？</h4>
+</div>
+
+<div id="outline-container-sec-48-1-2" class="outline-4">
+<h4 id="sec-48-1-2"><span class="section-number-4">48.1.2</span> 它会有一处勾人的地方吗？</h4>
+</div>
+<div id="outline-container-sec-48-1-3" class="outline-4">
+<h4 id="sec-48-1-3"><span class="section-number-4">48.1.3</span> 他有着兴趣的逐步提升，且具备周期性的休息中断吗？</h4>
+</div>
+<div id="outline-container-sec-48-1-4" class="outline-4">
+<h4 id="sec-48-1-4"><span class="section-number-4">48.1.4</span> 体验里，有一个比任何事情都有趣的大结局吗？</h4>
+</div>
+<div id="outline-container-sec-48-1-5" class="outline-4">
+<h4 id="sec-48-1-5"><span class="section-number-4">48.1.5</span> 什么样的调整，能让我拥有一条更棒的兴趣曲线吗？</h4>
+</div>
+<div id="outline-container-sec-48-1-6" class="outline-4">
+<h4 id="sec-48-1-6"><span class="section-number-4">48.1.6</span> 在我的兴趣曲线中有分形结构吗？它应该具备吗？</h4>
+</div>
+<div id="outline-container-sec-48-1-7" class="outline-4">
+<h4 id="sec-48-1-7"><span class="section-number-4">48.1.7</span> 我直觉觉察到的兴趣曲线，和观察玩家所了解到的兴趣曲线一致程度如何？如果让玩家来绘制兴趣曲线，是怎么样的呢？</h4>
+</div>
+</div>
+<div id="outline-container-sec-48-2" class="outline-3">
+<h3 id="sec-48-2"><span class="section-number-3">48.2</span> 扩展描述</h3>
+</div>
+
+<div id="outline-container-sec-48-3" class="outline-3">
+<h3 id="sec-48-3"><span class="section-number-3">48.3</span> 应用</h3>
+<div class="outline-text-3" id="text-48-3">
+<p>
+古琴音乐节的演出，就明显有一个故意制造出的兴趣曲线。艺术是相通的啊。 
+</p>
+
+<p>
+《找你妹2014》中，要在一开始游戏出一个显著不同的美术效果，然后在玩几局之后，出一个
+物品只有轮廓的玩法，这是为了提兴趣曲线。
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-49" class="outline-2">
+<h2 id="sec-49"><span class="section-number-2">49</span> 透镜63 美好事物的透镜</h2>
+<div class="outline-text-2" id="text-49">
+<p>
+诗般表现：Poetry of Presentation
+体验时候用到的艺术元素越美好，则观众会觉得它越有趣和越吸引。
+我们喜欢体会各种极为美好的事务。通过下面的问题，确保你的游戏充满兴趣：
+</p>
+</div>
+<div id="outline-container-sec-49-1" class="outline-3">
+<h3 id="sec-49-1"><span class="section-number-3">49.1</span> 透镜描述</h3>
+<div class="outline-text-3" id="text-49-1">
+</div><div id="outline-container-sec-49-1-1" class="outline-4">
+<h4 id="sec-49-1-1"><span class="section-number-4">49.1.1</span> 哪些元素组成了我的游戏？如何能让每种元素变得更美好？</h4>
+</div>
+<div id="outline-container-sec-49-1-2" class="outline-4">
+<h4 id="sec-49-1-2"><span class="section-number-4">49.1.2</span> 有些事物本身并不美好，但组合起来就变得美好了。我的游戏中各种元素能够通过组合变得如诗般美好？</h4>
+</div>
+<div id="outline-container-sec-49-1-3" class="outline-4">
+<h4 id="sec-49-1-3"><span class="section-number-4">49.1.3</span> 在我的游戏背景下，美好意味着什么？</h4>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-50" class="outline-2">
+<h2 id="sec-50"><span class="section-number-2">50</span> 透镜  66  障碍的透镜  &lt;&#x2013;&#x2014;&gt;透镜25  目标的透镜</h2>
+<div class="outline-text-2" id="text-50">
+</div><div id="outline-container-sec-50-1" class="outline-3">
+<h3 id="sec-50-1"><span class="section-number-3">50.1</span> 透镜描述</h3>
+<div class="outline-text-3" id="text-50-1">
+<p>
+这个透镜，是“目标透镜”的姊妹透镜！
+一个有着各种障碍的目标是值得追求的。
+利用这个透镜来确保你的各种障碍是玩家想要克服的障碍。
+</p>
+<ol class="org-ol">
+<li>主角和目标有着什么样的关系？为什么角色会在意这个目标？
+</li>
+<li>角色和目标之间有着哪些障碍？
+</li>
+<li>在这些障碍背后存在敌对的双方吗？主角和敌对双方之间的关系是什么样的？
+</li>
+<li>这些障碍在难度上是逐渐提升的吗？
+</li>
+<li>有人说，障碍越大，故事越好，你的障碍足够大吗？它们还可以足够大吗？
+</li>
+<li>出色的故事往往包含着主角为了克服障碍所作出的转变。你的主角是如何转变的？
+</li>
+</ol>
+</div>
+</div>
+<div id="outline-container-sec-50-2" class="outline-3">
+<h3 id="sec-50-2"><span class="section-number-3">50.2</span> 扩展描述</h3>
+<div class="outline-text-3" id="text-50-2">
+<p>
+好莱坞电影剧本创作的古老箴言：
+一个好的故事主要组成材料是：1）一个有着特定目标的角色 2）阻碍他达成目标的各种障碍。
+在角色尝试去克服障碍的过程中，各种有趣的冲突也会随着产生。
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-50-3" class="outline-3">
+<h3 id="sec-50-3"><span class="section-number-3">50.3</span> 应用</h3>
+<div class="outline-text-3" id="text-50-3">
+<p>
+明朝中，明确告诉玩家，需要克服各种障碍去下一个城市。
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-50-4" class="outline-3">
+<h3 id="sec-50-4"><span class="section-number-3">50.4</span> 新观察  2013年05月20日 12:00:05</h3>
+<div class="outline-text-3" id="text-50-4">
+<p>
+手游中，存在一个奇怪现象：
+一开始的关貌似简单，但是就是过不去，玩家就会一次又一次尝试，反而增加了游戏的魅力以及玩家玩它的动力。例子：
+《暴走大冒险》、《找你妹》
+关键点在于：
+1, 貌似简单，但过不了关，照成玩家巨大反差和惊愕
+2, 挑拨了玩家的感情，心里不服，就是想过去
+3，手游与页游平台不一样，玩家习惯不一样。同样的设计在页游上是不行的。
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-51" class="outline-2">
+<h2 id="sec-51"><span class="section-number-2">51</span> 故事语法:英雄历程(Hero’s Journey)</h2>
+<div class="outline-text-2" id="text-51">
+<p>
+Vogler’s Synopsis of the Hero’s Journey
+</p>
+<ol class="org-ol">
+<li>The Ordinary World — Establishing scenes that show our hero is a regular per-
+</li>
+</ol>
+<p>
+son leading an ordinary life.
+</p>
+<ol class="org-ol">
+<li>The Call to Adventure — The hero is presented with a challenge that disrupts
+</li>
+</ol>
+<p>
+their ordinary life.
+</p>
+<ol class="org-ol">
+<li>Refusal of the Call — The hero makes excuses about why he can’t go on the
+</li>
+</ol>
+<p>
+adventure.
+</p>
+<ol class="org-ol">
+<li>Meeting with the Mentor — Some wise figure gives advice, training, or aid.
+</li>
+<li>Crossing the Threshold — The hero leaves the ordinary world (often under
+</li>
+</ol>
+<p>
+pressure) and enters the adventure world.
+</p>
+<ol class="org-ol">
+<li>Tests, Allies, Enemies — The hero faces minor challenges, makes allies, con-
+</li>
+</ol>
+<p>
+fronts enemies, and learns the workings of the adventure world.
+</p>
+<ol class="org-ol">
+<li>Approaching the Cave — The hero encounters setbacks and needs to try some-
+</li>
+</ol>
+<p>
+thing new.
+</p>
+<ol class="org-ol">
+<li>The Ordeal — The hero faces a peak life or death crisis.
+</li>
+<li>The Reward — The hero survives, overcomes their fear, and gets the reward.
+</li>
+<li>The Road Back — The hero returns to the ordinary world, but the problems still
+</li>
+</ol>
+<p>
+aren’t all solved.
+</p>
+<ol class="org-ol">
+<li>Resurrection — The hero faces a still greater crisis, and has to use everything
+</li>
+</ol>
+<p>
+he has learned.
+</p>
+<ol class="org-ol">
+<li>Returning with the Elixir — The journey is now well and truly complete,
+</li>
+</ol>
+<p>
+and the hero’s success has improved the lives of everyone in the ordinary
+world.
+</p>
+</div>
+
+<div id="outline-container-sec-51-1" class="outline-3">
+<h3 id="sec-51-1"><span class="section-number-3">51.1</span> 黑客帝国的剧情</h3>
+<div class="outline-text-3" id="text-51-1">
+<p>
+完全符合上述故事文法，虽然俗，但效果很好。
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-52" class="outline-2">
+<h2 id="sec-52"><span class="section-number-2">52</span> Lens #68: The Lens of the Hero’s Journey</h2>
+<div class="outline-text-2" id="text-52">
+<p>
+Many heroic stories have similar structure. Use this lens to make sure you
+haven’t missed out on any elements that might improve your story. Ask your-
+self these questions:
+● Does my story have elements that qualify it as a heroic story?
+● If so, how does it match up with the structure of the Hero’s Journey?
+● Would my story be improved by including more archetypical elements?
+● Does my story match this form so closely that it feels hackneyed?
+  过于接近这种形式以至于让人觉得陈腐吗？
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-53" class="outline-2">
+<h2 id="sec-53"><span class="section-number-2">53</span> 透镜#72  间接控制的透镜</h2>
+<div class="outline-text-2" id="text-53">
+<p>
+使用间接的（而不是直接的）手段，让玩家被微妙地影响来获得设计者设定的最佳体验。
+</p>
+</div>
+<div id="outline-container-sec-53-1" class="outline-3">
+<h3 id="sec-53-1"><span class="section-number-3">53.1</span> 间接控制手段一：限制</h3>
+<div class="outline-text-3" id="text-53-1">
+<p>
+通过提供有限的选择，来给玩家一种自由感，其实比给玩家填空题（最大自由）进行
+了限制。而且选择自身的设定上就可达到进行控制的意图。
+相比最大自由，人们其实喜欢和认可这种限制。例子就是作者在公园卖不同口味糖果。
+1.让顾客自己报需要什么，顾客迟疑并不知道该如何报。
+2.报给顾客60种口味，顾客晕菜并且恐惧。
+3.让顾客从6种所谓最受欢迎的口味中选择，顾客就高兴了。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-53-2" class="outline-3">
+<h3 id="sec-53-2"><span class="section-number-3">53.2</span> 间接控制手段二：目标</h3>
+<div class="outline-text-3" id="text-53-2">
+<p>
+通过设置目标来控制玩家，是最简单最常用的手段。
+一旦设置了清晰且可以达成的目标后，你就可以通过目标来雕琢你的游戏世界了。
+玩家只会去那些有目标的场所。
+玩家只会做满足目标的事情。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-53-3" class="outline-3">
+<h3 id="sec-53-3"><span class="section-number-3">53.3</span> 间接控制手段三：界面</h3>
+<div class="outline-text-3" id="text-53-3">
+<p>
+（原文中文译文没看懂，需要看英文原文）
+大明的考试结束界面中，如果玩家20题中有错题，则界面中有一个很大的按钮
+“我不服，要全对”和一个很小的按钮“算了，我认栽”。
+前面那个大按钮是要花钱的。
+通过这种界面控制，间接诱导玩家花钱。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-53-4" class="outline-3">
+<h3 id="sec-53-4"><span class="section-number-3">53.4</span> 间接控制手段四：视觉设计</h3>
+<div class="outline-text-3" id="text-53-4">
+<p>
+一些视觉上的设计，能微妙、润物无声地控制（诱导）玩家的行为。作者给出的
+例子：玩家面对宫殿王座的行为：直接飞过去，闪到两边去，都由美术设计（画线）
+诱导成功了。
+《找你妹2014》的地图上，姐姐头像面对最新关卡一闪一闪，也是类似。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-53-5" class="outline-3">
+<h3 id="sec-53-5"><span class="section-number-3">53.5</span> 间接控制手段五：角色</h3>
+<div class="outline-text-3" id="text-53-5">
+<p>
+角色也是间接控制玩家的手段。
+如果能让玩家在意角色-&#x2014;让他们真心去服从、保护、帮助和毁灭这些角色，你就
+有了很好的工具来帮助你控制玩家愿意尝试去做的事。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-53-6" class="outline-3">
+<h3 id="sec-53-6"><span class="section-number-3">53.6</span> 间接控制手段六：音乐</h3>
+<div class="outline-text-3" id="text-53-6">
+<p>
+用音乐来控制游戏节奏。
+快餐店和商场一直在用这种手段。
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-sec-53-7" class="outline-3">
+<h3 id="sec-53-7"><span class="section-number-3">53.7</span> 提问</h3>
+<div class="outline-text-3" id="text-53-7">
+</div><div id="outline-container-sec-53-7-1" class="outline-4">
+<h4 id="sec-53-7-1"><span class="section-number-4">53.7.1</span> 理想来说，我想让玩家做什么事情？</h4>
+</div>
+<div id="outline-container-sec-53-7-2" class="outline-4">
+<h4 id="sec-53-7-2"><span class="section-number-4">53.7.2</span> 我能设定各种限制来让玩家做这些事情吗？</h4>
+</div>
+<div id="outline-container-sec-53-7-3" class="outline-4">
+<h4 id="sec-53-7-3"><span class="section-number-4">53.7.3</span> 我能设定各种目标来让玩家做这些事情吗？</h4>
+</div>
+<div id="outline-container-sec-53-7-4" class="outline-4">
+<h4 id="sec-53-7-4"><span class="section-number-4">53.7.4</span> 我能设定界面来让玩家做这些事情吗？</h4>
+</div>
+<div id="outline-container-sec-53-7-5" class="outline-4">
+<h4 id="sec-53-7-5"><span class="section-number-4">53.7.5</span> 我能用视觉设计来让玩家做这些事情吗？</h4>
+</div>
+<div id="outline-container-sec-53-7-6" class="outline-4">
+<h4 id="sec-53-7-6"><span class="section-number-4">53.7.6</span> 我能用角色来让玩家做这些事情吗？</h4>
+</div>
+<div id="outline-container-sec-53-7-7" class="outline-4">
+<h4 id="sec-53-7-7"><span class="section-number-4">53.7.7</span> 我能用音乐（音效）来让玩家做这些事情吗？</h4>
+</div>
+<div id="outline-container-sec-53-7-8" class="outline-4">
+<h4 id="sec-53-7-8"><span class="section-number-4">53.7.8</span> 还有什么方法，我能用来控制玩家，但又没有侵害玩家的自由感？</h4>
+<div class="outline-text-4" id="text-53-7-8">
+<p>
+应该是行为-奖励这种模式吧，参考skiner-box
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-54" class="outline-2">
+<h2 id="sec-54"><span class="section-number-2">54</span> 透镜#73  合谋的透镜</h2>
+<div class="outline-text-2" id="text-54">
+<p>
+其实这个透镜，就是综合应用间接控制的透镜。
+设计师和游戏角色一起合谋，为玩家创造最优体验，把目标，角色和视觉设计都朝着单个统一的效果联合在一起。
+实际例子：
+《海盗之战》在5分钟之内创造优异的互动体验：我们让角色有两个同时并存的目标：一方面，他们的目标是让玩家
+参与到一场具有挑战性的战斗里，另一方面，他们的目标又是把玩家引导到有趣的地方让体验的心流保持在最理想的
+区域。
+</p>
+</div>
+<div id="outline-container-sec-54-1" class="outline-3">
+<h3 id="sec-54-1"><span class="section-number-3">54.1</span> 透镜描述</h3>
+<div class="outline-text-3" id="text-54-1">
+<p>
+角色应该完全满足他们在游戏中扮演的角色，但只要可能，他们也要成为服从游戏设计师的仆役，为设计师的目标而
+努力，建立玩家的体验。
+为确保你的角色是为这种责任而生的，问：
+我希望玩家体验到什么？
+如何让角色能满足这些体验，且不损害他们在游戏中目标？
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-55" class="outline-2">
+<h2 id="sec-55"><span class="section-number-2">55</span> 透镜#75 玩家的化身透镜</h2>
+<div class="outline-text-2" id="text-55">
+<p>
+玩家化身是玩家进入游戏的世界里的门户。为了确保这些化身能带出玩家尽可能的认同，问一下自己以下问题：
+</p>
+</div>
+<div id="outline-container-sec-55-1" class="outline-3">
+<h3 id="sec-55-1"><span class="section-number-3">55.1</span> 游戏中的化身是一种吸引玩家的理想人型吗？</h3>
+</div>
+<div id="outline-container-sec-55-2" class="outline-3">
+<h3 id="sec-55-2"><span class="section-number-3">55.2</span> 游戏中的化身有着能让玩家投射到角色上的图形抽象化的特征吗？</h3>
+</div>
+<div id="outline-container-sec-55-3" class="outline-3">
+<h3 id="sec-55-3"><span class="section-number-3">55.3</span> 实际经验</h3>
+<div class="outline-text-3" id="text-55-3">
+<p>
+Irene 早期版本，玩家化身特别小，在场景中都看不清，弱小，不起眼，让玩家没有认同感。
+</p>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-sec-56" class="outline-2">
+<h2 id="sec-56"><span class="section-number-2">56</span> 透镜77 角色性格特征的透镜</h2>
+<div class="outline-text-2" id="text-56">
+<p>
+为了确保一个角色的性格特征能在他所说所做里体现出来，问：
+</p>
+</div>
+<div id="outline-container-sec-56-1" class="outline-3">
+<h3 id="sec-56-1"><span class="section-number-3">56.1</span> 哪些性格特征界定了我的角色？</h3>
+</div>
+<div id="outline-container-sec-56-2" class="outline-3">
+<h3 id="sec-56-2"><span class="section-number-3">56.2</span> 这些性格特征如何在角色的言语、行为和外观上表露出来？</h3>
+</div>
+
+<div id="outline-container-sec-56-3" class="outline-3">
+<h3 id="sec-56-3"><span class="section-number-3">56.3</span> 《饥荒》</h3>
+<div class="outline-text-3" id="text-56-3">
+<p>
+饥荒角色性格塑造得很成功，栩栩如生，给游戏加分了。
+科学家角色，面貌像一个知识分子，见到下雨会说“H2O”， 见到大树会说“感谢树木对我们的保护”，很有科学家的风格。
+放火女郎，面貌是一个女子，带着打火机。紧张的时候，随便放火，看到树会说“这货可以燃”，看到荆棘会说“它比别的东西烧得更好”
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-57" class="outline-2">
+<h2 id="sec-57"><span class="section-number-2">57</span> 透镜#82 内在矛盾的透镜</h2>
+<div class="outline-text-2" id="text-57">
+<p>
+Free from inner contradictions&#x2013;&#x2014;毫无内在矛盾
+毫无内在矛盾对于任何设计师来说都是极为重要的，因为内在矛盾是糟糕设计的本质。
+一个好的游戏不能包含了抵触游戏最关键的目的的特征。为了移出这些矛盾的特征，问一下自己下面的问题：
+</p>
+</div>
+<div id="outline-container-sec-57-1" class="outline-3">
+<h3 id="sec-57-1"><span class="section-number-3">57.1</span> 透镜描述</h3>
+<div class="outline-text-3" id="text-57-1">
+</div><div id="outline-container-sec-57-1-1" class="outline-4">
+<h4 id="sec-57-1-1"><span class="section-number-4">57.1.1</span> 我的游戏的目的是什么？</h4>
+<div class="outline-text-4" id="text-57-1-1">
+<p>
+给玩家轻松、幽默、懒惰的娱乐。
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-57-1-2" class="outline-4">
+<h4 id="sec-57-1-2"><span class="section-number-4">57.1.2</span> 我游戏中的每个子系统的目的是什么？</h4>
+<div class="outline-text-4" id="text-57-1-2">
+<p>
+需要列表。
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-57-1-3" class="outline-4">
+<h4 id="sec-57-1-3"><span class="section-number-4">57.1.3</span> 在我游戏中，有什么东西是从根本上抵触这些目的的呢？</h4>
+</div>
+
+<div id="outline-container-sec-57-1-4" class="outline-4">
+<h4 id="sec-57-1-4"><span class="section-number-4">57.1.4</span> 倘若这样，如何才能改变这种情况呢？</h4>
+</div>
+</div>
+<div id="outline-container-sec-57-2" class="outline-3">
+<h3 id="sec-57-2"><span class="section-number-3">57.2</span> 扩展描述</h3>
+<div class="outline-text-3" id="text-57-2">
+<p>
+“内在矛盾”是任何糟糕的设计的本质。
+假设一个设施能让我生活变得更轻松，但它却很难用;&#x2014;&#x2014;矛盾
+假设某样东西应该很有趣的，但用起来却无聊而且烦人&#x2013;&#x2014;矛盾
+一个好的设计师必须小心地去除所有内在的矛盾，不要给它们找借口。 
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-57-3" class="outline-3">
+<h3 id="sec-57-3"><span class="section-number-3">57.3</span> 应用</h3>
+<div class="outline-text-3" id="text-57-3">
+<p>
+&lt;大明&gt;中，内在的矛盾表现在，本来我们游戏是轻松休闲玩法特别的，那么下面就会成为内在矛盾：
+</p>
+<ol class="org-ol">
+<li>难用的界面 &#x2014;&#x2014;界面难用，不合适我们轻松的玩法
+</li>
+<li>常见的、普通的厚重的玩法&#x2014;&#x2014;如果出现类似大闹天宫的玩法，就厚重了，对我们游戏是矛盾。
+</li>
+<li>让玩家难以理解的玩法&#x2013;&#x2014;&#x2014;“难以理解”，这个太糟糕了，现在的技能以及技能升级效果，都是玩家无法理解的。
+</li>
+<li>平庸的玩法，无亮点和惊喜感&#x2013;&#x2014;平庸本来就是和我们目标矛盾的。
+</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-sec-57-4" class="outline-3">
+<h3 id="sec-57-4"><span class="section-number-3">57.4</span> 设计招式</h3>
+<div class="outline-text-3" id="text-57-4">
+<p>
+  Christopher Alexander解释到：只有通过对该样事物的使用过程进行不断的迭代和观察，如此才能达到真正出色的设计。也就是：
+循环的法则对于建筑学和游戏设计是一样通用的。
+他用具体例子说明：当在一个复杂的建筑群的建筑间铺设道路的时候，可先没有路，只是种上草。然后一年后，看看人们在草地上走出什么样的
+道路，再以此铺设道路。
+这个思路与《精益创业》的方法有异曲同工之妙，直接瞄准用户的需求。
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-58" class="outline-2">
+<h2 id="sec-58"><span class="section-number-2">58</span> 透镜#83 道之生动15特征的透镜</h2>
+<div class="outline-text-2" id="text-58">
+<p>
+一些事情或物品或产品，因为其自然而有机的设计，而让人感受很棒，很特殊。例如iphone，糖果等。
+建筑学家Alexander总结了生命现象的十五个特征，可用于设计。
+</p>
+</div>
+
+<div id="outline-container-sec-58-1" class="outline-3">
+<h3 id="sec-58-1"><span class="section-number-3">58.1</span> 层次结构</h3>
+<div class="outline-text-3" id="text-58-1">
+<p>
+We see levels of scale in “telescoping goals, ” where a player has
+to satisfy short-term goals to reach mid-term ones and to eventually reach longterm
+goals. We see it in fractal interest curves. We also see it in nested game
+world structures. Spore is a symphony of levels of scale.
+目标是有层次结构的。
+分形的兴趣曲线是有层次结构的。
+游戏世界是有层次结构的。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-58-2" class="outline-3">
+<h3 id="sec-58-2"><span class="section-number-3">58.2</span> 强大的中心</h3>
+<div class="outline-text-3" id="text-58-2">
+<p>
+We see this in visual layout, certainly, but also in our story
+structure. The avatar is at the center of our game universe — and generally we
+prefer strong avatars over weak ones. Also, we prefer strong centers when it
+comes to our purpose in the game — our goal.
+在视觉摆放上，在故事结构上，我们都看到了强大的中心。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-58-3" class="outline-3">
+<h3 id="sec-58-3"><span class="section-number-3">58.3</span> 边界</h3>
+<div class="outline-text-3" id="text-58-3">
+<p>
+Many games are primarily about boundaries! Certainly any game
+about territory is an exploration of boundaries. But rules are another kind of
+boundary, and a game with no rules is no game at all.
+游戏规则是一种边界。
+许多游戏是关于边界的。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-58-4" class="outline-3">
+<h3 id="sec-58-4"><span class="section-number-3">58.4</span> 交替性重复</h3>
+<div class="outline-text-3" id="text-58-4">
+<p>
+We see this on the pleasing shape of the chessboard, and
+we see it too in the cycle of level/boss/level/boss that comes up in so many games.
+Even tense/release/tense/release is an example of pleasing alternating repetition.
+</p>
+
+<p>
+在游戏中有许多交替性重复出现。
+</p>
+<ol class="org-ol">
+<li>形状：棋盘
+</li>
+<li>游戏内容安排：关卡-BOSS-关卡-BOSS
+</li>
+<li>体验： 紧张-放松-紧张-放松
+</li>
+</ol>
+</div>
+</div>
+<div id="outline-container-sec-58-5" class="outline-3">
+<h3 id="sec-58-5"><span class="section-number-3">58.5</span> 正交空间</h3>
+<div class="outline-text-3" id="text-58-5">
+<p>
+What Alexander means here is that the foreground and background
+elements both have beautiful, complementary shapes, like Yin and Yang.
+In a sense a well-balanced game has this quality — allowing multiple alternate
+strategies to have an interlocked beauty.
+如同阴阳，后景与前景元素，有美丽的、相互补偿的形状。
+平衡得很好的游戏中，也有类似东西&#x2013;多个相互替补的策略，形成深锁的美丽。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-58-6" class="outline-3">
+<h3 id="sec-58-6"><span class="section-number-3">58.6</span> 好的形状</h3>
+<div class="outline-text-3" id="text-58-6">
+<p>
+This is as simple as it sounds — a shape that is pleasing. We certainly
+look for this in the visual elements of our games. But we can see and feel
+it, too, in level design. A good level feels “solid” and has a “good curve. ”
+好的形状体现在视觉设计上。
+好的形状体现在关卡设计上。
+好的关卡设计，让人感觉实在，而且有很好的曲线。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-58-7" class="outline-3">
+<h3 id="sec-58-7"><span class="section-number-3">58.7</span> 局部对称</h3>
+<div class="outline-text-3" id="text-58-7">
+<p>
+This is different from an overall symmetry, like a mirror
+image; instead referring to multiple small, internal symmetries in a design.
+Zelda: The Wind Waker has this feeling throughout its architecture — when you
+are within a room or area, it seems to have a symmetry, but it is connected to
+other places in a way that feels organic. Rule systems and game balance can
+have this property as well.
+是设计中，多个细小的、内在的对称，而不是全局对称。
+在空间设计中，有这种局部对称，例如Zelda
+在规则系统设计，游戏平衡设计中，也有这种特性。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-58-8" class="outline-3">
+<h3 id="sec-58-8"><span class="section-number-3">58.8</span> 深度互锁与暧昧</h3>
+<div class="outline-text-3" id="text-58-8">
+<p>
+相互对立而相互成立&#x2014;围棋的黑白，道德经中的难易相成，高下相倾。缺其一，则另一东西也消失。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-58-9" class="outline-3">
+<h3 id="sec-58-9"><span class="section-number-3">58.9</span> 对比</h3>
+<div class="outline-text-3" id="text-58-9">
+<p>
+In games we have many kinds of contrast. The contrast between
+opponents, between what is controllable and what is not, and between reward
+and punishment. When opposites in our game are strongly contrasted, the game
+feels more meaningful and more powerful.
+游戏中有太多对比。
+如果对比强烈，游戏看起来更加有意义，更加强大。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-58-10" class="outline-3">
+<h3 id="sec-58-10"><span class="section-number-3">58.10</span> 梯度</h3>
+<div class="outline-text-3" id="text-58-10">
+<p>
+This refers to qualities that change gradually. The gradually increasing
+challenge curve is an example of this, but so are appropriately designed
+probability curves.
+事物逐渐的变化。
+难度曲线的逐步提升。
+概率曲线的逐步变化。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-58-11" class="outline-3">
+<h3 id="sec-58-11"><span class="section-number-3">58.11</span> 瑕疵</h3>
+<div class="outline-text-3" id="text-58-11">
+<p>
+When a game is too perfect, it has no character. The handmade
+feeling of “ house rules ” often makes a game seem more alive.
+太完美就不好了，出现点小问题就好了。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-58-12" class="outline-3">
+<h3 id="sec-58-12"><span class="section-number-3">58.12</span> 回音</h3>
+<div class="outline-text-3" id="text-58-12">
+<p>
+Echoes are a kind of pleasing, unifying repetition. When the boss monster
+has something in common with his minions, we are experiencing echoes.
+Good interest curves have this property, especially fractal ones.
+</p>
+
+<p>
+一种愉悦的、统一的重复。
+BOSS在某方面类似小鬼，我们就看见了回音。
+好的兴趣曲线有这样的特性，尤其是那种分形的。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-58-13" class="outline-3">
+<h3 id="sec-58-13"><span class="section-number-3">58.13</span> 空洞</h3>
+<div class="outline-text-3" id="text-58-13">
+<p>
+As Alexander says, “In the most profound centers which have perfect
+wholeness, there is at the heart a void which is like water, infinite in depth, surrounded
+by and contrasted with the clutter of the stuff and fabric all around it. ”
+Think of a church, or the human heart. When boss monsters tend to be in large,
+hollow spaces, we are experiencing the void.
+</p>
+
+<p>
+寂兮渺兮
+当其无，有器之用。
+当其无，有室之用。
+有之以为利，无之以为用。
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-58-14" class="outline-3">
+<h3 id="sec-58-14"><span class="section-number-3">58.14</span> 简洁与内在平静</h3>
+<div class="outline-text-3" id="text-58-14">
+<p>
+Designers talk endlessly about how important it is
+for a game to be simple — usually with a small number of rules that have emergent
+properties. Of course, these rules must be well-balanced, which gives them
+the inner calm that Alexander describes.
+</p>
+
+<p>
+简单规则导致的自发性特征，是游戏设计者的追求。
+规则必须平衡，有内在平静。
+围棋有此特征，因为其规则简单到了极致，而自发空间那么巨大。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-58-15" class="outline-3">
+<h3 id="sec-58-15"><span class="section-number-3">58.15</span> 有机融合（非独立性）</h3>
+<div class="outline-text-3" id="text-58-15">
+<p>
+This refers to something being well-connected to its surroundings
+— as if it was part of them. Each rule of our game should have this property,
+but so should every element of our game. If everything in our game has this
+quality, a certain wholeness results that makes the game feel very alive indeed.
+</p>
+
+<p>
+任何部分，都有机融入环境中，是环境的组成部分，没有突兀出现的东西，格格不入的东西。
+如果我们游戏所有部分都有这种特性，那么就会产生一个总体感&#x2014;使游戏感受很具生命活力。
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-58-16" class="outline-3">
+<h3 id="sec-58-16"><span class="section-number-3">58.16</span> 道之物化</h3>
+<div class="outline-text-3" id="text-58-16">
+<p>
+上述15个特征，其实是道德经中许多抽象原则的具体化。
+道，无所不在。
+尊道而行，设计也需如此。
+</p>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-sec-59" class="outline-2">
+<h2 id="sec-59"><span class="section-number-2">59</span> 实战</h2>
+<div class="outline-text-2" id="text-59">
+<p>
+学习《游戏设计的艺术后》，进行了下面的实战：
+</p>
+</div>
+<div id="outline-container-sec-59-1" class="outline-3">
+<h3 id="sec-59-1"><span class="section-number-3">59.1</span> 浮生历程的设计。</h3>
+<div class="outline-text-3" id="text-59-1">
+<p>
+玩家每打过一个城市，就有这个城市的Flash剧情，未打过的不开剧情。城市之间单线条连接起来。
+应用了：
+</p>
+</div>
+
+<div id="outline-container-sec-59-1-1" class="outline-4">
+<h4 id="sec-59-1-1"><span class="section-number-4">59.1.1</span> 进展可见透镜：玩家的游戏进展是可见的。</h4>
+</div>
+<div id="outline-container-sec-59-1-2" class="outline-4">
+<h4 id="sec-59-1-2"><span class="section-number-4">59.1.2</span> 好奇心透镜：玩家会好奇，下一个城市flash是什么？</h4>
+</div>
+</div>
+<div id="outline-container-sec-59-2" class="outline-3">
+<h3 id="sec-59-2"><span class="section-number-3">59.2</span> 采集场的设计</h3>
+<div class="outline-text-3" id="text-59-2">
+<p>
+原来的设计，玩家一按按钮，就随机得到特产或者宝石。
+我的设计，界面上有特产和宝石按钮，玩家自行选择按哪个，分别得到结果。
+应用了：
+</p>
+</div>
+<div id="outline-container-sec-59-2-1" class="outline-4">
+<h4 id="sec-59-2-1"><span class="section-number-4">59.2.1</span> 有意义的选择的透镜。</h4>
+<div class="outline-text-4" id="text-59-2-1">
+<p>
+让玩家感觉，我参与了，得到的东西是我操作的结果。
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-59-3" class="outline-3">
+<h3 id="sec-59-3"><span class="section-number-3">59.3</span> 太学设计</h3>
+<div class="outline-text-3" id="text-59-3">
+<p>
+  为玩家下阵的伙伴提供经验。我的设计概要：若干城市有“太学”，提供免费的50个位置，玩家可以把自己的伙伴送到太学学习，一个伙伴
+占一个位置。如果没有位置了，就得等。应用了：
+</p>
+</div>
+<div id="outline-container-sec-59-3-1" class="outline-4">
+<h4 id="sec-59-3-1"><span class="section-number-4">59.3.1</span> 本质体验的透镜： 这种体验是玩家可接受的</h4>
+</div>
+<div id="outline-container-sec-59-3-2" class="outline-4">
+<h4 id="sec-59-3-2"><span class="section-number-4">59.3.2</span> 玩家的透镜：我们游戏的玩家不愿意理解费解的东西</h4>
+</div>
+<div id="outline-container-sec-59-3-3" class="outline-4">
+<h4 id="sec-59-3-3"><span class="section-number-4">59.3.3</span> 自发性的透镜之 “5. 会改变约束条件的副作用效果。</h4>
+<div class="outline-text-4" id="text-59-3-3">
+<p>
+  每当你采取一个行动，它所带来的副作用都会改变你自己或你的对手的约束情况，那是很有趣的。 例子：
+  在跳棋中，你移动一个旗子，你不但改变了你可能被吃掉的格局，还改变了你对手（以及你自己）可以移动的格局。在这个意义上，  每一步都改变了游戏空间的本质，
+无论这种改变是你希望或者不希望的。”。 &#x2013;&#x2014;我的设计中，玩家伙伴的学习占了位置，改变了你的对手（别的玩家）的格局。
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-59-4" class="outline-3">
+<h3 id="sec-59-4"><span class="section-number-3">59.4</span> 《绝对领域》的改进</h3>
+<div class="outline-text-3" id="text-59-4">
+<p>
+缘由：《绝对领域》立项8个月之后，完成度低，前期感受差，各方面评价不佳。
+因此，做了下面的改进：
+</p>
+</div>
+<div id="outline-container-sec-59-4-1" class="outline-4">
+<h4 id="sec-59-4-1"><span class="section-number-4">59.4.1</span> 更美的开场画面</h4>
+<div class="outline-text-4" id="text-59-4-1">
+<p>
+原来开篇剧情画面品质很差，玩家感受这游戏没诚意。决定重修，提升画面品质。
+参见透镜#63: 美好事物的透镜。
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-59-4-2" class="outline-4">
+<h4 id="sec-59-4-2"><span class="section-number-4">59.4.2</span> 增加前十分钟场景数量，并使场景：1.更美更细腻 2. 场景之间有显著差异</h4>
+<div class="outline-text-4" id="text-59-4-2">
+<p>
+原来版本前十分钟体验过程中，只有两个很烂的场景，玩家在第二个场景中打怪停留时间很长，厌倦。玩家觉得游戏不精致，而且闷。
+改进原理如下：
+透镜#63: 美好事物的透镜。
+透镜#61：兴趣曲线的透镜。-&#x2014;&gt;通过改变场景，让玩家见到相互之间差异大的场景，提振兴趣。
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-59-4-3" class="outline-4">
+<h4 id="sec-59-4-3"><span class="section-number-4">59.4.3</span> 简化剧情，剧情人物都改为目标玩家熟悉的日本动漫人物，编一个让玩家救公主的烂俗故事</h4>
+<div class="outline-text-4" id="text-59-4-3">
+<p>
+原来的剧情复杂而且不被玩家熟知，是360腾讯百度迅雷等一大堆人物之间复杂恩怨情仇，问题在于：1 玩家识别不了这些人物，缺乏代入感。2 在短短十分钟内，玩家完全无法理解这些人物之间的关系，
+剧情陷入不被玩家理解的苦中。3 更严重的是，玩家不知道自己的目标，尤其是终极目标，因此打怪无意义了。
+改进的原理如下：
+透镜16  玩家的透镜-&#x2014;》让玩家无脑就能理解剧情。
+透镜16  玩家的透镜-&#x2014;》让玩家发现自己熟悉的日本动漫人物，兴趣提升。（玩家喜欢什么？玩家希望在你游戏中看到什么？）
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-59-4-4" class="outline-4">
+<h4 id="sec-59-4-4"><span class="section-number-4">59.4.4</span> 在简化剧情同时，给予玩家可以理解的浅显的目标</h4>
+<div class="outline-text-4" id="text-59-4-4">
+<p>
+见上面剧情改动的分析描述，给了玩家终极目标或说使命感。
+而且为了让这个使命感更强烈，外加了一张魔王快要欺负公主的单独的图。
+改进的原理如下：
+透镜#25  目标的透镜
+</p>
+</div>
+</div>
+<div id="outline-container-sec-59-4-5" class="outline-4">
+<h4 id="sec-59-4-5"><span class="section-number-4">59.4.5</span> 让玩家在前十分钟内，形象由猥琐变得英俊帅气</h4>
+<div class="outline-text-4" id="text-59-4-5">
+<p>
+原来的一击男形象猥琐呆，虽然一看有特点，但如果要让玩家把它当自己avatar，是完全不行的。
+一击男的形象改变，给了玩家惊喜感。
+改进原理如下：
+透镜#2, 惊喜感
+透镜#75, 玩家化身的透镜
+</p>
+
+<p>
+实践证明，上述改动是有效果的。
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-60" class="outline-2">
+<h2 id="sec-60"><span class="section-number-2">60</span> 基于混搭的头脑风暴技术</h2>
+<div class="outline-text-2" id="text-60">
+<p>
+Brainstorm Tip #13: Mix and Match Categories
+It’s great when game ideas, Athena-like, spring forth from your head, fully formed.
+But it doesn’t happen that way every time. A great technique for helping ideas come
+together is to brainstorm in categories. The elemental tetrad comes in handy here.
+For example, you might have decided you want to make a game for teenage girls.
+You might make separate lists, which you can start to mix and match. Something
+like
+Technology Ideas
+</p>
+<ol class="org-ol">
+<li>Cell phone platform
+</li>
+<li>Handheld game
+</li>
+<li>PC
+</li>
+<li>Integrated with instant messaging
+</li>
+<li>Game console
+</li>
+</ol>
+<p>
+Mechanics Ideas
+</p>
+<ol class="org-ol">
+<li>Sims-like game
+</li>
+<li>Interactive fiction game
+</li>
+<li>The winner makes the most friends
+</li>
+<li>Try to spread rumors about the other players
+</li>
+<li>Try to help as many people as possible
+</li>
+<li>Tetris-like game
+</li>
+</ol>
+<p>
+Story Ideas
+</p>
+<ol class="org-ol">
+<li>High school drama
+</li>
+<li>College-themed
+</li>
+<li>You play cupid
+</li>
+<li>You’re a TV star
+</li>
+<li>Hospital theme
+</li>
+</ol>
+<p>
+72
+FIFTEEN NITTY-GRITTY BRAINSTORMING TIPS
+</p>
+<ol class="org-ol">
+<li>Music theme
+</li>
+</ol>
+<p>
+a. You’re a rock star
+b. You’re a dancer
+Aesthetic Ideas
+</p>
+<ol class="org-ol">
+<li>Cel shaded
+</li>
+<li>Anime style
+</li>
+<li>All characters are animals
+</li>
+<li>R&amp;B music defines the game
+</li>
+<li>Edgy rock/punk music defines the feel
+</li>
+</ol>
+<p>
+Once you have lists like these (though you should have dozens more entries on
+each list!) you are free to start mixing and matching ideas — maybe a cell-phone-
+based Tetris-like game, which has a hospital theme, where all the characters are
+animals&#x2026;. Or how about a Sims-like console game based on high school with
+an anime style? By having all these lists of partial ideas that can easily be mixed
+and matched, fully formed game ideas that you might never have thought of start
+springing up all over the place, each taking on a life of their own. Don’t be afraid to
+make up other categories, either, as you need them!
+</p>
+
+<p>
+我要批注   混搭有时能突破人的思维局限，创造出意想不到的好创意。
+         计算机可以用来做这个，其实质就是机械地实现乘法原理。A=BxCxDxE, B,C,D,E就是各个组成部件，A的空间很大。可以使用脚本语言来找出A,
+然后通过人来在A中选择有意义的组合（子集合）作为创意集。
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-61" class="outline-2">
+<h2 id="sec-61"><span class="section-number-2">61</span> 从bafang学到的游戏设计思想</h2>
+<div class="outline-text-2" id="text-61">
+<ol class="org-ol">
+<li>找你妹一的亮点：这货是什么？制作精良的基础上要维持这个。（要在制作时，故意搞得玩家看不懂）给玩家炒点。
+</li>
+
+<li>要设计一些坑爹的东西：梨不是甜的、发光的东西包括戒指上有光点。做一些让失败换取的教训。
+</li>
+
+<li>让玩家感觉不来就亏了。（我花了163把5条命的上限扩展到8条）
+</li>
+</ol>
+<p>
+主动给玩家的，玩家不觉得有价值
+让玩家感觉不拿就亏，这才有价值。
+</p>
+
+
+<ol class="org-ol">
+<li>一战到底最成功的地方，在于看到别人犯错尤其是那种低级错误，获得“自己很聪明”的满足感，战胜别人的优越感。
+</li>
+</ol>
+
+
+<ol class="org-ol">
+<li>故意设计一些玩家占便宜的点。也就是，玩家自以为发现了某个设计漏洞，占了便宜。其实这个是游戏设计者故意设计的，玩家的
+</li>
+</ol>
+<p>
+反馈在预料范围内。
+</p>
+
+<ol class="org-ol">
+<li>游戏特色只有一个，不要做大杂烩。国产山寨手机什么功能都往上堆，但就是缺特色和感觉。iPhone有缺点，大家让改，乔帮主就是不改。
+</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-sec-62" class="outline-2">
+<h2 id="sec-62"><span class="section-number-2">62</span> 作者Jesse的补充</h2>
+<div class="outline-text-2" id="text-62">
+<p>
+还有一些从前我不明白的道理，现在能更好地理解，其中一些如下。
+</p>
+</div>
+
+<div id="outline-container-sec-62-1" class="outline-3">
+<h3 id="sec-62-1"><span class="section-number-3">62.1</span> 1. 故事发展中“奇幻”的重要性——“奇幻”被证明远比故事本身更重要。</h3>
+</div>
+
+<div id="outline-container-sec-62-2" class="outline-3">
+<h3 id="sec-62-2"><span class="section-number-3">62.2</span> 2. 大脑中寻找快乐和避免痛苦的系统是分离的。</h3>
+<div class="outline-text-3" id="text-62-2">
+<p>
+这有助于解释为什么游戏开始时给予的很多奖励，会逐渐成为玩家的拖累（如回来收割庄稼，或为你所在的团队服务），并往往最终导致“退出时刻”的来临——玩家选择停止游戏。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-62-3" class="outline-3">
+<h3 id="sec-62-3"><span class="section-number-3">62.3</span> 3. 自决理论。</h3>
+<div class="outline-text-3" id="text-62-3">
+<p>
+它是关于人类动机和人格的宏观理论，同时也是关于心理需要的理论。它关注一个人可以在不受外界因素干扰而作出自己选择的自由和权力，它是游戏设计的核心。
+[自决理论（Self-Determination Theory，简称SDT）是关于人类动机
+和人格的宏观理论，同时也是关于人类本身的进化趋势以及其心理需
+要的理论。它关注人们在不受外部因素干扰条件下所做出的选择背后
+的动机，重点关注一个人的行为由内在动机和自我决定引发而产生的
+程度 (Deci &amp; Ryan, 2002)。简单地说，就是一个人可以有不受外界
+任何因素干扰而做出自己的选择的自由和权力。]
+</p>
+</div>
+</div>
+<div id="outline-container-sec-62-4" class="outline-3">
+<h3 id="sec-62-4"><span class="section-number-3">62.4</span> 移动游戏的特殊</h3>
+<div class="outline-text-3" id="text-62-4">
+<p>
+移动游戏的设计与众不同——部分原因是触摸操控带来的，还有部分原因是玩家的心态不同——玩家在手机上预期随时被打断。
+</p>
+
+<p>
+这意味着，为手机设计游戏，一方面需要充分利用触控，另一方面还要优化被打断的情况。
+</p>
+
+<p>
+有趣的是，为平板电脑设计游戏不需要太多考虑玩家被打断的情况——人们倾向在更私人的空间使用平板电脑。然而对平板电脑来说，触摸更加重要。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-62-5" class="outline-3">
+<h3 id="sec-62-5"><span class="section-number-3">62.5</span> 功夫在诗外，不断尝试，不断创新</h3>
+<div class="outline-text-3" id="text-62-5">
+<p>
+中国有句古话“汝果欲学诗，功夫在诗外”。同样的情况适用于游戏设计领域吗？如果是，学习游戏设计应当朝着什么方向用功？ 初级设计师与资深设计师之间的差异是什么？
+</p>
+
+<p>
+Jesse：是的，完全如此！对于游戏设计师来说，只研究那些最流行、最复杂的游戏是错误的。如果希望在市场竞争中获胜，你需要研究竞争对手——但不能只研究竞争对手。
+</p>
+
+<p>
+若想成为一名优秀的游戏设计师，万勿复制他人的作品——而是应当观察生活中的每个角落。灵感可以源自任何地方——而且出处越独特，你设计的游戏也越有个性。
+</p>
+
+<p>
+你没法阻止旁人复制你的想法，但市场本身的规律是淘汰同质化作品。
+</p>
+
+<p>
+为了获得成功，你必须一次接一次不断尝试。几乎没人能一蹴而就——而且假使这次成功了，也不能确保下一次成功。
+</p>
+
+<p>
+就如任何其他技艺一样——你必须不断创造，才能逐渐提高自己的能力。
+</p>
+
+<p>
+《程序员》：当你开始设计一款新游戏，会采用怎样的流程？
+</p>
+
+<p>
+Jesse：这还得看具体情况，每款游戏多有不同。有时我从一个问题出发，有时跟随莫名的灵感。
+</p>
+
+<p>
+大多数时候，我开始做一件事，随即发现行不通，于是我开始做其他尝试，又发现行不通，再做其他尝试……大约上百次其他尝试之后，我终于能发现某些可以行得通的方案。
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-63" class="outline-2">
+<h2 id="sec-63"><span class="section-number-2">63</span> 透镜101：正能量的透镜</h2>
+<div class="outline-text-2" id="text-63">
+<p>
+相同一个内容，可以用不同的方式来表达，可以让玩家有完全不同的感受。
+尽量用充满正力量的、乐观的、积极的、鼓励的、向上的方式与玩家交流沟通或展示。
+</p>
+
+<p>
+（例如：1、手机游戏界面上的关闭按钮有两种表达方式，一个是右上角放一个“×”，一个是右下角放一个“√”。
+</p>
+
+<p>
+2、将冷冰冰的“提示”改用语气词(哇哦！)或称赞词（恭喜你/你真棒！））
+</p>
+
+<p>
+问一下你自己：
+</p>
+
+<p>
+你的设计是不是可以用另外一种方式来表达，更能够让人接受呢？
+</p>
+
+<p>
+你的设计是不是可以用另外一种方式来表达，更能够让玩家充满爱，感恩和power呢！
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-64" class="outline-2">
+<h2 id="sec-64"><span class="section-number-2">64</span> 透镜102：得到失去的透镜</h2>
+<div class="outline-text-2" id="text-64">
+<p>
+让玩家有得到的感觉，尽量减少失去的感觉。
+原理：
+同样数量N的&lt;奖励|物品|&#x2026;&gt;，
+</p>
+<ol class="org-ol">
+<li>玩家喜欢的是由少到多的变化过程，以至于到N
+原因：喜欢得到。
+</li>
+
+<li>玩家不喜欢的是由多到少的变化过程，以至于到N
+原因：讨厌失去。
+</li>
+</ol>
+
+<p>
+案例：
+巴fang说的那个卖糖的售货员。他的顾客最多，就是他称一斤糖，少放到秤里面，然后一点一点加上去，顾客喜欢。但有的
+售货员抓一大把到秤里面，然后一点一点减少，直到一斤。然后顾客就不高兴了。
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-65" class="outline-2">
+<h2 id="sec-65"><span class="section-number-2">65</span> 透镜103：尺寸的透镜</h2>
+<div class="outline-text-2" id="text-65">
+<p>
+存在着两个尺寸：最优尺寸与魔法尺寸。
+</p>
+</div>
+<div id="outline-container-sec-65-1" class="outline-3">
+<h3 id="sec-65-1"><span class="section-number-3">65.1</span> 最优尺寸</h3>
+<div class="outline-text-3" id="text-65-1">
+<p>
+对于特定设备A和它的分辨率P， 存在且仅存在最优的游戏界面尺寸S1、
+人物尺寸S2、物品尺寸S3和字体尺寸S4。
+我们称它为最优尺寸。
+在这尺寸下，玩家感觉界面最清晰、最舒服。
+如果游戏界面、物件实际尺寸小于最优尺寸，则感觉很难受，不仅看不清楚，
+而且显得游戏小气、物件密集等，体验很差。
+</p>
+</div>
+
+<div id="outline-container-sec-65-1-1" class="outline-4">
+<h4 id="sec-65-1-1"><span class="section-number-4">65.1.1</span> 来源：</h4>
+<div class="outline-text-4" id="text-65-1-1">
+<p>
+《找你妹2014》的安卓版本体验不错了。
+刚移植到iOS的时候，感觉特别恶心，主要是各种元素的尺寸不对。尽管游戏逻辑、
+美术等，都与安卓一样，体验为什么差异那么大呢？
+于是经过思考，发现了尺寸的透镜。
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-65-2" class="outline-3">
+<h3 id="sec-65-2"><span class="section-number-3">65.2</span> 魔法尺寸</h3>
+<div class="outline-text-3" id="text-65-2">
+<p>
+通过把某个物品或人物或怪物的尺寸搞得特别大、特别小，就能产生特别
+（可怕、壮观）的感觉，提供奇特的体验。叫这个为“魔法尺寸 ”
+例子：kingdom rush中，冰雪那一关，出的BOSS非常巨大，出场的时候
+给了玩家很大震动。
+</p>
+
+<p>
+问自己问题：
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-65-3" class="outline-3">
+<h3 id="sec-65-3"><span class="section-number-3">65.3</span> 我们游戏的各种尺寸，是最优尺寸吗？</h3>
+<div class="outline-text-3" id="text-65-3">
+<p>
+如果不是，应该如何达到呢？
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-65-4" class="outline-3">
+<h3 id="sec-65-4"><span class="section-number-3">65.4</span> 我们游戏的某个object，需要用魔法尺寸吗？</h3>
+<div class="outline-text-3" id="text-65-4">
+<p>
+为什么要用？是为了塑造一种奇怪的感觉吗？
+</p>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-sec-66" class="outline-2">
+<h2 id="sec-66"><span class="section-number-2">66</span> 透镜104： 凯尔文勋爵的透镜</h2>
+<div class="outline-text-2" id="text-66">
+<p>
+一切都要量化才行。数据依据是最准确、最客观的度量标准，为游戏设计和改进提供了刚性论据。
+所以需要在游戏设计、参考、改进过程中，大量使用统计学手段。
+不以量化手段来做的设计和改进，是没有证据支撑的，难以成立的。
+尤其是对游戏参照系的学习，要量化地学。
+</p>
+</div>
+
+<div id="outline-container-sec-66-1" class="outline-3">
+<h3 id="sec-66-1"><span class="section-number-3">66.1</span> 实例：</h3>
+<div class="outline-text-3" id="text-66-1">
+</div><div id="outline-container-sec-66-1-1" class="outline-4">
+<h4 id="sec-66-1-1"><span class="section-number-4">66.1.1</span> 以开始界面的设置按钮为例：</h4>
+<div class="outline-text-4" id="text-66-1-1">
+<p>
+《找你妹2014》 的设置按钮 (75,72)
+找你妹1的开始界面按钮(92,93)
+农场英雄 的设置按钮 (120,117)
+dump die  (79,85)
+小小盗贼的设置按钮(91,96)
+</p>
+
+<p>
+结论：
+《找你妹2014》设置按钮太小，不仅感受到了，而且数据支持了。
+</p>
+
+<p>
+最终：
+改。
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-66-2" class="outline-3">
+<h3 id="sec-66-2"><span class="section-number-3">66.2</span> 《找你妹2014》物件大小</h3>
+<div class="outline-text-3" id="text-66-2">
+<p>
+《找你妹2014》物件在大小上，分布比找你妹1扩散，所以看起来怪怪的，证据如下。
+使用R软件，分别统计101个《找你妹2014》和找你妹1物件，
+z1<sub>chang</sub>: 1的物件长度
+z2<sub>chang</sub>: 《找你妹2014》的物件长度
+z1<sub>gao</sub>: 1的物件高度
+z2<sub>gao</sub>: 《找你妹2014》的物件高度
+mianji1： 1物件的面积
+mianji2： 《找你妹2014》物件的面积
+mean:均值
+min:最小数
+max:最大数
+sd:标准均方差
+</p>
+
+<p>
+&gt; mean(z1<sub>chang</sub>)
+143.1287
+</p>
+
+<p>
+&gt; mean(z1<sub>gao</sub>)
+132.9802
+</p>
+
+
+<p>
+&gt; mean(z2<sub>chang</sub>)
+129.3762
+</p>
+
+
+<p>
+&gt; mean(z2<sub>gao</sub>)
+134.5347
+</p>
+
+
+<p>
+&gt; summary(z1<sub>gao</sub>)
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+     40      96     120     133     162     258 
+&gt; summary(z2<sub>gao</sub>)
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   39.0    95.0   131.0   134.5   162.0   293.0 
+</p>
+
+
+
+<p>
+&gt; summary(z1<sub>chang</sub>)
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   32.0   109.0   146.0   143.1   169.0   380.0 
+</p>
+
+
+
+<p>
+&gt; summary(z2<sub>chang</sub>)
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   31.0    90.0   126.0   129.4   166.0   447.0 
+</p>
+
+
+<p>
+&gt; summary(mianji1)
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   2772   11780   17430   19850   25260   75080 
+&gt; summary(mianji2)
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   1829    9177   16490   18910   23710  110400 
+</p>
+
+<p>
+&gt; sd(mianji1)
+ 12214.73
+&gt; sd(mianji2)
+ 15338.41
+</p>
+
+<p>
+结论
+</p>
+
+<p>
+一、 《找你妹2014》的物件，大小上很不平衡，以物件面积为度量标准，表现：
+A  《找你妹2014》最大的面积为110400，远远超过找你妹1的最大物件75080
+B. 《找你妹2014》最小的面积为1829(一个小音符)，远小于找你妹1的最小物件2772
+C. 《找你妹2014》物件的标准方差为15338.41，比找你妹1物件标准方差12214.73大。
+</p>
+
+<p>
+建议：
+把《找你妹2014》过于大的物件改小些，过于小的物件改大些。这样总体上分布平衡。
+</p>
+
+<p>
+二、《找你妹2014》物件的长和高，最小数值与找你妹1的类似。
+</p>
+
+<p>
+三、《找你妹2014》物件的高度，最大数值远远大于找你妹1物件高度的最大数值：
+&gt; summary(z1<sub>gao</sub>)
+      Max. =  258 
+&gt; summary(z2<sub>gao</sub>)
+    Max. =   293.0 
+</p>
+
+<p>
+四、《找你妹2014》物件的长度，最大数值远远大于找你妹1物件长度的最大数值：
+&gt; summary(z1<sub>chang</sub>)
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   32.0   109.0   146.0   143.1   169.0   380.0 
+</p>
+
+
+
+<p>
+&gt; summary(z2<sub>chang</sub>)
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   31.0    90.0   126.0   129.4   166.0   447.0 
+</p>
+
+<p>
+建议：把《找你妹2014》特别高或特别长的物件去掉，或改得不那么高或那么长。
+</p>
+
+<p>
+五、 《找你妹2014》物件平均面积比找你妹1的小
+summary(mianji1)   Mean=19850
+summary(mianji2)   Mean=18910
+但有趣的是：
+</p>
+
+<p>
+六： 每屏物件，找你妹1有26个，《找你妹2014》才23个。统计数据：
+找你妹1平均值        25.86         《找你妹2014》平均值        22.98
+</p>
+
+<p>
+由五和六得出结论：
+我们物品摆放算法导致更多空隙，所以每屏物品摆放效率比找你妹1低。
+</p>
+
+
+<p>
+最终：
+改了物件大小，200左右物件调整大了，初步效果是：看起来更美观，且更加类似找你妹1。
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-67" class="outline-2">
+<h2 id="sec-67"><span class="section-number-2">67</span> 宫本茂言论</h2>
+<div class="outline-text-2" id="text-67">
+</div><div id="outline-container-sec-67-1" class="outline-3">
+<h3 id="sec-67-1"><span class="section-number-3">67.1</span> 把游戏以外的经验带到游戏制作中去。</h3>
+</div>
+<div id="outline-container-sec-67-2" class="outline-3">
+<h3 id="sec-67-2"><span class="section-number-3">67.2</span> 很多事情人们在生活中习以为常，但如果能换一个角度去观察他们的话，你就可以从中找到灵感的闪光。</h3>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Chris Guo</p>
+<p class="date">Created: 2015-12-29 二 21:38</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 23.3.1 (<a href="http://orgmode.org">Org</a> mode 8.0.6)</p>
+<p class="xhtml-validation"><a href="http://validator.w3.org/check?uri=referer">Validate XHTML 1.0</a></p>
+</div>
+</body>
+</html>
